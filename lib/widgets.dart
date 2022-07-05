@@ -2,56 +2,53 @@ import 'package:educazy/constants.dart';
 import 'package:flutter/material.dart';
 
 class Tabs extends StatelessWidget {
-
   String imagePath;
   String text;
+  final void Function()? onPressed;
 
-  Tabs({
-    required this.imagePath,
-    required this.text,
-  });
+  Tabs({required this.imagePath, required this.text, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width/2.37,
-      padding: const EdgeInsets.all(18),
-      child: Row(
-        children: [
-          Image.asset(imagePath),
-          const SizedBox(width: 10),
-          Text(
-            text,
-            style: const TextStyle(
-              // fontFamily: "PoppinsMedium",
-              color: Color(0xff525252),
-              fontSize: 13,
-            ),
-          )
-        ],
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: const BorderRadius.all(Radius.circular(5)),
-        border: Border.all(
-          color: const Color(0xffFFD7CC),
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        width: MediaQuery.of(context).size.width / 2.37,
+        padding: const EdgeInsets.all(18),
+        child: Row(
+          children: [
+            Image.asset(imagePath),
+            const SizedBox(width: 10),
+            Text(
+              text,
+              style: const TextStyle(
+                // fontFamily: "PoppinsMedium",
+                color: Color(0xff525252),
+                fontSize: 13,
+              ),
+            )
+          ],
         ),
-        boxShadow:[
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          border: Border.all(
+            color: const Color(0xffFFD7CC),
           ),
-        ],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              blurRadius: 5,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-
-
 class Cards extends StatelessWidget {
-
   String titleText;
   String date;
   String time;
@@ -70,12 +67,13 @@ class Cards extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
-          boxShadow:[
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              blurRadius: 5,
-              offset: const Offset(0, 2),
-            )],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            blurRadius: 5,
+            offset: const Offset(0, 2),
+          )
+        ],
       ),
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -93,7 +91,8 @@ class Cards extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   color: const Color(0xffF4F4F4),
@@ -113,7 +112,8 @@ class Cards extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   color: const Color(0xffF4F4F4),
@@ -131,7 +131,6 @@ class Cards extends StatelessWidget {
                     ),
                   ],
                 ),
-
               ),
             ],
           ),
