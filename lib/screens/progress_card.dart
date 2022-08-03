@@ -1,4 +1,5 @@
 import 'package:educazy/widgets/header_logo.dart';
+import 'package:educazy/widgets/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -29,14 +30,7 @@ class _ProgresscardState extends State<Progresscard> {
                     SizedBox(
                       height: 27,
                     ),
-                    Text(
-                      'Progress Card',
-                      style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 24,
-                          color: Color(0xFF3D3D3D)),
-                      textAlign: TextAlign.left,
-                    ),
+                    const HeaderText(text: "Progress Card"),
                     SizedBox(
                       height: 21,
                     ),
@@ -51,14 +45,7 @@ class _ProgresscardState extends State<Progresscard> {
                     SizedBox(
                       height: 7,
                     ),
-                    Text(
-                      'Never stop learning! Books, worksheets and reading materials now just one click away.',
-                      style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                          color: const Color(0xFF5E5D5D)),
-                      textAlign: TextAlign.left,
-                    ),
+                    const TaglineText(text: "Never stop learning! Books, worksheets and reading materials now just one click away."),
                     Container(
                       margin: EdgeInsets.symmetric(vertical: 58),
                       decoration: BoxDecoration(

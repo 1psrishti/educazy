@@ -4,8 +4,10 @@ import 'package:educazy/helper_methods.dart';
 import 'package:educazy/screens/progress_card.dart';
 import 'package:educazy/screens/quiz_screens/quiz_ques.dart';
 import 'package:educazy/screens/resources_screen.dart';
+import 'package:educazy/widgets/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:educazy/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -42,29 +44,32 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    const Text(
+                    Text(
                       "Explore, question, learn. Connect virtually with the "
                       "guided support of sign language detection and "
                       "subtitles.",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: "Poppins",
+                      style: GoogleFonts.poppins(
                         fontSize: 16,
-                        color: Color(0xffAEAEAE),
+                        color: const Color(0xffAEAEAE),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 30),
                     Container(
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(16),
                       child: const TextField(
                         decoration: InputDecoration.collapsed(
                             hintText: "Enter code - Excyyz-99990",
                             hintStyle: TextStyle(
-                                fontSize: 18, color: Color(0xff8D8D8D))),
+                              fontSize: 18,
+                              color: Color(0xff8D8D8D),
+                            ),
+                        ),
                       ),
                       decoration: const BoxDecoration(
                           color: Color(0xffEDEDED),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
                     ),
                     const SizedBox(height: 16),
                     GestureDetector(
@@ -86,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 44),
+                    const SizedBox(height: 50),
                     Column(
                       children: [
                         Row(
@@ -99,13 +104,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             Tabs(
                                 onPressed: () {
                                   HelperMethods.navigateTo(
-                                      MultiProvider(providers: [
-                                        ChangeNotifierProvider(
-                                            create: ((context) => QuizData())),
-                                        ChangeNotifierProvider(
-                                            create: ((context) => TimerData())),
-                                      ], child: QuizQues()),
-                                      context);
+                                      MultiProvider(
+                                          providers: [
+                                            ChangeNotifierProvider(
+                                                create: (context) => QuizData()),
+                                            ChangeNotifierProvider(
+                                                create: (context) => TimerData()),
+                                          ],
+                                          child: const QuizQues(),
+                                      ), context
+                                  );
                                 },
                                 imagePath: "assets/images/tests.png",
                                 text: "Tests"),
@@ -117,15 +125,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Tabs(
                                 onPressed: () {
-                                  HelperMethods.navigateTo(
-                                      Progresscard(), context);
+                                  HelperMethods.navigateTo(const Progresscard(), context);
                                 },
                                 imagePath: "assets/images/progress_cards.png",
                                 text: "Progress\nCard"),
                             Tabs(
                                 onPressed: () {
                                   HelperMethods.navigateTo(
-                                      Resources(), context);
+                                      const Resources(), context);
                                 },
                                 imagePath: "assets/images/resources.png",
                                 text: "Resources"),
@@ -133,23 +140,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 62),
+                    const SizedBox(height: 50),
                   ],
                 ),
               ),
-              const Text(
-                "Events",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                ),
-              ),
+              const HeaderText(text: "Events"),
               const SizedBox(height: 10),
-              const Text(
-                "Upcoming events conducted for you. Find new doors of "
-                "opportunities.",
-                style: TextStyle(color: Color(0xff5B5B5B), fontSize: 14),
-              ),
+              const TaglineText(text: "Upcoming events conducted for you. Find new doors of opportunities."),
               const SizedBox(height: 24),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -161,20 +158,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 46),
-              const Text(
-                "Schedule",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                ),
-              ),
+              const SizedBox(height: 50),
+              const HeaderText(text: "Schedule"),
               const SizedBox(height: 10),
-              const Text(
-                "Find your plans for the day.",
-                style: TextStyle(color: Color(0xff5B5B5B), fontSize: 14),
-              ),
-              const SizedBox(height: 24),
+              const TaglineText(text: "Find your plans for the day."),
+              const SizedBox(height: 30),
               Cards(
                 titleText: "Maternal Science Class",
                 date: "5 Aug 2022",

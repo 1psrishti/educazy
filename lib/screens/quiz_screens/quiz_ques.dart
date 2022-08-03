@@ -259,9 +259,9 @@ class _QuizQuesState extends State<QuizQues> {
                               ),
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w500, fontSize: 18)),
-                          Icon(
+                          const Icon(
                             Entypo.chevron_small_right,
-                            color: const Color(0xFF7F5EEC),
+                            color: Color(0xFF7F5EEC),
                             size: 21,
                           ),
                         ]),
