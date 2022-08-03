@@ -1,5 +1,5 @@
 import 'package:educazy/models/question_model.dart';
-import 'package:educazy/models/test.dart';
+import 'package:educazy/models/test_model.dart';
 
 List<Question> questions = <Question>[
   Question(
@@ -12,7 +12,7 @@ List<Question> questions = <Question>[
       correctAnswer: 'Radiowaves')
 ];
 
-Test quiz_data = Test(
+Test quizData = Test(
     id: 'PY123978',
     name: 'Physics',
     duration: Duration(minutes: 15),

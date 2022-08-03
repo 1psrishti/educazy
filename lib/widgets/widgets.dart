@@ -40,11 +40,11 @@ class Tabs extends StatelessWidget {
               color: const Color(0xffFFD7CC),
             ),
             // boxShadow: [
-              // BoxShadow(
-              //   // color: Colors.grey.withOpacity(0.5),
-              //   blurRadius: 5,
-              //   offset: const Offset(0, 2),
-              // ),
+            // BoxShadow(
+            //   // color: Colors.grey.withOpacity(0.5),
+            //   blurRadius: 5,
+            //   offset: const Offset(0, 2),
+            // ),
             // ],
           ),
         ),
@@ -147,6 +147,105 @@ class Cards extends StatelessWidget {
               fontSize: 14,
             ),
           )
+        ],
+      ),
+    );
+  }
+}
+
+class TestCards extends StatelessWidget {
+  String titleText;
+  String date;
+  String time;
+  String profName;
+  int maxMarks;
+
+  TestCards({
+    required this.titleText,
+    required this.date,
+    required this.time,
+    required this.profName,
+    required this.maxMarks,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: grey,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            blurRadius: 2,
+            offset: const Offset(0, 2),
+          )
+        ],
+      ),
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            titleText,
+            style: TextStyle(
+              fontSize: 18,
+              color: blue,
+            ),
+          ),
+          const SizedBox(height: 26),
+          Text(
+            "Professor: " + profName,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            "Max Marks: " + maxMarks.toString(),
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 30),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Column(
+                children: [
+                  const Icon(Icons.schedule_outlined),
+                  const SizedBox(width: 5),
+                  Text(
+                    time,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Color(0xff373737),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(width: 20),
+              Column(
+                children: [
+                  const Icon(Icons.calendar_today_outlined),
+                  const SizedBox(width: 5),
+                  Text(
+                    date,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Color(0xff373737),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     );

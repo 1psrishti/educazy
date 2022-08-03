@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 
 class TimerData extends ChangeNotifier {
   Timer? countDownTimer;
-  Duration? myDuration = quiz_data.duration;
+  Duration? myDuration = quizData.duration;
 
   Duration getRemainingTime() => myDuration!;
 

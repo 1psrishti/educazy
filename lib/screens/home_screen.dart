@@ -1,12 +1,14 @@
 import 'package:educazy/dataProviders/quiz_data_provider.dart';
 import 'package:educazy/dataProviders/timer_data.dart';
 import 'package:educazy/helper_methods.dart';
-import 'package:educazy/screens/progress_card.dart';
+import 'package:educazy/screens/progress_card_screen.dart';
 import 'package:educazy/screens/quiz_screens/quiz_ques.dart';
 import 'package:educazy/screens/resources_screen.dart';
+import 'package:educazy/screens/test_portal_screen.dart';
+import 'package:educazy/widgets/header_logo.dart';
 import 'package:educazy/widgets/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:educazy/widgets.dart';
+import 'package:educazy/widgets/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -20,18 +22,20 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
           child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.asset('assets/images/logo.png'),
-              const SizedBox(height: 60),
-              Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const HeaderLogo(),
+            const SizedBox(height: 50),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 0.0613 * width),
+              child: Center(
                 child: Column(
                   children: [
                     Image.asset('assets/images/image.png'),
@@ -103,20 +107,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 text: "Join\nClasses"),
                             Tabs(
                                 onPressed: () {
-                                  HelperMethods.navigateTo(
-                                      MultiProvider(
-                                          providers: [
-                                            ChangeNotifierProvider(
-                                                create: (context) => QuizData()),
-                                            ChangeNotifierProvider(
-                                                create: (context) => TimerData()),
-                                          ],
-                                          child: const QuizQues(),
-                                      ), context
-                                  );
+                                  HelperMethods.navigateTo(const TestPortal(), context);
                                 },
                                 imagePath: "assets/images/tests.png",
-                                text: "Tests"),
+                                text: "Tests",
+                            ),
                           ],
                         ),
                         const SizedBox(height: 15),
@@ -144,45 +139,50 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              const HeaderText(text: "Events"),
-              const SizedBox(height: 10),
-              const TaglineText(text: "Upcoming events conducted for you. Find new doors of opportunities."),
-              const SizedBox(height: 24),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    Image.asset('assets/images/img1.png'),
-                    const SizedBox(width: 10),
-                    Image.asset('assets/images/img2.png'),
-                  ],
-                ),
+            ),
+            const HeaderText(text: "Events"),
+            const SizedBox(height: 10),
+            const TaglineText(text: "Upcoming events conducted for you. Find new doors of opportunities."),
+            const SizedBox(height: 24),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Image.asset('assets/images/img1.png'),
+                  const SizedBox(width: 10),
+                  Image.asset('assets/images/img2.png'),
+                ],
               ),
-              const SizedBox(height: 50),
-              const HeaderText(text: "Schedule"),
-              const SizedBox(height: 10),
-              const TaglineText(text: "Find your plans for the day."),
-              const SizedBox(height: 30),
-              Cards(
-                titleText: "Maternal Science Class",
-                date: "5 Aug 2022",
-                time: "9:30 AM to 10:30 AM",
-                text: "Session 3 - Topics covered : Decimal expressions, "
-                    "terminating and non terminating rational numbers.",
-              ),
-              const SizedBox(height: 16),
-              Cards(
-                titleText: "Maternal Science Class",
-                date: "5 Aug 2022",
-                time: "9:30 AM to 10:30 AM",
-                text: "Session 3 - Topics covered : Decimal expressions, "
-                    "terminating and non terminating rational numbers.",
-              ),
-              const SizedBox(height: 50),
-            ],
-          ),
+            ),
+            const SizedBox(height: 50),
+            const HeaderText(text: "Schedule"),
+            const SizedBox(height: 10),
+            const TaglineText(text: "Find your plans for the day."),
+            const SizedBox(height: 30),
+            Cards(
+              titleText: "Maternal Science Class",
+              date: "5 Aug 2022",
+              time: "9:30 AM to 10:30 AM",
+              text: "Session 3 - Topics covered : Decimal expressions, "
+                  "terminating and non terminating rational numbers.",
+            ),
+            const SizedBox(height: 16),
+            Cards(
+              titleText: "Maternal Science Class",
+              date: "5 Aug 2022",
+              time: "9:30 AM to 10:30 AM",
+              text: "Session 3 - Topics covered : Decimal expressions, "
+                  "terminating and non terminating rational numbers.",
+            ),
+            const SizedBox(height: 50),
+          ],
         ),
       )),
     );
   }
 }
+
+
+
+
+

@@ -20,7 +20,6 @@ class HeaderText extends StatelessWidget {
 
 
 
-
 class TaglineText extends StatelessWidget {
   final String text;
 

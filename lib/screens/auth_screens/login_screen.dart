@@ -1,6 +1,6 @@
 import 'package:educazy/helper_methods.dart';
 import 'package:educazy/screens/auth_screens/enroll_screen.dart';
-import 'package:educazy/screens/homescreen.dart';
+import 'package:educazy/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
