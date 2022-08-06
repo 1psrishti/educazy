@@ -2,10 +2,12 @@ import 'package:educazy/helper_methods.dart';
 import 'package:educazy/screens/auth_screens/login_screen.dart';
 import 'package:educazy/screens/homescreen.dart';
 import 'package:educazy/widgets/multi_select.dart';
+import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RegisterScreen extends StatefulWidget {
+  static const name = 'registerscreen';
   const RegisterScreen({Key? key}) : super(key: key);
 
   @override
@@ -223,7 +225,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: MaterialButton(
                     minWidth: 0.85 * width,
                     onPressed: () {
-                      HelperMethods.navigateTo(HomeScreen(), context);
+                      // HelperMethods.navigateTo(HomeScreen(), context);
                     },
                     child: Container(
                       width: 0.85 * width,

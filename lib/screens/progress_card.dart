@@ -1,10 +1,12 @@
 import 'package:educazy/widgets/header_logo.dart';
+import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../data/student_data.dart';
 
 class Progresscard extends StatefulWidget {
+  static const name = 'progresscard';
   const Progresscard({Key? key}) : super(key: key);
 
   @override

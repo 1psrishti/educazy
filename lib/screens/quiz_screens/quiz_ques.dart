@@ -6,12 +6,14 @@ import 'package:educazy/dataProviders/timer_data.dart';
 import 'package:educazy/helper_methods.dart';
 import 'package:educazy/models/question_model.dart';
 import 'package:educazy/widgets/gradient_text.dart';
+import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class QuizQues extends StatefulWidget {
+  static const name = 'quizscreen';
   const QuizQues({Key? key}) : super(key: key);
 
   @override

@@ -1,21 +1,117 @@
+import 'dart:math';
+
+import 'package:connectycube_sdk/connectycube_sdk.dart';
+import 'package:educazy/HelperMethods/ConnectyCubeHelper/configs.dart';
+import 'package:educazy/HelperMethods/ConnectyCubeHelper/platform_utils.dart';
 import 'package:educazy/dataProviders/quiz_data_provider.dart';
 import 'package:educazy/dataProviders/timer_data.dart';
 import 'package:educazy/helper_methods.dart';
+import 'package:educazy/screens/incoming_call.dart';
 import 'package:educazy/screens/progress_card.dart';
 import 'package:educazy/screens/quiz_screens/quiz_ques.dart';
 import 'package:educazy/screens/resources_screen.dart';
+import 'package:educazy/screens/video_call.dart';
+import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:educazy/widgets.dart';
 import 'package:provider/provider.dart';
 
+import '../HelperMethods/ConnectyCubeHelper/call_manager.dart';
+
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  static const name = 'homescreen';
+  final CubeUser currentuser;
+  HomeScreen({Key? key, required this.currentuser}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+Random? rand = Random();
+
 class _HomeScreenState extends State<HomeScreen> {
+  static const String TAG = "LoginScreen.BodyState";
+
+  bool _isLoginContinues = false;
+  int? _selectedUserId;
+  Set<int> _selectedUsers = {};
+
+  late CallManager _callManager;
+  late ConferenceClient _callClient;
+  ConferenceSession? _currentCall;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    initForegroundService();
+
+    CubeSettings.instance.onSessionRestore = () {
+      return createSession(widget.currentuser);
+    };
+
+    _initConferenceConfig();
+    _initCalls();
+  }
+
+  void _initCalls() {
+    _selectedUsers.add(users[0].id!);
+    _selectedUsers.add(users[1].id!);
+    _selectedUsers.add(users[2].id!);
+    _callClient = ConferenceClient.instance;
+    _callManager = CallManager.instance;
+    _callManager.onReceiveNewCall = (meetingId, participantIds) {
+      _showIncomingCallScreen(meetingId, participantIds);
+    };
+
+    _callManager.onCloseCall = () {
+      _currentCall = null;
+    };
+  }
+
+  void _startCall(Set<int> opponents, {bool startScreenSharing = false}) async {
+    if (opponents.isEmpty) return;
+
+    var attendees = opponents.map((entry) {
+      return CubeMeetingAttendee(userId: entry);
+    }).toList();
+
+    var startDate = DateTime.now().microsecondsSinceEpoch ~/ 1000;
+    var endDate = startDate + 2 * 60 * 60; //create meeting for two hours
+
+    CubeMeeting meeting = CubeMeeting(
+      name: 'Conference Call',
+      startDate: startDate,
+      endDate: endDate,
+      attendees: attendees,
+    );
+    createMeeting(meeting).then((createdMeeting) async {
+      _currentCall = await _callClient.createCallSession(
+          createdMeeting.hostId!, CallType.VIDEO_CALL, startScreenSharing);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ConversationCallScreen(_currentCall!,
+              createdMeeting.meetingId!, opponents.toList(), false),
+        ),
+      );
+    });
+  }
+
+  void _showIncomingCallScreen(String meetingId, List<int> participantIds) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => IncomingCallScreen(meetingId, participantIds),
+      ),
+    );
+  }
+
+  void _initConferenceConfig() {
+    ConferenceConfig.instance.url = SERVER_ENDPOINT;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +164,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 16),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        startBackgroundExecution().then((_) {
+                          _startCall(_selectedUsers, startScreenSharing: true);
+                        });
+                      },
                       child: Container(
                         padding: const EdgeInsets.all(12),
                         child: const Text(

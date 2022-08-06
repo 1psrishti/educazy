@@ -1,10 +1,12 @@
 import 'package:educazy/helper_methods.dart';
 import 'package:educazy/screens/auth_screens/login_screen.dart';
 import 'package:educazy/screens/auth_screens/register_screen.dart';
+import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EnrollScreen extends StatefulWidget {
+  static const name = 'enrollscreen';
   const EnrollScreen({Key? key}) : super(key: key);
 
   @override

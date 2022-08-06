@@ -1,10 +1,20 @@
+import 'dart:math';
+
+import 'package:connectycube_sdk/connectycube_sdk.dart';
+import 'package:educazy/HelperMethods/ConnectyCubeHelper/configs.dart';
+import 'package:educazy/HelperMethods/ConnectyCubeHelper/connectycube_helper.dart';
+import 'package:educazy/HelperMethods/alan_ai_helper.dart';
 import 'package:educazy/helper_methods.dart';
 import 'package:educazy/screens/auth_screens/enroll_screen.dart';
 import 'package:educazy/screens/homescreen.dart';
+import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+Random? rand = Random();
+
 class LoginScreen extends StatefulWidget {
+  static const name = 'loginscreen';
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -12,6 +22,85 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final CubeUser _currentUser = CubeUser(
+    id: 6042955,
+    login: "kartikeymahawar1234@gmail.com",
+    fullName: "Kartikey",
+    password: "#321urak",
+  );
+  bool _isLoginContinues = false;
+  int? _selectedUserId;
+  Set<int> _selectedUsers = {};
+  @override
+  void initState() {
+    super.initState();
+    ConnectyCubeHelper.attachConnectyCubeSdk();
+    AlanAiHelper.initAlanButton();
+  }
+
+  _loginToCC(BuildContext context, CubeUser user) {
+    if (_isLoginContinues) return;
+
+    setState(() {
+      _isLoginContinues = true;
+      _selectedUserId = user.id;
+    });
+
+    if (CubeSessionManager.instance.isActiveSessionValid() &&
+        CubeSessionManager.instance.activeSession?.userId != null &&
+        CubeSessionManager.instance.activeSession?.userId == user.id) {
+      _loginToCubeChat(context, user);
+    } else {
+      createSession(user).then((cubeSession) {
+        _loginToCubeChat(context, user);
+      }).catchError((onError) {
+        _processLoginError(onError);
+      });
+    }
+  }
+
+  void _loginToCubeChat(BuildContext context, CubeUser user) {
+    CubeChatConnection.instance.login(user).then((cubeUser) {
+      setState(() {
+        _isLoginContinues = false;
+        _selectedUserId = 0;
+      });
+      print('sucessful login');
+
+      HelperMethods.navigateTo(
+          HomeScreen(
+            currentuser: _currentUser,
+          ),
+          context);
+    }).catchError((onError) {
+      _processLoginError(onError);
+    });
+  }
+
+  void _processLoginError(exception) {
+    log("Login error $exception", "TAG");
+
+    setState(() {
+      _isLoginContinues = false;
+      _selectedUserId = 0;
+    });
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Login Error"),
+            content: Text("Something went wrong during login to ConnectyCube"),
+            actions: <Widget>[
+              TextButton(
+                child: Text("OK"),
+                onPressed: () => Navigator.of(context).pop(),
+              )
+            ],
+          );
+        });
+  }
+
   signIn(String userId, String password) async {}
   @override
   Widget build(BuildContext context) {
@@ -134,7 +223,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: MaterialButton(
                   minWidth: 0.85 * width,
                   onPressed: () {
-                    HelperMethods.navigateTo(HomeScreen(), context);
+                    _loginToCC(context, _currentUser);
                   },
                   child: Container(
                     width: 0.85 * width,

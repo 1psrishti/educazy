@@ -2,7 +2,7 @@ import 'package:educazy/models/marks_model.dart';
 import 'package:educazy/models/subject_model.dart';
 import 'package:educazy/models/user_model.dart';
 
-User student = User(
+UserModel student = UserModel(
     name: 'Kartikey Mahawar',
     userId: 'RA2011032010041',
     school: 'Hartmann College',
