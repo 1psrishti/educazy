@@ -38,7 +38,7 @@ class _QuizQuesState extends State<QuizQues> {
     // TODO: implement initState
     super.initState();
 
-    testDuration = quiz_data.duration;
+    testDuration = quizData.duration;
     quizProvider = Provider.of<QuizData>(context, listen: false);
     timerProvider = Provider.of<TimerData>(context, listen: false);
 
@@ -47,7 +47,7 @@ class _QuizQuesState extends State<QuizQues> {
   }
 
   void _nextQuestion() {
-    if (quiz_data.questions.length > _currentQuestionIndex + 1) {
+    if (quizData.questions.length > _currentQuestionIndex + 1) {
       setState(() {
         _currentQuestionIndex = _currentQuestionIndex + 1;
       });
@@ -63,7 +63,7 @@ class _QuizQuesState extends State<QuizQues> {
   }
 
   void markAnswer(String answer) {
-    Question currentQues = quiz_data.questions[_currentQuestionIndex];
+    Question currentQues = quizData.questions[_currentQuestionIndex];
     if (currentQues.answers.contains(answer)) {
       setState(() {
         currentQues.markedAnswer = answer;
@@ -109,7 +109,7 @@ class _QuizQuesState extends State<QuizQues> {
 
   @override
   Widget build(BuildContext context) {
-    currentQues = quiz_data.questions[_currentQuestionIndex];
+    currentQues = quizData.questions[_currentQuestionIndex];
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
@@ -129,7 +129,7 @@ class _QuizQuesState extends State<QuizQues> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Test - ${quiz_data.name} (${quiz_data.id})',
+                    'Test - ${quizData.name} (${quizData.id})',
                     style: GoogleFonts.poppins(
                         color: const Color(0xFF202020),
                         fontWeight: FontWeight.w500,
@@ -261,9 +261,9 @@ class _QuizQuesState extends State<QuizQues> {
                               ),
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w500, fontSize: 18)),
-                          Icon(
+                          const Icon(
                             Entypo.chevron_small_right,
-                            color: const Color(0xFF7F5EEC),
+                            color: Color(0xFF7F5EEC),
                             size: 21,
                           ),
                         ]),

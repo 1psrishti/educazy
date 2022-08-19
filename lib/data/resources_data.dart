@@ -1,5 +1,4 @@
 import 'package:educazy/models/book.dart';
-import 'package:educazy/screens/resources_screen.dart';
 
 List<Book> resources = [
   Book(name: "book name", id: "1"),
