@@ -20,15 +20,15 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
       key: _parentKey,
       children: [
         widget.child,
-        // Stack(
-        //   children: [
-        //     DraggableFloatingActionButton(
-        //       parentKey: _parentKey,
-        //       initialOffset: Offset(300, 750),
-        //       onPressed: () {},
-        //     ),
-        //   ],
-        // )
+        Stack(
+          children: [
+            DraggableFloatingActionButton(
+              parentKey: _parentKey,
+              initialOffset: Offset(300, 750),
+              onPressed: () {},
+            ),
+          ],
+        )
       ],
     );
   }

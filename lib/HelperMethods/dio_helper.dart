@@ -50,14 +50,14 @@ class DioHelper {
     }
   }
 
-  Future login({required String username, required String password}) async {
+  Future login(
+      {required String username,
+      required String password,
+      required String fcmToken}) async {
     try {
       Response response = await _dio.post(
         _baseUrl + '/user/login',
-        data: {
-          "username": username,
-          "password": password,
-        },
+        data: {"username": username, "password": password, "fcm": fcmToken},
       );
 
       print('User created: ${jsonDecode(response.data)}');

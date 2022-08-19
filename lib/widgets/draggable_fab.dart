@@ -1,15 +1,25 @@
 import 'dart:async';
 
+import 'package:educazy/HelperMethods/alan_ai_helper.dart';
+import 'package:educazy/dataProviders/quiz_data_provider.dart';
+import 'package:educazy/dataProviders/timer_data.dart';
 import 'package:educazy/dataProviders/user_app_data.dart';
 import 'package:educazy/main.dart';
-import 'package:educazy/screens/homescreen.dart';
-import 'package:educazy/screens/progress_card.dart';
+import 'package:educazy/screens/auth_screens/enroll_screen.dart';
+import 'package:educazy/screens/auth_screens/login_screen.dart';
+import 'package:educazy/screens/auth_screens/register_screen.dart';
+
 import 'package:educazy/screens/quiz_screens/quiz_ques.dart';
 import 'package:educazy/screens/resources_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'package:string_similarity/string_similarity.dart';
+
+import '../screens/home_screen.dart';
+import '../screens/progress_card_screen.dart';
 
 class DraggableFloatingActionButton extends StatefulWidget {
   final Offset initialOffset;
@@ -61,10 +71,14 @@ class _DraggableFloatingActionButtonState
         _speechToText!.listen(
           listenMode: ListenMode.deviceDefault,
           listenFor: Duration(seconds: 10),
-          onResult: (val) => setState(() async {
+          onResult: (val) => setState(() {
             _text = val.recognizedWords;
+
             print(val.recognizedWords);
-            navigateToPage(_text);
+            // navigateToPage(_text);
+            if (val.finalResult) {
+              readCommand(_text);
+            }
 
             if (val.hasConfidenceRating && val.confidence > 0) {
               _confidence = val.confidence;
@@ -84,7 +98,7 @@ class _DraggableFloatingActionButtonState
     _offset = widget.initialOffset;
     _speechToText = SpeechToText();
 
-    WidgetsBinding.instance.addPostFrameCallback(_setBoundary);
+    //WidgetsBinding.instance.addPostFrameCallback(_setBoundary);
   }
 
   void _setBoundary(_) {
@@ -142,7 +156,7 @@ class _DraggableFloatingActionButtonState
             constraints: BoxConstraints(minWidth: 0),
             child: Text(
               _text,
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 18, decoration: TextDecoration.none),
             ),
             decoration: const BoxDecoration(
                 color: Colors.white,
@@ -154,29 +168,14 @@ class _DraggableFloatingActionButtonState
         Positioned(
           left: _offset.dx,
           top: _offset.dy,
-          child: Listener(
-            onPointerMove: (PointerMoveEvent pointerMoveEvent) {
-              _updatePosition(pointerMoveEvent);
-
-              setState(() {
-                _isDragging = true;
-              });
-            },
-            onPointerUp: (PointerUpEvent pointerUpEvent) {
-              print('onPointerUp');
-
-              if (_isDragging) {
-                setState(() {
-                  _isDragging = false;
-                });
-              } else {
-                _listen();
-              }
-            },
-            child: Stack(
-              children: [
-                Container(
-                  key: _key,
+          child: Stack(
+            children: [
+              Container(
+                key: _key,
+                child: GestureDetector(
+                  onTap: () {
+                    _listen();
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
@@ -185,12 +184,129 @@ class _DraggableFloatingActionButtonState
                     child: Icon(_isListening ? Icons.mic : Icons.mic_none),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],
     );
+  }
+
+  readCommand(String text) async {
+    var text1 = text.toLowerCase();
+    const targetStrings = <String?>[
+      'my user id is',
+      'my password is',
+      'my fullname is',
+      "my school name is",
+      "my class name is",
+      'my confirm password is',
+      'go back',
+      'take me to homepage',
+      'take me to testscreen',
+      'take me to quiz',
+      'Take me to class',
+      'take me to resources',
+      'take me to progress card',
+      null
+    ];
+    final bestMatch = text1.bestMatch(targetStrings);
+    switch (bestMatch.bestMatchIndex) {
+      case 0:
+        {
+          text = text.substring(14);
+          setText(loginuserIdController, text);
+          break;
+        }
+      case 1:
+        {
+          text = text.substring(14);
+          if (currentscreen == LoginScreen.name) {
+            setText(loginpasswordController, text);
+          } else if (currentscreen == RegisterScreen.name) {
+            setText(registerpasswordController, text);
+          }
+          break;
+        }
+      case 2:
+        {
+          text = text.substring(15).trim();
+          setText(enrollnamecontroller, text);
+          break;
+        }
+      case 3:
+        {
+          text = text.substring(18);
+          setText(enrollschoolController, text);
+          break;
+        }
+      case 4:
+        {
+          text = text.substring(17);
+          setText(registerclassController, text);
+          break;
+        }
+      case 5:
+        {
+          text = text.substring(23);
+          setText(registerconfirmpasswordController, text);
+          break;
+        }
+      case 6:
+        {
+          navigatorKey.currentState!.pop();
+          await _speak("Going back");
+          break;
+        }
+      case 7:
+        {
+          navigatorKey.currentState!.pushNamed(HomeScreen.name);
+          await _speak("Taking you to homepage");
+          break;
+        }
+      case 8:
+        {
+          debugPrint('Not yet Implemented');
+          await _speak("Taking you to testscreen");
+          break;
+        }
+      case 9:
+        {
+          navigatorKey.currentState!.push(MaterialPageRoute(
+              builder: ((context) => MultiProvider(
+                    providers: [
+                      ChangeNotifierProvider(create: (context) => QuizData()),
+                      ChangeNotifierProvider(create: (context) => TimerData()),
+                    ],
+                    child: const QuizQues(),
+                  ))));
+          await _speak("Taking you to quiz");
+          break;
+        }
+      case 10:
+        {
+          debugPrint('Not yet Implemented');
+          await _speak("Taking you to class");
+          break;
+        }
+      case 11:
+        {
+          navigatorKey.currentState!.pushNamed(Resources.name);
+          await _speak("Taking you to resources");
+          break;
+        }
+      case 12:
+        {
+          navigatorKey.currentState!.pushNamed(Progresscard.name);
+          await _speak("Taking you to progress card");
+          break;
+        }
+    }
+    setState(() {
+      _text = "";
+    });
+    setState(() => _isListening = false);
+    _speechToText!.stop();
   }
 
   navigateToPage(String route) async {
@@ -246,5 +362,15 @@ class _DraggableFloatingActionButtonState
 
   Future _speak(String sentence) async {
     await flutterTts.speak(sentence);
+  }
+
+  void setText(TextEditingController controller, value) {
+    try {
+      controller.text = value;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
   }
 }

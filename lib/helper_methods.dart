@@ -22,8 +22,4 @@ class HelperMethods {
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
     return "$twoDigitMinutes:$twoDigitSeconds";
   }
-
-  static navigateTo(Widget screen, BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: ((context) => screen)));
-  }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
-import 'package:connectycube_sdk/connectycube_chat.dart';
+import 'package:connectycube_sdk/connectycube_sdk.dart';
+import 'package:connectycube_sdk/src/calls/utils/rtc_config.dart';
 
 const NO_ANSWER_TIMER_INTERVAL = 30;
 
@@ -20,6 +21,8 @@ class CallManager {
     _systemMessagesManager = CubeChatConnection.instance.systemMessagesManager;
     _systemMessagesManager!.systemMessagesStream
         .listen((cubeMessage) => parseCallMessage(cubeMessage));
+
+    RTCConfig.instance.statsReportsInterval = 200;
   }
 
   static final CallManager _instance = CallManager._privateConstructor();

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "521398834496",
+    "project_id": "educazy-69bf5",
+    "storage_bucket": "educazy-69bf5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:521398834496:android:76677c2d224bd5eca496a5",
+        "android_client_info": {
+          "package_name": "com.matrix_united.educazy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "521398834496-ve6t8fo0cqgkck0oq0655nh4uifk2s82.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRt_Opahw9iEVXEFka1SKjLhmSTWe0H3w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "521398834496-ve6t8fo0cqgkck0oq0655nh4uifk2s82.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

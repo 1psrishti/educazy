@@ -1,12 +1,107 @@
-import 'dart:io';
-
-import 'package:connectycube_sdk/connectycube_sdk.dart';
-import 'package:educazy/HelperMethods/ConnectyCubeHelper/platform_utils.dart';
-import 'package:educazy/HelperMethods/ConnectyCubeHelper/video_config.dart';
-import 'package:flutter/foundation.dart';
+import 'package:camera/camera.dart';
+import 'package:educazy/main.dart';
+import 'package:educazy/utils/call_manager.dart';
+import 'package:educazy/utils/platform_utils.dart';
+import 'package:educazy/utils/video_config.dart';
 import 'package:flutter/material.dart';
 
-import '../HelperMethods/ConnectyCubeHelper/call_manager.dart';
+import 'package:connectycube_sdk/connectycube_sdk.dart';
+import 'package:tflite/tflite.dart';
+
+class IncomingCallScreen extends StatelessWidget {
+  static const String TAG = "IncomingCallScreen";
+  final String _meetingId;
+  final List<int> _participantIds;
+
+  IncomingCallScreen(this._meetingId, this._participantIds);
+
+  @override
+  Widget build(BuildContext context) {
+    CallManager.instance.onCloseCall = () {
+      log("onCloseCall", TAG);
+      Navigator.pop(context);
+    };
+
+    return WillPopScope(
+        onWillPop: () => _onBackPressed(context),
+        child: Scaffold(
+            body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(36),
+                child: Text(_getCallTitle(), style: TextStyle(fontSize: 28)),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 36, bottom: 8),
+                child: Text("Members:", style: TextStyle(fontSize: 20)),
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 86),
+                child: Text(_participantIds.join(", "),
+                    style: TextStyle(fontSize: 18)),
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(right: 36),
+                    child: FloatingActionButton(
+                      heroTag: "RejectCall",
+                      child: Icon(
+                        Icons.call_end,
+                        color: Colors.white,
+                      ),
+                      backgroundColor: Colors.red,
+                      onPressed: () => _rejectCall(context),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 36),
+                    child: FloatingActionButton(
+                      heroTag: "AcceptCall",
+                      child: Icon(
+                        Icons.call,
+                        color: Colors.white,
+                      ),
+                      backgroundColor: Colors.green,
+                      onPressed: () => _acceptCall(context),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        )));
+  }
+
+  _getCallTitle() {
+    String callType = "Video";
+    return "Incoming $callType call";
+  }
+
+  void _acceptCall(BuildContext context) async {
+    ConferenceSession callSession = await ConferenceClient.instance
+        .createCallSession(CubeChatConnection.instance.currentUser!.id!);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ConversationCallScreen(
+            callSession, _meetingId, _participantIds, true),
+      ),
+    );
+  }
+
+  void _rejectCall(BuildContext context) {
+    CallManager.instance.reject(_meetingId, false);
+    Navigator.pop(context);
+  }
+
+  Future<bool> _onBackPressed(BuildContext context) {
+    return Future.value(false);
+  }
+}
 
 class ConversationCallScreen extends StatefulWidget {
   final ConferenceSession _callSession;
@@ -26,12 +121,63 @@ class ConversationCallScreen extends StatefulWidget {
 
 class _ConversationCallScreenState extends State<ConversationCallScreen>
     implements RTCSessionStateCallback<ConferenceSession> {
+  CameraImage? cameraImage;
+  CameraController? cameraController;
+  String output = '';
+  loadCamera() {
+    cameraController = CameraController(cameras![1], ResolutionPreset.medium);
+    cameraController!.initialize().then((value) {
+      if (!mounted) {
+        return;
+      } else {
+        setState(() {
+          cameraController!.startImageStream((imageStream) {
+            cameraImage = imageStream;
+            runModel();
+          });
+        });
+      }
+    });
+  }
+
+  runModel() async {
+    if (cameraImage != null) {
+      var predictions = await Tflite.runModelOnFrame(
+          bytesList: cameraImage!.planes.map((plane) {
+            return plane.bytes;
+          }).toList(),
+          imageHeight: cameraImage!.height,
+          imageWidth: cameraImage!.width,
+          imageMean: 127.5,
+          imageStd: 127.5,
+          rotation: 90,
+          numResults: 5,
+          threshold: 0.1,
+          asynch: true);
+      predictions!.forEach((element) {
+        setState(() {
+          output = element.toString();
+          print(
+            "output: $output",
+          );
+        });
+      });
+    }
+  }
+
+  loadModel() async {
+    await Tflite.loadModel(
+        model: "assets/model.tflite", labels: "assets/labels.txt");
+  }
+
   static const String TAG = "_ConversationCallScreenState";
   final ConferenceSession _callSession;
   CallManager _callManager = CallManager.instance;
   final bool _isIncoming;
   final String _meetingId;
   final List<int> _opponents;
+  final CubeStatsReportsManager _statsReportsManager =
+      CubeStatsReportsManager();
   bool _isCameraEnabled = true;
   bool _isSpeakerEnabled = true;
   bool _isMicMute = false;
@@ -48,7 +194,10 @@ class _ConversationCallScreenState extends State<ConversationCallScreen>
   @override
   void initState() {
     super.initState();
+    loadCamera();
+    loadModel();
     _initCustomMediaConfigs();
+    _statsReportsManager.init(_callSession);
     _callManager.onReceiveRejectCall = _onReceiveRejectCall;
     _callManager.onCloseCall = _onCloseCall;
 
@@ -140,6 +289,7 @@ class _ConversationCallScreenState extends State<ConversationCallScreen>
 
   void _onSessionClosed(session) {
     log("_onSessionClosed", TAG);
+    _statsReportsManager.dispose();
     _callSession.removeSessionCallbacksListener();
     (session as ConferenceSession).leave();
     Navigator.pop(context);
@@ -189,20 +339,103 @@ class _ConversationCallScreenState extends State<ConversationCallScreen>
 
     if (localRenderer != null) {
       streamsExpanded.add(Expanded(
-          child: RTCVideoView(
-        localRenderer!,
-        objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
-        mirror: true,
+          child: Stack(
+        children: [
+          !cameraController!.value.isInitialized
+              ? Container()
+              : AspectRatio(
+                  aspectRatio: cameraController!.value.aspectRatio,
+                  child: CameraPreview(cameraController!),
+                ),
+          // RTCVideoView(
+          //   localRenderer!,
+          //   objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+          //   mirror: true,
+          // ),
+          // Align(
+          //   alignment: Alignment.bottomCenter,
+          // ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              color: Colors.white,
+              child: Text(
+                output,
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ),
+            ),
+          )
+        ],
       )));
     }
 
     streamsExpanded.addAll(remoteRenderers.entries
         .map(
           (entry) => Expanded(
-            child: RTCVideoView(
-              entry.value,
-              objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
-              mirror: false,
+            child: Stack(
+              children: [
+                RTCVideoView(
+                  entry.value,
+                  objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+                  mirror: false,
+                ),
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      margin: EdgeInsets.all(8),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 10,
+                        ),
+                        child: RotatedBox(
+                          quarterTurns: -1,
+                          child: StreamBuilder<CubeMicLevelEvent>(
+                            stream: _statsReportsManager.micLevelStream
+                                .where((event) => event.userId == entry.key),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return LinearProgressIndicator(value: 0);
+                              } else {
+                                var micLevelForUser = snapshot.data!;
+                                return LinearProgressIndicator(
+                                    value: micLevelForUser.micLevel);
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    )),
+                Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 8),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          color: Colors.black26,
+                          child: StreamBuilder<CubeVideoBitrateEvent>(
+                            stream: _statsReportsManager.videoBitrateStream
+                                .where((event) => event.userId == entry.key),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return Text(
+                                  '0 kbits/sec',
+                                  style: TextStyle(color: Colors.white),
+                                );
+                              } else {
+                                var videoBitrateForUser = snapshot.data!;
+                                return Text(
+                                  '${videoBitrateForUser.bitRate} kbits/sec',
+                                  style: TextStyle(color: Colors.white),
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ))
+              ],
             ),
           ),
         )
@@ -336,22 +569,19 @@ class _ConversationCallScreenState extends State<ConversationCallScreen>
                   backgroundColor: Colors.black38,
                 ),
               ),
-              Visibility(
-                visible: kIsWeb || Platform.isIOS || Platform.isAndroid,
-                child: Padding(
-                  padding: EdgeInsets.only(right: 4),
-                  child: FloatingActionButton(
-                    elevation: 0,
-                    heroTag: "ToggleScreenSharing",
-                    child: Icon(
-                      _enableScreenSharing
-                          ? Icons.screen_share
-                          : Icons.stop_screen_share,
-                      color: Colors.white,
-                    ),
-                    onPressed: () => _toggleScreenSharing(),
-                    backgroundColor: Colors.black38,
+              Padding(
+                padding: EdgeInsets.only(right: 4),
+                child: FloatingActionButton(
+                  elevation: 0,
+                  heroTag: "ToggleScreenSharing",
+                  child: Icon(
+                    _enableScreenSharing
+                        ? Icons.screen_share
+                        : Icons.stop_screen_share,
+                    color: Colors.white,
                   ),
+                  onPressed: () => _toggleScreenSharing(),
+                  backgroundColor: Colors.black38,
                 ),
               ),
               Visibility(
@@ -450,8 +680,19 @@ class _ConversationCallScreenState extends State<ConversationCallScreen>
       await initForegroundService();
     }
 
+    var desktopCapturerSource = _enableScreenSharing && isDesktop
+        ? await showDialog<DesktopCapturerSource>(
+            context: context,
+            builder: (context) => ScreenSelectDialog(),
+          )
+        : null;
+
     foregroundServiceFuture.then((_) {
-      _callSession.enableScreenSharing(_enableScreenSharing).then((voidResult) {
+      _callSession
+          .enableScreenSharing(_enableScreenSharing,
+              desktopCapturerSource: desktopCapturerSource,
+              useIOSBroadcasting: true)
+          .then((voidResult) {
         setState(() {
           _enableScreenSharing = !_enableScreenSharing;
         });

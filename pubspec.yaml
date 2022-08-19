@@ -28,12 +28,17 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   alan_voice: ^3.6.0
+  camera: ^0.10.0+1
   connectycube_sdk: ^2.1.1
   cupertino_icons: ^1.0.2
   dio: ^4.0.6
+  file_picker: ^5.0.1
+  firebase_core: ^1.21.0
+  firebase_messaging: ^12.0.3
   flutter:
     sdk: flutter
   flutter_background: ^1.1.0
+  flutter_local_notifications: ^5.0.0-nullsafety.1
   flutter_svg: ^1.0.3
   flutter_tts: ^3.5.0
   flutter_vector_icons: ^1.0.0
@@ -41,10 +46,13 @@ dependencies:
   highlight_text: ^1.4.0
   multi_select_flutter: ^4.1.2
   provider: ^6.0.2
+  read_pdf_text: ^0.2.1
   speech_to_text: ^5.6.0
   string_similarity: ^2.0.0
+  tflite: ^1.1.2
 
 dev_dependencies:
+  change_app_package_name: ^1.1.0
   flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
@@ -62,6 +70,7 @@ flutter:
   assets:
     - assets/svgs/
     - assets/images/
+    - assets/
 
   fonts:
     - family: Poppins

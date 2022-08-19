@@ -111,169 +111,178 @@ class _QuizQuesState extends State<QuizQues> {
   Widget build(BuildContext context) {
     currentQues = quizData.questions[_currentQuestionIndex];
     final width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 13, left: 23),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: Image.asset('assets/images/logo.png'),
+    return ScreenWrapper(
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 13, left: 23),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Image.asset('assets/images/logo.png'),
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    'Test - ${quizData.name} (${quizData.id})',
-                    style: GoogleFonts.poppins(
-                        color: const Color(0xFF202020),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16),
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 19, vertical: 13),
-                    decoration: BoxDecoration(
-                        color: const Color(0xFFFF8C4A),
-                        borderRadius: BorderRadius.circular(10)),
-                    width: 0.915 * width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 150,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const Icon(
-                                Fontisto.clock,
-                                color: Colors.white,
-                                size: 20,
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                'Time Remaining',
-                                style: GoogleFonts.poppins(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Text(HelperMethods.printDuration(testDuration!),
-                            style: GoogleFonts.poppins(color: Colors.white))
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 32),
-                    child: Text(
-                      'Question ${_currentQuestionIndex + 1}',
-                      style: GoogleFonts.poppins(color: Color(0xFF707070)),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 9),
-                    child: Text(
-                      currentQues!.question,
-                      textAlign: TextAlign.left,
+              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Test - ${quizData.name} (${quizData.id})',
                       style: GoogleFonts.poppins(
+                          color: const Color(0xFF202020),
                           fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: const Color(0xFF202020)),
+                          fontSize: 16),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 32),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: currentQues!.answers.length,
-                      itemBuilder: (context, index) {
-                        print(_groupValue);
-                        return GestureDetector(
-                          onTap: () {
-                            onchangedAnswer(index);
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(vertical: 10),
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(0),
-                              color: const Color(0xFFF3F3F3),
-                            ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 19, vertical: 13),
+                      decoration: BoxDecoration(
+                          color: const Color(0xFFFF8C4A),
+                          borderRadius: BorderRadius.circular(10)),
+                      width: 0.915 * width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          SizedBox(
+                            width: 150,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Radio(
-                                    value: index,
-                                    groupValue: _groupValue,
-                                    onChanged: onchangedAnswer),
-                                Text('${String.fromCharCode(65 + index)})'),
-                                SizedBox(
-                                  width: 15,
+                                const Icon(
+                                  Fontisto.clock,
+                                  color: Colors.white,
+                                  size: 20,
                                 ),
-                                Text(currentQues!.answers[index])
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Text(
+                                  'Time Remaining',
+                                  style:
+                                      GoogleFonts.poppins(color: Colors.white),
+                                ),
                               ],
                             ),
                           ),
-                        );
-                      },
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          _prevQuestion();
-                        },
-                        child: Row(children: [
-                          Icon(
-                            Entypo.chevron_small_left,
-                            color: const Color(0xFF7F5EEC),
-                            size: 21,
-                          ),
-                          GradientText('Previous',
-                              gradient: const LinearGradient(
-                                colors: [Color(0xFF8A5BEF), Color(0xFF5866DE)],
-                              ),
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w500, fontSize: 18))
-                        ]),
+                          Text(HelperMethods.printDuration(testDuration!),
+                              style: GoogleFonts.poppins(color: Colors.white))
+                        ],
                       ),
-                      TextButton(
-                        onPressed: () {
-                          print("next");
-                          _nextQuestion();
-                        },
-                        child: Row(children: [
-                          GradientText('Next',
-                              gradient: const LinearGradient(
-                                colors: [Color(0xFF8A5BEF), Color(0xFF5866DE)],
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 32),
+                      child: Text(
+                        'Question ${_currentQuestionIndex + 1}',
+                        style: GoogleFonts.poppins(color: Color(0xFF707070)),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 9),
+                      child: Text(
+                        currentQues!.question,
+                        textAlign: TextAlign.left,
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                            color: const Color(0xFF202020)),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 32),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: currentQues!.answers.length,
+                        itemBuilder: (context, index) {
+                          print(_groupValue);
+                          return GestureDetector(
+                            onTap: () {
+                              onchangedAnswer(index);
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(vertical: 10),
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(0),
+                                color: const Color(0xFFF3F3F3),
                               ),
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w500, fontSize: 18)),
-                          const Icon(
-                            Entypo.chevron_small_right,
-                            color: Color(0xFF7F5EEC),
-                            size: 21,
-                          ),
-                        ]),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Radio(
+                                      value: index,
+                                      groupValue: _groupValue,
+                                      onChanged: onchangedAnswer),
+                                  Text('${String.fromCharCode(65 + index)})'),
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  Text(currentQues!.answers[index])
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            _prevQuestion();
+                          },
+                          child: Row(children: [
+                            Icon(
+                              Entypo.chevron_small_left,
+                              color: const Color(0xFF7F5EEC),
+                              size: 21,
+                            ),
+                            GradientText('Previous',
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    Color(0xFF8A5BEF),
+                                    Color(0xFF5866DE)
+                                  ],
+                                ),
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w500, fontSize: 18))
+                          ]),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            print("next");
+                            _nextQuestion();
+                          },
+                          child: Row(children: [
+                            GradientText('Next',
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    Color(0xFF8A5BEF),
+                                    Color(0xFF5866DE)
+                                  ],
+                                ),
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w500, fontSize: 18)),
+                            const Icon(
+                              Entypo.chevron_small_right,
+                              color: Color(0xFF7F5EEC),
+                              size: 21,
+                            ),
+                          ]),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
