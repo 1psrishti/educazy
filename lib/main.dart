@@ -4,10 +4,12 @@ import 'package:educazy/dataProviders/quiz_data_provider.dart';
 import 'package:educazy/dataProviders/timer_data.dart';
 import 'package:educazy/dataProviders/user_app_data.dart';
 import 'package:educazy/models/user_model.dart';
+import 'package:educazy/screens/account_settings_screen.dart';
 import 'package:educazy/screens/auth_screens/enroll_screen.dart';
 import 'package:educazy/screens/auth_screens/login_screen.dart';
 import 'package:educazy/screens/auth_screens/register_screen.dart';
 import 'package:educazy/screens/home_screen.dart';
+import 'package:educazy/screens/profile_screen.dart';
 import 'package:educazy/screens/progress_card_screen.dart';
 
 import 'package:educazy/screens/quiz_screens/quiz_ques.dart';
@@ -100,7 +102,11 @@ class _MyAppState extends State<MyApp> {
           Progresscard.name: (context) =>
               const RouteAwareWidget(Progresscard.name, child: Progresscard()),
           Resources.name: (context) =>
-              const RouteAwareWidget(Resources.name, child: Resources())
+              const RouteAwareWidget(Resources.name, child: Resources()),
+          ProfileScreen.name: (context) =>
+              const RouteAwareWidget(ProfileScreen.name, child: ProfileScreen()),
+          AccountSettingsScreen.name: (context) =>
+              const RouteAwareWidget(AccountSettingsScreen.name, child: AccountSettingsScreen())
         },
       ),
     );
