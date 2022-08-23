@@ -7,6 +7,8 @@ import 'package:educazy/HelperMethods/alan_ai_helper.dart';
 import 'package:educazy/dataProviders/user_app_data.dart';
 import 'package:educazy/helper_methods.dart';
 import 'package:educazy/screens/auth_screens/enroll_screen.dart';
+import 'package:educazy/screens/auth_screens/register_screen.dart';
+import 'package:educazy/screens/profile_screen.dart';
 import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -190,7 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextButton.styleFrom(
                       padding: EdgeInsets.zero, minimumSize: const Size(0, 0)),
                   onPressed: () {
-                    Navigator.pushNamed(context, EnrollScreen.name);
+                    Navigator.pushNamed(context, RegisterScreen.name);
                   },
                   child: Text(
                     'Click here to enroll now',

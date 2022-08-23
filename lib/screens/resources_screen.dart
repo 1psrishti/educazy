@@ -30,128 +30,125 @@ class _ResourcesState extends State<Resources> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
-    return ScreenWrapper(
-      child: Scaffold(
-        body: SafeArea(
-            child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const HeaderLogo(),
-              const SizedBox(
-                height: 28,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 0.0613 * width),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const HeaderText(text: 'Resources'),
-                    const TaglineText(
-                        text:
-                            'Never stop learning! Books, worksheets and reading materials now just one click away.'),
-                    const SizedBox(height: 20),
-                    GridView.builder(
-                      itemCount: resources.length,
-                      shrinkWrap: true,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2, crossAxisSpacing: 16),
-                      itemBuilder: (context, index) {
-                        return Column(children: [
-                          Container(
-                            width: 108,
-                            height: 123,
-                            decoration: const BoxDecoration(
-                                color: Color(0xFFF3F3F3),
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: Offset(2, 8),
-                                    blurRadius: 79,
-                                    spreadRadius: -19,
-                                    color: Color.fromRGBO(0, 0, 0, 0.25),
-                                  )
-                                ]),
-                          ),
-                          Text(
-                            resources[index].name,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500, fontSize: 18),
-                          )
-                        ]);
-                      },
-                    ),
-                    const SizedBox(height: 50),
-                    const HeaderText(text: "Braille Converter"),
-                    const TaglineText(text: "Easily convert text to braille."),
-                    const SizedBox(height: 20),
-                    GestureDetector(
-                      onTap: () async {
-                        final FilePickerResult? result =
-                            await FilePicker.platform.pickFiles(
-                          type: FileType.custom,
-                          allowedExtensions: ['pdf'],
-                        );
-                        if (result != null) {
-                          File file = File(result.files.single.path ?? "");
-                          getPDFText(file.path).then((pdfText) {
-                            final text = pdfText.replaceAll("\n", " ");
-                            pdfText = text;
-                            setState(() {
-                              displayedText = "PDF selected.";
-                            });
+    return Scaffold(
+      body: SafeArea(
+          child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(
+              height: 28,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 0.0613 * width),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const HeaderText(text: 'Resources'),
+                  const TaglineText(
+                      text:
+                          'Never stop learning! Books, worksheets and reading materials now just one click away.'),
+                  const SizedBox(height: 20),
+                  GridView.builder(
+                    itemCount: resources.length,
+                    shrinkWrap: true,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, crossAxisSpacing: 16),
+                    itemBuilder: (context, index) {
+                      return Column(children: [
+                        Container(
+                          width: 108,
+                          height: 123,
+                          decoration: const BoxDecoration(
+                              color: Color(0xFFF3F3F3),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(2, 8),
+                                  blurRadius: 79,
+                                  spreadRadius: -19,
+                                  color: Color.fromRGBO(0, 0, 0, 0.25),
+                                )
+                              ]),
+                        ),
+                        Text(
+                          resources[index].name,
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500, fontSize: 18),
+                        )
+                      ]);
+                    },
+                  ),
+                  const SizedBox(height: 50),
+                  const HeaderText(text: "Braille Converter"),
+                  const TaglineText(text: "Easily convert text to braille."),
+                  const SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () async {
+                      final FilePickerResult? result =
+                          await FilePicker.platform.pickFiles(
+                        type: FileType.custom,
+                        allowedExtensions: ['pdf'],
+                      );
+                      if (result != null) {
+                        File file = File(result.files.single.path ?? "");
+                        getPDFText(file.path).then((pdfText) {
+                          final text = pdfText.replaceAll("\n", " ");
+                          pdfText = text;
+                          setState(() {
+                            displayedText = "PDF selected.";
                           });
-                        }
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(12),
-                        child: const Text(
-                          "Select Pdf",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                          ),
-                        ),
-                        width: double.infinity,
-                        decoration: const BoxDecoration(
-                          color: Color(0xffEDEDED),
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        });
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      child: const Text(
+                        "Select Pdf",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(displayedText),
-                    const SizedBox(height: 10),
-                    GestureDetector(
-                      onTap: () {
-                        getBraille(pdfText);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(12),
-                        child: const Text(
-                          "Convert to Braille",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                          ),
-                        ),
-                        width: double.infinity,
-                        decoration: const BoxDecoration(
-                          color: Color(0xff62C733),
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                        color: Color(0xffEDEDED),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                     ),
-                    const SizedBox(height: 50),
-                  ],
-                ),
-              )
-            ],
-          ),
-        )),
-      ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(displayedText),
+                  const SizedBox(height: 10),
+                  GestureDetector(
+                    onTap: () {
+                      getBraille(pdfText);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      child: const Text(
+                        "Convert to Braille",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                        color: Color(0xff62C733),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 50),
+                ],
+              ),
+            )
+          ],
+        ),
+      )),
     );
   }
 

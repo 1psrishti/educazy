@@ -5,6 +5,7 @@ import 'package:educazy/dataProviders/quiz_data_provider.dart';
 import 'package:educazy/dataProviders/timer_data.dart';
 import 'package:educazy/helper_methods.dart';
 import 'package:educazy/models/question_model.dart';
+import 'package:educazy/utils/theme_provider.dart';
 import 'package:educazy/widgets/gradient_text.dart';
 import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
@@ -109,6 +110,8 @@ class _QuizQuesState extends State<QuizQues> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
+    var textColor = isDarkMode ? Color(0xFFDFDFDF) : Color(0xFF202020);
     currentQues = quizData.questions[_currentQuestionIndex];
     final width = MediaQuery.of(context).size.width;
     return ScreenWrapper(
@@ -116,13 +119,6 @@ class _QuizQuesState extends State<QuizQues> {
         body: SafeArea(
           child: Column(
             children: [
-              Container(
-                margin: const EdgeInsets.only(top: 13, left: 23),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Image.asset('assets/images/logo.png'),
-                ),
-              ),
               const SizedBox(height: 20),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -132,7 +128,7 @@ class _QuizQuesState extends State<QuizQues> {
                     Text(
                       'Test - ${quizData.name} (${quizData.id})',
                       style: GoogleFonts.poppins(
-                          color: const Color(0xFF202020),
+                          color: textColor,
                           fontWeight: FontWeight.w500,
                           fontSize: 16),
                     ),
@@ -143,7 +139,7 @@ class _QuizQuesState extends State<QuizQues> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 19, vertical: 13),
                       decoration: BoxDecoration(
-                          color: const Color(0xFFFF8C4A),
+                          color: Theme.of(context).primaryColor,
                           borderRadius: BorderRadius.circular(10)),
                       width: 0.915 * width,
                       child: Row(
@@ -156,7 +152,7 @@ class _QuizQuesState extends State<QuizQues> {
                               children: [
                                 const Icon(
                                   Fontisto.clock,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   size: 20,
                                 ),
                                 const SizedBox(
@@ -165,13 +161,13 @@ class _QuizQuesState extends State<QuizQues> {
                                 Text(
                                   'Time Remaining',
                                   style:
-                                      GoogleFonts.poppins(color: Colors.white),
+                                      GoogleFonts.poppins(color: Colors.black),
                                 ),
                               ],
                             ),
                           ),
                           Text(HelperMethods.printDuration(testDuration!),
-                              style: GoogleFonts.poppins(color: Colors.white))
+                              style: GoogleFonts.poppins(color: Colors.black))
                         ],
                       ),
                     ),
@@ -190,7 +186,7 @@ class _QuizQuesState extends State<QuizQues> {
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             fontSize: 18,
-                            color: const Color(0xFF202020)),
+                            color: textColor),
                       ),
                     ),
                     Container(
@@ -209,12 +205,16 @@ class _QuizQuesState extends State<QuizQues> {
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(0),
-                                color: const Color(0xFFF3F3F3),
+                                color: isDarkMode
+                                    ? Color(0xFF181818)
+                                    : const Color(0xFFF3F3F3),
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Radio(
+                                      activeColor:
+                                          Theme.of(context).primaryColor,
                                       value: index,
                                       groupValue: _groupValue,
                                       onChanged: onchangedAnswer),
@@ -240,18 +240,20 @@ class _QuizQuesState extends State<QuizQues> {
                           child: Row(children: [
                             Icon(
                               Entypo.chevron_small_left,
-                              color: const Color(0xFF7F5EEC),
+                              color: Theme.of(context).primaryColor,
                               size: 21,
                             ),
-                            GradientText('Previous',
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    Color(0xFF8A5BEF),
-                                    Color(0xFF5866DE)
-                                  ],
-                                ),
+                            Text('Previous',
+                                // gradient: const LinearGradient(
+                                //   colors: [
+                                //     Color(0xFF8A5BEF),
+                                //     Color(0xFF5866DE)
+                                //   ],
+                                // ),
                                 style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500, fontSize: 18))
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18))
                           ]),
                         ),
                         TextButton(
@@ -260,18 +262,20 @@ class _QuizQuesState extends State<QuizQues> {
                             _nextQuestion();
                           },
                           child: Row(children: [
-                            GradientText('Next',
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    Color(0xFF8A5BEF),
-                                    Color(0xFF5866DE)
-                                  ],
-                                ),
+                            Text('Next',
+                                // gradient: const LinearGradient(
+                                //   colors: [
+                                //     Color(0xFF8A5BEF),
+                                //     Color(0xFF5866DE)
+                                //   ],
+                                // ),
                                 style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500, fontSize: 18)),
-                            const Icon(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18)),
+                            Icon(
                               Entypo.chevron_small_right,
-                              color: Color(0xFF7F5EEC),
+                              color: Theme.of(context).primaryColor,
                               size: 21,
                             ),
                           ]),

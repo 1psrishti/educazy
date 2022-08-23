@@ -11,13 +11,17 @@ import 'package:educazy/main.dart';
 import 'package:educazy/screens/auth_screens/enroll_screen.dart';
 import 'package:educazy/screens/auth_screens/login_screen.dart';
 import 'package:educazy/screens/auth_screens/register_screen.dart';
+import 'package:educazy/screens/profile_screen.dart';
 
 import 'package:educazy/screens/quiz_screens/quiz_ques.dart';
 import 'package:educazy/screens/resources_screen.dart';
+import 'package:educazy/screens/test_portal_screen.dart';
 import 'package:educazy/utils/custom_colors.dart';
+import 'package:educazy/utils/theme_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -27,14 +31,12 @@ import '../screens/home_screen.dart';
 import '../screens/progress_card_screen.dart';
 
 class DraggableFloatingActionButton extends StatefulWidget {
-  final Offset initialOffset;
-  final VoidCallback onPressed;
+  final Alignment initialOffset;
+
   final Widget child;
 
   DraggableFloatingActionButton(
-      {required this.initialOffset,
-      required this.onPressed,
-      required this.child});
+      {required this.initialOffset, required this.child});
 
   @override
   State<StatefulWidget> createState() => _DraggableFloatingActionButtonState();
@@ -100,7 +102,7 @@ class _DraggableFloatingActionButtonState
   @override
   void initState() {
     super.initState();
-    _offset = widget.initialOffset;
+
     _speechToText = SpeechToText();
 
     //WidgetsBinding.instance.addPostFrameCallback(_setBoundary);
@@ -130,6 +132,7 @@ class _DraggableFloatingActionButtonState
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -201,15 +204,20 @@ class _DraggableFloatingActionButtonState
         ],
       ),
       body: CircularMenu(
+        toggleButtonAnimatedIconData: AnimatedIcons.play_pause,
         startingAngleInRadian: 1 * pi,
         endingAngleInRadian: 1.5 * pi,
-        alignment: Alignment.bottomRight,
+        alignment: widget.initialOffset,
         items: [
           CircularMenuItem(
               iconSize: 20,
-              icon: Icons.home,
+              icon: themeProvider.isDarkMode
+                  ? Icons.dark_mode
+                  : Icons.dark_mode_outlined,
               onTap: () {
-                // callback
+                final provider =
+                    Provider.of<ThemeProvider>(context, listen: false);
+                provider.toggleTheme(!(themeProvider.isDarkMode));
               }),
           CircularMenuItem(
               iconSize: 20,

@@ -172,7 +172,7 @@ class TestCards extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: grey,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
@@ -197,7 +197,7 @@ class TestCards extends StatelessWidget {
           Text(
             "Professor: " + profName,
             style: const TextStyle(
-              color: Colors.black,
+              // color: Colors.black,
               fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
@@ -205,7 +205,7 @@ class TestCards extends StatelessWidget {
           Text(
             "Max Marks: " + maxMarks.toString(),
             style: const TextStyle(
-              color: Colors.black,
+              // color: Colors.black,
               fontSize: 14,
               fontWeight: FontWeight.bold,
             ),

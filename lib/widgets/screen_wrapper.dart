@@ -6,7 +6,11 @@ import 'package:speech_to_text/speech_to_text.dart';
 
 class ScreenWrapper extends StatefulWidget {
   final Widget child;
-  const ScreenWrapper({Key? key, required this.child}) : super(key: key);
+
+  const ScreenWrapper({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
 
   @override
   State<ScreenWrapper> createState() => _ScreenWrapperState();
@@ -22,8 +26,7 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
           children: [
             DraggableFloatingActionButton(
               child: widget.child,
-              initialOffset: Offset(300, 750),
-              onPressed: () {},
+              initialOffset: Alignment(0.85, 0.85),
             ),
           ],
         )
