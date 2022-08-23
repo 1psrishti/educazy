@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'dart:math';
 
+import 'package:badges/badges.dart';
+import 'package:circular_menu/circular_menu.dart';
 import 'package:educazy/HelperMethods/alan_ai_helper.dart';
 import 'package:educazy/dataProviders/quiz_data_provider.dart';
 import 'package:educazy/dataProviders/timer_data.dart';
@@ -11,9 +14,11 @@ import 'package:educazy/screens/auth_screens/register_screen.dart';
 
 import 'package:educazy/screens/quiz_screens/quiz_ques.dart';
 import 'package:educazy/screens/resources_screen.dart';
+import 'package:educazy/utils/custom_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:string_similarity/string_similarity.dart';
@@ -24,12 +29,12 @@ import '../screens/progress_card_screen.dart';
 class DraggableFloatingActionButton extends StatefulWidget {
   final Offset initialOffset;
   final VoidCallback onPressed;
-  final GlobalKey parentKey;
+  final Widget child;
 
   DraggableFloatingActionButton(
       {required this.initialOffset,
       required this.onPressed,
-      required this.parentKey});
+      required this.child});
 
   @override
   State<StatefulWidget> createState() => _DraggableFloatingActionButtonState();
@@ -101,26 +106,6 @@ class _DraggableFloatingActionButtonState
     //WidgetsBinding.instance.addPostFrameCallback(_setBoundary);
   }
 
-  void _setBoundary(_) {
-    final RenderBox parentRenderBox =
-        widget.parentKey.currentContext?.findRenderObject() as RenderBox;
-    final RenderBox renderBox =
-        _key.currentContext?.findRenderObject() as RenderBox;
-
-    try {
-      final Size parentSize = parentRenderBox.size;
-      final Size size = renderBox.size;
-
-      setState(() {
-        _minOffset = const Offset(0, 0);
-        _maxOffset = Offset(
-            parentSize.width - size.width, parentSize.height - size.height);
-      });
-    } catch (e) {
-      print('catch: $e');
-    }
-  }
-
   void _updatePosition(PointerMoveEvent pointerMoveEvent) {
     double newOffsetX = _offset.dx + pointerMoveEvent.delta.dx;
     double newOffsetY = _offset.dy + pointerMoveEvent.delta.dy;
@@ -145,50 +130,117 @@ class _DraggableFloatingActionButtonState
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned(
-          right: _offset.dx - 200,
-          top: _offset.dy + 14,
-          child: AnimatedContainer(
-            padding: const EdgeInsets.all(5),
-            duration: Duration(milliseconds: 500),
-            constraints: BoxConstraints(minWidth: 0),
-            child: Text(
-              _text,
-              style: TextStyle(fontSize: 18, decoration: TextDecoration.none),
-            ),
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    bottomLeft: Radius.circular(20))),
-          ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        elevation: 0.2,
+        toolbarHeight: 60,
+        backgroundColor: Theme.of(context).cardColor,
+        leading: ImageIcon(
+          AssetImage('assets/images/logo1.png'),
+          color: Theme.of(context).primaryColor,
+          size: 33,
         ),
-        Positioned(
-          left: _offset.dx,
-          top: _offset.dy,
-          child: Stack(
-            children: [
-              Container(
-                key: _key,
-                child: GestureDetector(
-                  onTap: () {
-                    _listen();
-                  },
+        leadingWidth: 45,
+        title: Text(
+          'Educazy',
+          style: GoogleFonts.squadaOne(
+              fontSize: 21, color: Theme.of(context).primaryColor),
+        ),
+        actions: [
+          Container(
+            child: Row(
+              children: [
+                Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: CustomColors.blue.withOpacity(0.05)),
+                  child: Center(
+                      child: ImageIcon(
+                    AssetImage('assets/images/help-circle.png'),
+                    color: Theme.of(context).primaryColor,
+                    size: 25,
+                  )),
+                ),
+                const SizedBox(
+                  width: 26,
+                ),
+                Badge(
+                  badgeColor: const Color(0xFFD84F4F),
+                  badgeContent: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Text(
+                      notifNo.toString(),
+                      style: const TextStyle(color: Colors.white, fontSize: 10),
+                    ),
+                  ),
+                  toAnimate: true,
+                  position: BadgePosition.topEnd(end: 0),
                   child: Container(
+                    height: 40,
+                    width: 40,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Colors.yellow),
-                    padding: EdgeInsets.all(20),
-                    child: Icon(_isListening ? Icons.mic : Icons.mic_none),
+                        borderRadius: BorderRadius.circular(10),
+                        color: CustomColors.blue.withOpacity(0.05)),
+                    child: Center(
+                        child: ImageIcon(
+                      AssetImage('assets/images/bell.png'),
+                      color: Theme.of(context).primaryColor,
+                      size: 25,
+                    )),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
-      ],
+                SizedBox(
+                  width: 20,
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+      body: CircularMenu(
+        startingAngleInRadian: 1 * pi,
+        endingAngleInRadian: 1.5 * pi,
+        alignment: Alignment.bottomRight,
+        items: [
+          CircularMenuItem(
+              iconSize: 20,
+              icon: Icons.home,
+              onTap: () {
+                // callback
+              }),
+          CircularMenuItem(
+              iconSize: 20,
+              icon: Icons.search,
+              onTap: () {
+                //callback
+              }),
+          CircularMenuItem(
+              iconSize: 20,
+              icon: Icons.settings,
+              onTap: () {
+                //callback
+              }),
+        ],
+        backgroundWidget: widget.child,
+        // child: GestureDetector(
+        //   onTap: () {
+        //     _listen();
+        //   },
+        //   child: Container(
+        //     decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(50),
+        //         color: Color(0xFF5BB92F)),
+        //     padding: EdgeInsets.all(20),
+        //     child: Icon(
+        //       _isListening ? Icons.mic : Icons.mic_none,
+        //       color: Colors.white,
+        //     ),
+        //   ),
+        // ),
+      ),
     );
   }
 
@@ -374,3 +426,129 @@ class _DraggableFloatingActionButtonState
     }
   }
 }
+
+
+
+
+
+
+/*
+  return Stack(
+      children: [
+        Positioned(
+          right: _offset.dx - 200,
+          top: _offset.dy + 14,
+          child: AnimatedContainer(
+            padding: const EdgeInsets.all(5),
+            duration: Duration(milliseconds: 500),
+            constraints: BoxConstraints(minWidth: 0),
+            child: Text(
+              _text,
+              style: TextStyle(fontSize: 18, decoration: TextDecoration.none),
+            ),
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    bottomLeft: Radius.circular(20))),
+          ),
+        ),
+        Positioned(
+          left: _offset.dx,
+          top: _offset.dy,
+          child: Stack(
+            children: [
+              Container(
+                key: _key,
+                child: GestureDetector(
+                  onTap: () {
+                    _listen();
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: Color(0xFF5BB92F)),
+                    padding: EdgeInsets.all(20),
+                    child: Icon(
+                      _isListening ? Icons.mic : Icons.mic_none,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+    */
+
+    /*
+      appBar: AppBar(
+        elevation: 0,
+        toolbarHeight: 60,
+        backgroundColor: Colors.white,
+        leading: ImageIcon(
+          AssetImage('assets/images/logo1.png'),
+          color: CustomColors.blue,
+          size: 33,
+        ),
+        leadingWidth: 45,
+        title: Text(
+          'Educazy',
+          style: GoogleFonts.squadaOne(fontSize: 21, color: CustomColors.blue),
+        ),
+        actions: [
+          Container(
+            child: Row(
+              children: [
+                Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: CustomColors.blue.withOpacity(0.05)),
+                  child: Center(
+                      child: ImageIcon(
+                    AssetImage('assets/images/help-circle.png'),
+                    color: CustomColors.blue,
+                    size: 25,
+                  )),
+                ),
+                const SizedBox(
+                  width: 26,
+                ),
+                Badge(
+                  badgeColor: const Color(0xFFD84F4F),
+                  badgeContent: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Text(
+                      notifNo.toString(),
+                      style: const TextStyle(color: Colors.white, fontSize: 10),
+                    ),
+                  ),
+                  toAnimate: true,
+                  position: BadgePosition.topEnd(end: 0),
+                  child: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: CustomColors.blue.withOpacity(0.05)),
+                    child: Center(
+                        child: ImageIcon(
+                      AssetImage('assets/images/bell.png'),
+                      color: CustomColors.blue,
+                      size: 25,
+                    )),
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+      */

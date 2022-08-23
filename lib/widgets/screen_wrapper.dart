@@ -15,15 +15,13 @@ class ScreenWrapper extends StatefulWidget {
 class _ScreenWrapperState extends State<ScreenWrapper> {
   @override
   Widget build(BuildContext context) {
-    GlobalKey _parentKey = GlobalKey();
     return Stack(
-      key: _parentKey,
       children: [
         widget.child,
         Stack(
           children: [
             DraggableFloatingActionButton(
-              parentKey: _parentKey,
+              child: widget.child,
               initialOffset: Offset(300, 750),
               onPressed: () {},
             ),

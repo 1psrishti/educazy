@@ -1,5 +1,4 @@
 import 'package:camera/camera.dart';
-import 'package:connectycube_sdk/connectycube_core.dart';
 import 'package:educazy/dataProviders/quiz_data_provider.dart';
 import 'package:educazy/dataProviders/timer_data.dart';
 import 'package:educazy/dataProviders/user_app_data.dart';
@@ -13,13 +12,18 @@ import 'package:educazy/screens/progress_card_screen.dart';
 import 'package:educazy/screens/quiz_screens/quiz_ques.dart';
 import 'package:educazy/screens/resources_screen.dart';
 import 'package:educazy/screens/speech_demo.dart';
+import 'package:educazy/screens/splash_screen.dart';
+import 'package:educazy/screens/test_portal_screen.dart';
 import 'package:educazy/utils/route_aware_widget.dart';
+import 'package:educazy/utils/theme_provider.dart';
+import 'package:educazy/utils/webview_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import '../../utils/configs.dart' as config;
 
 AndroidNotificationChannel channel = const AndroidNotificationChannel(
     'new_email_arrived', // id
@@ -48,6 +52,11 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // await Permission.camera.request();
+  // await Permission.microphone.request();
+
+  await Firebase.initializeApp();
   cameras = await availableCameras();
   runApp(const MyApp());
 }
@@ -63,46 +72,49 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    init(
-      config.APP_ID,
-      config.AUTH_KEY,
-      config.AUTH_SECRET,
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: ((context) => UserAppData()),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        navigatorKey: navigatorKey,
-        theme: ThemeData(fontFamily: "Poppins"),
-        navigatorObservers: [routeObserver],
-        home: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: ((context) => UserAppData())),
-          ],
-          child: LoginScreen(),
-        ),
-        routes: {
-          HomeScreen.name: (context) =>
-              RouteAwareWidget(HomeScreen.name, child: HomeScreen()),
-          EnrollScreen.name: (context) =>
-              const RouteAwareWidget(EnrollScreen.name, child: EnrollScreen()),
-          LoginScreen.name: (context) =>
-              const RouteAwareWidget(LoginScreen.name, child: LoginScreen()),
-          RegisterScreen.name: (context) => const RouteAwareWidget(
-              RegisterScreen.name,
-              child: RegisterScreen()),
-          QuizQues.name: (context) =>
-              const RouteAwareWidget(QuizQues.name, child: QuizQues()),
-          Progresscard.name: (context) =>
-              const RouteAwareWidget(Progresscard.name, child: Progresscard()),
-          Resources.name: (context) =>
-              const RouteAwareWidget(Resources.name, child: Resources())
-        },
-      ),
-    );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: ((context) => UserAppData())),
+          ChangeNotifierProvider(create: ((context) => ThemeProvider()))
+        ],
+        builder: (context, _) {
+          final themeProvider = Provider.of<ThemeProvider>(context);
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            themeMode: themeProvider.themeMode,
+            darkTheme: MyThemes.darkTheme,
+            navigatorKey: navigatorKey,
+            theme: MyThemes.lightTheme,
+            navigatorObservers: [routeObserver],
+            home: HomeScreen(),
+            routes: {
+              HomeScreen.name: (context) =>
+                  RouteAwareWidget(HomeScreen.name, child: HomeScreen()),
+              EnrollScreen.name: (context) => const RouteAwareWidget(
+                  EnrollScreen.name,
+                  child: EnrollScreen()),
+              LoginScreen.name: (context) => const RouteAwareWidget(
+                  LoginScreen.name,
+                  child: LoginScreen()),
+              RegisterScreen.name: (context) => const RouteAwareWidget(
+                  RegisterScreen.name,
+                  child: RegisterScreen()),
+              QuizQues.name: (context) =>
+                  const RouteAwareWidget(QuizQues.name, child: QuizQues()),
+              Progresscard.name: (context) => const RouteAwareWidget(
+                  Progresscard.name,
+                  child: Progresscard()),
+              Resources.name: (context) =>
+                  const RouteAwareWidget(Resources.name, child: Resources()),
+              TestPortal.name: (context) =>
+                  RouteAwareWidget(TestPortal.name, child: const TestPortal())
+            },
+          );
+        });
   }
 }

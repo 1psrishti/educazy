@@ -1,7 +1,9 @@
+import 'package:educazy/models/user_model.dart';
 import 'package:educazy/widgets/header_logo.dart';
 import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/student_data.dart';
 
@@ -14,6 +16,23 @@ class Progresscard extends StatefulWidget {
 }
 
 class _ProgresscardState extends State<Progresscard> {
+  UserModel student = student1;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setUsers();
+  }
+
+  setUsers() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    UserModel us = UserModel.fromJson(prefs.getString('userdata')!);
+    print(us.toJson());
+    setState(() {
+      student = us;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
@@ -162,8 +181,8 @@ class _ProgresscardState extends State<Progresscard> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            student
-                                                .marksList![index].subject.name,
+                                            student.marksList![index].subject
+                                                .name.name,
                                             style: GoogleFonts.poppins(
                                                 fontSize: 15,
                                                 color: Color(0xFF202020)),

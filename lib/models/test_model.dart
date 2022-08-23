@@ -1,17 +1,22 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:educazy/helper_methods.dart';
 import 'package:flutter/foundation.dart';
 
+import 'package:educazy/enums/subject_type.dart';
+import 'package:educazy/enums/test_status.dart';
+import 'package:educazy/helper_methods.dart';
 import 'package:educazy/models/question_model.dart';
+import 'package:educazy/models/subject_model.dart';
 
 class Test {
   String id;
   String name;
   Duration duration;
-  List<Question> questions;
+  List<Question> questions = [];
+  TestStatus testStatus;
   Test({
+    required this.testStatus,
     required this.id,
     required this.name,
     required this.duration,
@@ -23,8 +28,10 @@ class Test {
     String? name,
     Duration? duration,
     List<Question>? questions,
+    TestStatus? testStatus,
   }) {
     return Test(
+      testStatus: testStatus ?? this.testStatus,
       id: id ?? this.id,
       name: name ?? this.name,
       duration: duration ?? this.duration,
@@ -36,16 +43,18 @@ class Test {
     return <String, dynamic>{
       'id': id,
       'name': name,
-      'duration': duration.toString(),
+      'duration': duration.inSeconds,
+      'type': testStatus.index,
       'questions': questions.map((x) => x.toMap()).toList(),
     };
   }
 
   factory Test.fromMap(Map<String, dynamic> map) {
     return Test(
+      testStatus: TestStatus.values[map['type'] as int],
       id: map['id'] as String,
       name: map['name'] as String,
-      duration: HelperMethods.parseDuration(map['duration']),
+      duration: Duration(seconds: map['duration']),
       questions: List<Question>.from(
         (map['questions'] as List<int>).map<Question>(
           (x) => Question.fromMap(x as Map<String, dynamic>),
@@ -65,11 +74,10 @@ class Test {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(covariant Test other) {
     if (identical(this, other)) return true;
 
-    return other is Test &&
-        other.id == id &&
+    return other.id == id &&
         other.name == name &&
         other.duration == duration &&
         listEquals(other.questions, questions);

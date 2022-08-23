@@ -1,5 +1,6 @@
 import 'package:educazy/constants.dart';
 import 'package:educazy/screens/quiz_screens/quiz_ques.dart';
+import 'package:educazy/utils/stt_service.dart';
 import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,7 @@ import '../widgets/text_styles.dart';
 import '../widgets/widgets.dart';
 
 class TestPortal extends StatefulWidget {
+  static final String name = "testportal";
   const TestPortal({Key? key}) : super(key: key);
 
   @override

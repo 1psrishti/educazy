@@ -1,21 +1,27 @@
 import 'dart:math';
 
-import 'package:connectycube_sdk/connectycube_sdk.dart';
-
+import 'package:badges/badges.dart';
 import 'package:educazy/dataProviders/quiz_data_provider.dart';
 import 'package:educazy/dataProviders/timer_data.dart';
 import 'package:educazy/helper_methods.dart';
-import 'package:educazy/screens/connectycube_screens/login_screen.dart';
 import 'package:educazy/screens/incoming_call.dart';
 import 'package:educazy/screens/progress_card_screen.dart';
 import 'package:educazy/screens/quiz_screens/quiz_ques.dart';
 import 'package:educazy/screens/resources_screen.dart';
+import 'package:educazy/screens/test_portal_screen.dart';
+import 'package:educazy/utils/custom_colors.dart';
+import 'package:educazy/utils/theme_provider.dart';
 
 import 'package:educazy/widgets/screen_wrapper.dart';
+import 'package:educazy/widgets/toggle_theme_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/widgets.dart';
+
+int notifNo = 2;
 
 class HomeScreen extends StatefulWidget {
   static const String name = 'homescreen';
@@ -29,285 +35,375 @@ class HomeScreen extends StatefulWidget {
 Random? rand = Random();
 
 class _HomeScreenState extends State<HomeScreen> {
-  // static const String TAG = "LoginScreen.BodyState";
-
-  // bool _isLoginContinues = false;
-  // int? _selectedUserId;
-  // Set<int> _selectedUsers = {};
-
-  // late CallManager _callManager;
-  // late ConferenceClient _callClient;
-  // ConferenceSession? _currentCall;
+  bool? isDarkMode;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    // initForegroundService();
-
-    // CubeSettings.instance.onSessionRestore = () {
-    //   return createSession(widget.currentuser);
-    // };
-
-    // _initConferenceConfig();
-    // _initCalls();
   }
-
-  // void _initCalls() {
-  //   _selectedUsers.add(users[0].id!);
-  //   // _selectedUsers.add(users[1].id!);
-  //   // _selectedUsers.add(users[2].id!);
-  //   _callClient = ConferenceClient.instance;
-  //   _callManager = CallManager.instance;
-  //   _callManager.onReceiveNewCall = (meetingId, participantIds) {
-  //     _showIncomingCallScreen(meetingId, participantIds);
-  //   };
-
-  //   _callManager.onCloseCall = () {
-  //     _currentCall = null;
-  //   };
-  // }
-
-  // void _startCall(Set<int> opponents, {bool startScreenSharing = false}) async {
-  //   if (opponents.isEmpty) return;
-
-  //   var attendees = opponents.map((entry) {
-  //     return CubeMeetingAttendee(userId: entry);
-  //   }).toList();
-
-  //   var startDate = DateTime.now().microsecondsSinceEpoch ~/ 1000;
-  //   var endDate = startDate + 2 * 60 * 60; //create meeting for two hours
-
-  //   CubeMeeting meeting = CubeMeeting(
-  //     name: 'Conference Call',
-  //     startDate: startDate,
-  //     endDate: endDate,
-  //     attendees: attendees,
-  //   );
-  //   createMeeting(meeting).then((createdMeeting) async {
-  //     _currentCall = await _callClient.createCallSession(
-  //         createdMeeting.hostId!, CallType.VIDEO_CALL, startScreenSharing);
-
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //         builder: (context) => ConversationCallScreen(_currentCall!,
-  //             createdMeeting.meetingId!, opponents.toList(), false),
-  //       ),
-  //     );
-  //   });
-  // }
-
-  // void _showIncomingCallScreen(String meetingId, List<int> participantIds) {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => IncomingCallScreen(meetingId, participantIds),
-  //     ),
-  //   );
-  // }
-
-  // void _initConferenceConfig() {
-  //   ConferenceConfig.instance.url = SERVER_ENDPOINT;
-  // }
 
   @override
   Widget build(BuildContext context) {
+    isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
+    final homeClassCodeController = TextEditingController();
+
+    double width = MediaQuery.of(context).size.width - 40;
+
     return ScreenWrapper(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
-            child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.asset('assets/images/logo.png'),
-                const SizedBox(height: 60),
-                Center(
-                  child: Column(
-                    children: [
-                      Image.asset('assets/images/image.png'),
-                      const SizedBox(height: 34),
-                      const Text(
-                        "Join the Class",
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        "Explore, question, learn. Connect virtually with the "
-                        "guided support of sign language detection and "
-                        "subtitles.",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: "Poppins",
+        child: Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TopSection(
+              notifNo: notifNo,
+              width: width,
+              controller: homeClassCodeController,
+            ),
+            SizedBox(
+              height: 24,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Enrolled Classes',
+                      textAlign: TextAlign.start,
+                      style: GoogleFonts.sourceSansPro(
+                          fontWeight: FontWeight.w600,
                           fontSize: 16,
-                          color: Color(0xffAEAEAE),
+                          color: Color(0xFF555555)),
+                    ),
+                    SizedBox(
+                      height: 13,
+                    ),
+                    EnrolledClass(
+                      width: width,
+                      facultyName: 'Mr. Vedant Singh',
+                      subjectName: 'Social Studies',
+                      onPressed: () {},
+                      image: Icon(
+                        Entypo.globe,
+                        color: CustomColors.green,
+                        size: 24,
+                      ),
+                      primaryColor: Color(0XFF1D934C),
+                      backColor: Color(0xFF1D934C).withOpacity(0.05),
+                    ),
+                    EnrolledClass(
+                      width: width,
+                      facultyName: 'Mr. Viraj',
+                      subjectName: 'Mathematics',
+                      onPressed: () {},
+                      image: ImageIcon(
+                        AssetImage('assets/images/math.png'),
+                        color: Color(0xFf107ABE),
+                        size: 24,
+                      ),
+                      primaryColor: Color(0xFf107ABE),
+                      backColor: Color(0xFf107ABE).withOpacity(0.05),
+                    ),
+                    EnrolledClass(
+                      width: width,
+                      facultyName: 'Ms. Srishti',
+                      subjectName: 'Science',
+                      onPressed: () {},
+                      image: ImageIcon(
+                        AssetImage('assets/images/science.png'),
+                        color: Color(0xFF914698),
+                        size: 24,
+                      ),
+                      primaryColor: Color(0xFF914698),
+                      backColor: Color(0xFF914698).withOpacity(0.05),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            ToggleThemeButton()
+          ],
+        ),
+      ),
+    ));
+  }
+}
+
+class EnrolledClass extends StatelessWidget {
+  const EnrolledClass({
+    Key? key,
+    required this.width,
+    required this.onPressed,
+    required this.subjectName,
+    required this.facultyName,
+    required this.image,
+    required this.backColor,
+    required this.primaryColor,
+  }) : super(key: key);
+
+  final double width;
+  final void Function() onPressed;
+  final String subjectName;
+  final String facultyName;
+  final Widget image;
+  final Color backColor;
+  final Color primaryColor;
+
+  @override
+  Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 21),
+      height: 100,
+      width: width,
+      decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: isDarkMode
+                  ? Color.fromARGB(255, 255, 255, 255).withOpacity(0.08)
+                  : Color(0xFF000000).withOpacity(0.08),
+              offset: Offset(0, 4),
+              blurRadius: 8,
+              blurStyle: BlurStyle.normal,
+            )
+          ]),
+      child: Center(
+          child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            child: Row(
+              children: [
+                Container(
+                  height: 52,
+                  width: 52,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: backColor),
+                  child: Center(child: image),
+                ),
+                SizedBox(
+                  width: 21,
+                ),
+                Container(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          subjectName,
+                          style: GoogleFonts.sourceSansPro(
+                              color: primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        child: const TextField(
-                          decoration: InputDecoration.collapsed(
-                              hintText: "Enter code - Excyyz-99990",
-                              hintStyle: TextStyle(
-                                  fontSize: 18, color: Color(0xff8D8D8D))),
+                        SizedBox(
+                          height: 7,
                         ),
-                        decoration: const BoxDecoration(
-                            color: Color(0xffEDEDED),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                      ),
-                      const SizedBox(height: 16),
-                      GestureDetector(
-                        onTap: () {
-                          // startBackgroundExecution().then((_) {
-                          //   _startCall(_selectedUsers, startScreenSharing: true);
-                          // });
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      ConnectyCubeLoginScreen()));
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
-                          child: const Text(
-                            "Join Class",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                            ),
-                          ),
-                          width: double.infinity,
-                          decoration: const BoxDecoration(
-                            color: Color(0xff62C733),
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 44),
-                      Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Tabs(
-                                  onPressed: (() {}),
-                                  imagePath: "assets/images/classes.png",
-                                  text: "Join\nClasses"),
-                              Tabs(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: ((context) =>
-                                                MultiProvider(
-                                                  providers: [
-                                                    ChangeNotifierProvider(
-                                                        create: (context) =>
-                                                            QuizData()),
-                                                    ChangeNotifierProvider(
-                                                        create: (context) =>
-                                                            TimerData()),
-                                                  ],
-                                                  child: const QuizQues(),
-                                                ))));
-                                  },
-                                  imagePath: "assets/images/tests.png",
-                                  text: "Tests"),
-                            ],
-                          ),
-                          const SizedBox(height: 15),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Tabs(
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                        context, Progresscard.name);
-                                  },
-                                  imagePath: "assets/images/progress_cards.png",
-                                  text: "Progress\nCard"),
-                              Tabs(
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                        context, Resources.name);
-                                  },
-                                  imagePath: "assets/images/resources.png",
-                                  text: "Resources"),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 62),
-                    ],
-                  ),
-                ),
-                const Text(
-                  "Events",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  "Upcoming events conducted for you. Find new doors of "
-                  "opportunities.",
-                  style: TextStyle(color: Color(0xff5B5B5B), fontSize: 14),
-                ),
-                const SizedBox(height: 24),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      Image.asset('assets/images/img1.png'),
-                      const SizedBox(width: 10),
-                      Image.asset('assets/images/img2.png'),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 46),
-                const Text(
-                  "Schedule",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  "Find your plans for the day.",
-                  style: TextStyle(color: Color(0xff5B5B5B), fontSize: 14),
-                ),
-                const SizedBox(height: 24),
-                Cards(
-                  titleText: "Maternal Science Class",
-                  date: "5 Aug 2022",
-                  time: "9:30 AM to 10:30 AM",
-                  text: "Session 3 - Topics covered : Decimal expressions, "
-                      "terminating and non terminating rational numbers.",
-                ),
-                const SizedBox(height: 16),
-                Cards(
-                  titleText: "Maternal Science Class",
-                  date: "5 Aug 2022",
-                  time: "9:30 AM to 10:30 AM",
-                  text: "Session 3 - Topics covered : Decimal expressions, "
-                      "terminating and non terminating rational numbers.",
-                ),
-                const SizedBox(height: 50),
+                        Text(
+                          'by $facultyName',
+                          style: GoogleFonts.sourceSansPro(
+                              color: Color(0xFF777777), fontSize: 13),
+                        )
+                      ]),
+                )
               ],
             ),
           ),
-        )),
+          Container(
+            height: 30,
+            width: 30,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(27),
+                color: isDarkMode ? Color(0xFF1B1B1B) : Color(0xFFF1F1F1)),
+            child: Center(
+                child: ImageIcon(
+              AssetImage('assets/images/next.png'),
+              color: Color(0xFf999999),
+            )),
+          )
+        ],
+      )),
+    );
+  }
+}
+
+class TopSection extends StatefulWidget {
+  const TopSection({
+    Key? key,
+    required this.notifNo,
+    required this.width,
+    required this.controller,
+  }) : super(key: key);
+
+  final int notifNo;
+  final double width;
+  final TextEditingController controller;
+
+  @override
+  State<TopSection> createState() => _TopSectionState();
+}
+
+class _TopSectionState extends State<TopSection> {
+  Color? buttonColor;
+  bool buttonDisabled = true;
+  @override
+  Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
+    buttonColor = Theme.of(context).disabledColor;
+    return Container(
+      color: Theme.of(context).cardColor,
+      padding: const EdgeInsets.only(top: 25, left: 20, right: 20, bottom: 22),
+      child: Column(
+        children: [
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     Container(
+          //       child: Row(
+          //         children: [
+          //           ImageIcon(
+          //             AssetImage('assets/images/logo1.png'),
+          //             color: CustomColors.blue,
+          //             size: 33,
+          //           ),
+          //           SizedBox(
+          //             width: 18,
+          //           ),
+          //           Text(
+          //             'Educazy',
+          //             style: GoogleFonts.squadaOne(
+          //                 fontSize: 21, color: CustomColors.blue),
+          //           )
+          //         ],
+          //       ),
+          //     ),
+          //     Container(
+          //       child: Row(
+          //         children: [
+          //           Container(
+          //             height: 40,
+          //             width: 40,
+          //             decoration: BoxDecoration(
+          //                 borderRadius: BorderRadius.circular(10),
+          //                 color: CustomColors.blue.withOpacity(0.05)),
+          //             child: Center(
+          //                 child: ImageIcon(
+          //               AssetImage('assets/images/help-circle.png'),
+          //               color: CustomColors.blue,
+          //               size: 25,
+          //             )),
+          //           ),
+          //           const SizedBox(
+          //             width: 26,
+          //           ),
+          //           Badge(
+          //             badgeColor: const Color(0xFFD84F4F),
+          //             badgeContent: Padding(
+          //               padding: const EdgeInsets.all(2.0),
+          //               child: Text(
+          //                 widget.notifNo.toString(),
+          //                 style: const TextStyle(
+          //                     color: Colors.white, fontSize: 10),
+          //               ),
+          //             ),
+          //             toAnimate: true,
+          //             position: BadgePosition.topEnd(end: 0),
+          //             child: Container(
+          //               height: 40,
+          //               width: 40,
+          //               decoration: BoxDecoration(
+          //                   borderRadius: BorderRadius.circular(10),
+          //                   color: CustomColors.blue.withOpacity(0.05)),
+          //               child: Center(
+          //                   child: ImageIcon(
+          //                 AssetImage('assets/images/bell.png'),
+          //                 color: CustomColors.blue,
+          //                 size: 25,
+          //               )),
+          //             ),
+          //           )
+          //         ],
+          //       ),
+          //     )
+          //   ],
+          // ),
+
+          Container(
+            height: 44,
+            width: widget.width,
+            child: Row(children: [
+              Container(
+                width: 0.67 * widget.width,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        bottomLeft: Radius.circular(10)),
+                    border: Border.all(
+                        color: Color(0xFF000000).withOpacity(0.10), width: 1.0),
+                    color: isDarkMode
+                        ? CustomColors.textfieldDark
+                        : CustomColors.lightGrey),
+                child: TextField(
+                  onChanged: (value) {
+                    print(value.length);
+                    if (value.length > 3) {
+                      setState(() {
+                        buttonColor = Theme.of(context).buttonColor;
+                        buttonDisabled = false;
+                      });
+                    } else {
+                      setState(() {
+                        buttonColor = Theme.of(context).disabledColor;
+                        buttonDisabled = true;
+                      });
+                    }
+                  },
+                  controller: widget.controller,
+                  decoration: InputDecoration(
+                      hintText: '#Class ID',
+                      filled: true,
+                      border: OutlineInputBorder(borderSide: BorderSide.none),
+                      fillColor: isDarkMode
+                          ? CustomColors.textfieldDark
+                          : CustomColors.lightGrey,
+                      hintStyle: GoogleFonts.sourceSansPro(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                          color: CustomColors.hintColor)),
+                ),
+              ),
+              InkWell(
+                onTap: !buttonDisabled ? () {} : null,
+                child: Container(
+                    width: 0.33 * widget.width,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                        border: Border.all(
+                            color: Color(0xFF000000).withOpacity(0.10),
+                            width: 1.0),
+                        color: buttonColor),
+                    child: Center(
+                      child: Text('Join Class',
+                          style: GoogleFonts.sourceSansPro(
+                              fontSize: 16,
+                              color: !isDarkMode
+                                  ? Colors.white
+                                  : Color(0xFF0D0D0D),
+                              fontWeight: FontWeight.w600)),
+                    )),
+              )
+            ]),
+          )
+        ],
       ),
     );
   }

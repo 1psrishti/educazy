@@ -6,13 +6,15 @@ import 'package:flutter/foundation.dart';
 import 'package:educazy/models/marks_model.dart';
 
 class UserModel {
+  String username;
   String name;
   String userId;
   String school;
   String className;
   List<String>? disabilities;
-  List<Marks>? marksList;
+  List<Marks>? marksList = [];
   UserModel({
+    required this.username,
     required this.name,
     required this.userId,
     required this.school,
@@ -22,6 +24,7 @@ class UserModel {
   });
 
   UserModel copyWith({
+    String? username,
     String? name,
     String? userId,
     String? school,
@@ -30,6 +33,7 @@ class UserModel {
     List<Marks>? marksList,
   }) {
     return UserModel(
+      username: username ?? this.username,
       name: name ?? this.name,
       userId: userId ?? this.userId,
       school: school ?? this.school,
@@ -41,28 +45,31 @@ class UserModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'username': username,
       'name': name,
-      'userId': userId,
+      '_id': userId,
       'school': school,
-      'className': className,
+      'class': className,
       'disabilities': disabilities,
-      'marksList': marksList!.map((x) => x.toMap()).toList(),
+      'marksList':
+          marksList != null ? marksList!.map((x) => x.toMap()).toList() : [],
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
+      username: map['username'] as String,
       name: map['name'] as String,
-      userId: map['userId'] as String,
+      userId: map['_id'] as String,
       school: map['school'] as String,
-      className: map['className'] as String,
+      className: map['class'] as String,
       disabilities: map['disabilities'] != null
-          ? List<String>.from((map['disabilities'] as List<String>))
+          ? List<String>.from((map['disabilities']))
           : null,
       marksList: map['marksList'] != null
           ? List<Marks>.from(
-              (map['marksList'] as List<int>).map<Marks?>(
-                (x) => Marks.fromMap(x as Map<String, dynamic>),
+              (map['marksList']).map<Marks?>(
+                (x) => Marks.fromMap(x),
               ),
             )
           : null,
@@ -76,14 +83,14 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(name: $name, userId: $userId, school: $school, className: $className, disabilities: $disabilities, marksList: $marksList)';
+    return 'UserModel(username: $username, name: $name, _id: $userId, school: $school, class: $className, disabilities: $disabilities, marksList: $marksList)';
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(covariant UserModel other) {
     if (identical(this, other)) return true;
 
-    return other is UserModel &&
+    return other.username == username &&
         other.name == name &&
         other.userId == userId &&
         other.school == school &&
@@ -94,7 +101,8 @@ class UserModel {
 
   @override
   int get hashCode {
-    return name.hashCode ^
+    return username.hashCode ^
+        name.hashCode ^
         userId.hashCode ^
         school.hashCode ^
         className.hashCode ^

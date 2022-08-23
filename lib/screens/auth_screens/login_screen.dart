@@ -1,6 +1,7 @@
 import 'dart:math';
 
-import 'package:connectycube_sdk/connectycube_sdk.dart';
+import 'package:dio/dio.dart';
+import 'package:educazy/DioHelper/dio_client.dart';
 
 import 'package:educazy/HelperMethods/alan_ai_helper.dart';
 import 'package:educazy/dataProviders/user_app_data.dart';
@@ -27,15 +28,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final CubeUser _currentUser = CubeUser(
-    id: 6042955,
-    login: "kartikeymahawar1234@gmail.com",
-    fullName: "Kartikey",
-    password: "#321urak",
-  );
-  bool _isLoginContinues = false;
-  int? _selectedUserId;
-  Set<int> _selectedUsers = {};
+  DioClient? _dioClient = DioClient();
+
   @override
   void initState() {
     super.initState();
@@ -43,7 +37,6 @@ class _LoginScreenState extends State<LoginScreen> {
     currentscreen = LoginScreen.name;
   }
 
-  signIn(String userId, String password) async {}
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -164,8 +157,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     horizontal: (0.032 * width), vertical: 25),
                 child: MaterialButton(
                     minWidth: 0.85 * width,
-                    onPressed: () {
-                      Navigator.pushNamed(context, HomeScreen.name);
+                    onPressed: () async {
+                      await _dioClient!.login(
+                          username: loginuserIdController.text,
+                          password: loginpasswordController.text,
+                          context: context);
                     },
                     child: Container(
                       width: 0.85 * width,
