@@ -1,9 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:educazy/data/resources_data.dart';
-import 'package:educazy/widgets/header_logo.dart';
-import 'package:educazy/widgets/screen_wrapper.dart';
-import 'package:educazy/widgets/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
@@ -44,10 +41,13 @@ class _ResourcesState extends State<Resources> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const HeaderText(text: 'Resources'),
-                  const TaglineText(
-                      text:
-                          'Never stop learning! Books, worksheets and reading materials now just one click away.'),
+                  const Text(
+                    'Resources',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                    ),
+                  ),
                   const SizedBox(height: 20),
                   GridView.builder(
                     itemCount: resources.length,
@@ -80,8 +80,20 @@ class _ResourcesState extends State<Resources> {
                     },
                   ),
                   const SizedBox(height: 50),
-                  const HeaderText(text: "Braille Converter"),
-                  const TaglineText(text: "Easily convert text to braille."),
+                  Text(
+                    "Braille Converter",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                    ),
+                  ),
+                  Text(
+                    "Easily convert text to braille.",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                    ),
+                  ),
                   const SizedBox(height: 20),
                   GestureDetector(
                     onTap: () async {

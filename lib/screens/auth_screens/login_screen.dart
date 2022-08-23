@@ -1,28 +1,18 @@
 import 'dart:math';
 
-import 'package:dio/dio.dart';
 import 'package:educazy/DioHelper/dio_client.dart';
-
-import 'package:educazy/HelperMethods/alan_ai_helper.dart';
-import 'package:educazy/dataProviders/user_app_data.dart';
-import 'package:educazy/helper_methods.dart';
-import 'package:educazy/screens/auth_screens/enroll_screen.dart';
 import 'package:educazy/screens/auth_screens/register_screen.dart';
-import 'package:educazy/screens/profile_screen.dart';
 import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-
 import '../../main.dart';
-import '../home_screen.dart';
 
 Random? rand = Random();
-final loginuserIdController = TextEditingController();
-final loginpasswordController = TextEditingController();
+final logInUserIdController = TextEditingController();
+final logInPasswordController = TextEditingController();
 
 class LoginScreen extends StatefulWidget {
-  static const name = 'loginscreen';
+  static const name = 'loginScreen';
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -62,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 180,
                   width: 195,
                   child: Image.asset(
-                    'assets/images/logo1.png',
+                    'assets/images/logo.png',
                     height: 180,
                     width: 195,
                   ),
@@ -106,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 27),
                 child: TextField(
-                  controller: loginuserIdController,
+                  controller: logInUserIdController,
                   keyboardType: TextInputType.name,
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
@@ -132,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 27),
                 child: TextField(
-                  controller: loginpasswordController,
+                  controller: logInPasswordController,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                   textCapitalization: TextCapitalization.words,
@@ -161,8 +151,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     minWidth: 0.85 * width,
                     onPressed: () async {
                       await _dioClient!.login(
-                          username: loginuserIdController.text,
-                          password: loginpasswordController.text,
+                          username: logInUserIdController.text,
+                          password: logInPasswordController.text,
                           context: context);
                     },
                     child: Container(

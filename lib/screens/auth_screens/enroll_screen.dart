@@ -1,4 +1,3 @@
-import 'package:educazy/helper_methods.dart';
 import 'package:educazy/screens/auth_screens/login_screen.dart';
 import 'package:educazy/screens/auth_screens/register_screen.dart';
 import 'package:educazy/widgets/screen_wrapper.dart';
@@ -39,7 +38,7 @@ class _EnrollScreenState extends State<EnrollScreen> {
               child: Column(
                 children: [
                   Image.asset(
-                    'assets/images/logo1.png',
+                    'assets/images/logo.png',
                     height: 160,
                     width: 185,
                   ),

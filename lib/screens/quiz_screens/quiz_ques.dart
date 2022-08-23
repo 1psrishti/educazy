@@ -3,15 +3,14 @@ import 'dart:async';
 import 'package:educazy/data/quiz_data.dart';
 import 'package:educazy/dataProviders/quiz_data_provider.dart';
 import 'package:educazy/dataProviders/timer_data.dart';
-import 'package:educazy/helper_methods.dart';
 import 'package:educazy/models/question_model.dart';
 import 'package:educazy/utils/theme_provider.dart';
-import 'package:educazy/widgets/gradient_text.dart';
 import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import '../../HelperMethods/helper_methods.dart';
 
 class QuizQues extends StatefulWidget {
   static const name = 'quizscreen';

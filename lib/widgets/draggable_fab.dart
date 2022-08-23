@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:badges/badges.dart';
-import 'package:educazy/HelperMethods/alan_ai_helper.dart';
 import 'package:educazy/dataProviders/quiz_data_provider.dart';
 import 'package:educazy/dataProviders/timer_data.dart';
 import 'package:educazy/dataProviders/user_app_data.dart';
@@ -10,17 +9,14 @@ import 'package:educazy/main.dart';
 import 'package:educazy/screens/auth_screens/enroll_screen.dart';
 import 'package:educazy/screens/auth_screens/login_screen.dart';
 import 'package:educazy/screens/auth_screens/register_screen.dart';
-import 'package:educazy/screens/profile_screen.dart';
 
 import 'package:educazy/screens/quiz_screens/quiz_ques.dart';
 import 'package:educazy/screens/resources_screen.dart';
-import 'package:educazy/screens/test_portal_screen.dart';
 import 'package:educazy/utils/custom_colors.dart';
 import 'package:educazy/utils/theme_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -36,8 +32,11 @@ class DraggableFloatingActionButton extends StatefulWidget {
 
   final Widget child;
 
-  DraggableFloatingActionButton(
-      {required this.initialOffset, required this.child});
+  const DraggableFloatingActionButton({
+    Key? key,
+    required this.initialOffset,
+    required this.child,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _DraggableFloatingActionButtonState();
@@ -60,7 +59,6 @@ class _DraggableFloatingActionButtonState
   @override
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _speechToText!.stop();
   }
@@ -70,19 +68,19 @@ class _DraggableFloatingActionButtonState
       bool available = await _speechToText!.initialize(
           onStatus: (val) {
             if (val == "done") {}
-            print('$val');
+            debugPrint(val);
           },
-          onError: (val) => print('onError: $val'),
+          onError: (val) => debugPrint('onError: $val'),
           debugLogging: true);
       if (available) {
         setState(() => _isListening = true);
         _speechToText!.listen(
           listenMode: ListenMode.deviceDefault,
-          listenFor: Duration(seconds: 10),
+          listenFor: const Duration(seconds: 10),
           onResult: (val) => setState(() {
             _text = val.recognizedWords;
 
-            print(val.recognizedWords);
+            debugPrint(val.recognizedWords);
             // navigateToPage(_text);
             if (val.finalResult) {
               readCommand(_text);
@@ -141,66 +139,62 @@ class _DraggableFloatingActionButtonState
         toolbarHeight: 60,
         backgroundColor: Theme.of(context).cardColor,
         leading: ImageIcon(
-          AssetImage('assets/images/logo1.png'),
+          const AssetImage('assets/images/logo.png'),
           color: Theme.of(context).primaryColor,
           size: 33,
         ),
         leadingWidth: 45,
         title: Text(
-          'Educazy',
+          'educazy',
           style: GoogleFonts.squadaOne(
               fontSize: 21, color: Theme.of(context).primaryColor),
         ),
         actions: [
-          Container(
-            child: Row(
-              children: [
-                Container(
+          Row(
+            children: [
+              Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: CustomColors.blue.withOpacity(0.05)),
+                child: Center(
+                  child: Icon(
+                    Icons.help_outline_rounded,
+                    color: Theme.of(context).primaryColor,
+                    size: 25,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16),
+              Badge(
+                badgeColor: const Color(0xFFD84F4F),
+                badgeContent: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Text(
+                    notifNo.toString(),
+                    style: const TextStyle(color: Colors.white, fontSize: 10),
+                  ),
+                ),
+                toAnimate: true,
+                position: BadgePosition.topEnd(end: 0),
+                child: Container(
                   height: 40,
                   width: 40,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: CustomColors.blue.withOpacity(0.05)),
                   child: Center(
-                      child: ImageIcon(
-                    AssetImage('assets/images/help-circle.png'),
-                    color: Theme.of(context).primaryColor,
-                    size: 25,
-                  )),
-                ),
-                const SizedBox(
-                  width: 26,
-                ),
-                Badge(
-                  badgeColor: const Color(0xFFD84F4F),
-                  badgeContent: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Text(
-                      notifNo.toString(),
-                      style: const TextStyle(color: Colors.white, fontSize: 10),
-                    ),
-                  ),
-                  toAnimate: true,
-                  position: BadgePosition.topEnd(end: 0),
-                  child: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: CustomColors.blue.withOpacity(0.05)),
-                    child: Center(
-                        child: ImageIcon(
-                      AssetImage('assets/images/bell.png'),
+                    child: Icon(
+                      Icons.notifications_outlined,
                       color: Theme.of(context).primaryColor,
                       size: 25,
-                    )),
+                    ),
                   ),
                 ),
-                SizedBox(
-                  width: 20,
-                )
-              ],
-            ),
+              ),
+              const SizedBox(width: 16),
+            ],
           )
         ],
       ),
@@ -276,14 +270,14 @@ class _DraggableFloatingActionButtonState
       case 0:
         {
           text = text.substring(14);
-          setText(loginuserIdController, text);
+          setText(logInUserIdController, text);
           break;
         }
       case 1:
         {
           text = text.substring(14);
           if (currentscreen == LoginScreen.name) {
-            setText(loginpasswordController, text);
+            setText(logInPasswordController, text);
           } else if (currentscreen == RegisterScreen.name) {
             setText(registerpasswordController, text);
           }
@@ -436,11 +430,6 @@ class _DraggableFloatingActionButtonState
   }
 }
 
-
-
-
-
-
 /*
   return Stack(
       children: [
@@ -492,13 +481,13 @@ class _DraggableFloatingActionButtonState
     );
     */
 
-    /*
+/*
       appBar: AppBar(
         elevation: 0,
         toolbarHeight: 60,
         backgroundColor: Colors.white,
         leading: ImageIcon(
-          AssetImage('assets/images/logo1.png'),
+          AssetImage('assets/images/logo.png'),
           color: CustomColors.blue,
           size: 33,
         ),
@@ -546,7 +535,7 @@ class _DraggableFloatingActionButtonState
                         color: CustomColors.blue.withOpacity(0.05)),
                     child: Center(
                         child: ImageIcon(
-                      AssetImage('assets/images/bell.png'),
+
                       color: CustomColors.blue,
                       size: 25,
                     )),

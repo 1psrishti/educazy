@@ -282,14 +282,14 @@ class CircularMenuState extends State<CircularMenu>
         case 0:
           {
             text = text.substring(14);
-            setText(loginuserIdController, text);
+            setText(logInUserIdController, text);
             break;
           }
         case 1:
           {
             text = text.substring(14);
             if (currentscreen == LoginScreen.name) {
-              setText(loginpasswordController, text);
+              setText(logInPasswordController, text);
             } else if (currentscreen == RegisterScreen.name) {
               setText(registerpasswordController, text);
             }
@@ -329,13 +329,13 @@ class CircularMenuState extends State<CircularMenu>
           {
            // navigatorKey.currentState!.pushNamed(HomeScreen.name);
 
-          btm_globalKey.currentState!.widget.onTap!(0);
+          btmGlobalKey.currentState!.widget.onTap!(0);
             await _speak("Taking you to homepage");
             break;
           }
         case 8:
           {
-            btm_globalKey.currentState!.widget.onTap!(1);
+            btmGlobalKey.currentState!.widget.onTap!(1);
             await _speak("Taking you to testscreen");
             break;
           }
@@ -354,14 +354,14 @@ class CircularMenuState extends State<CircularMenu>
           }
         case 10:
           {
-            btm_globalKey.currentState!.widget.onTap!(0);
+            btmGlobalKey.currentState!.widget.onTap!(0);
             await _speak("Taking you to class");
             break;
           }
         case 11:
           {
            // navigatorKey.currentState!.pushNamed(Resources.name);
-            btm_globalKey.currentState!.widget.onTap!(2);
+            btmGlobalKey.currentState!.widget.onTap!(2);
             await _speak("Taking you to resources");
             break;
           }
@@ -375,7 +375,7 @@ class CircularMenuState extends State<CircularMenu>
         case 13:
           {
            // navigatorKey.currentState!.pushNamed(Progresscard.name);
-            btm_globalKey.currentState!.widget.onTap!(3);
+            btmGlobalKey.currentState!.widget.onTap!(3);
             await _speak("Taking you to progress card");
             break;
           }

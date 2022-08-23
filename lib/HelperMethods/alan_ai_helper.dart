@@ -98,12 +98,12 @@ class AlanAiHelper {
           switch (variable) {
             case "userid":
               {
-                setText(loginuserIdController, value);
+                setText(logInUserIdController, value);
                 break;
               }
             case 'password':
               {
-                setText(loginpasswordController, value);
+                setText(logInPasswordController, value);
                 break;
               }
           }
