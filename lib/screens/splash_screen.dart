@@ -4,6 +4,7 @@ import 'package:educazy/global.dart';
 import 'package:educazy/models/user_model.dart';
 import 'package:educazy/screens/auth_screens/login_screen.dart';
 import 'package:educazy/screens/home_screen.dart';
+import 'package:educazy/utils/stt_service.dart';
 import 'package:educazy/utils/webview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -33,6 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
       UserModel userModel = UserModel.fromJson(prefs.getString('userdata')!);
       Provider.of<UserAppData>(context, listen: false).setUserdata(userModel);
       debugPrint("done");
+
       setState(() {
         _child = HomeScreen();
       });

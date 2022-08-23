@@ -32,7 +32,7 @@ dependencies:
   badges: ^2.0.3
   camera: ^0.10.0+1
 
-  circular_menu: ^2.0.1
+
   cupertino_icons: ^1.0.2
   dio: ^4.0.6
   file_picker: ^5.0.1

@@ -25,6 +25,7 @@ import '../widgets/widgets.dart';
 
 int notifNo = 2;
 
+final btm_globalKey =  const GlobalObjectKey<State<BottomNavigationBar>>('hhhh');
 class HomeScreen extends StatefulWidget {
   static const String name = 'homescreen';
 
@@ -64,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: items,
           ),
           bottomNavigationBar: BottomNavigationBar(
+            key: btm_globalKey,
             showUnselectedLabels: true,
             unselectedLabelStyle: TextStyle(color: Colors.grey),
             unselectedIconTheme:

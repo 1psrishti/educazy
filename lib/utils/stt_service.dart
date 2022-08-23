@@ -16,15 +16,27 @@ import '../screens/auth_screens/login_screen.dart';
 import '../screens/auth_screens/register_screen.dart';
 import '../screens/quiz_screens/quiz_ques.dart';
 
-class SttService {
+class STTService extends StatefulWidget {
+  final Widget? Function(bool isListening, String text)? builder;
+  STTService({Key? key, this.builder}) : super(key: key);
+  final STTServiceState sttServiceState = STTServiceState();
+  @override
+  State<STTService> createState() => STTServiceState();
+
+  void runlisten(){
+    sttServiceState.listen();
+  }
+}
+
+class STTServiceState extends State<STTService> {
   SpeechToText _speechToText = SpeechToText();
-  bool _isListening = false;
-  String _text = "";
+  bool isListening = false;
+  String text = "";
   double _confidence = 1.0;
   FlutterTts flutterTts = FlutterTts();
 
   void listen() async {
-    if (!_isListening) {
+    if (!isListening) {
       bool available = await _speechToText.initialize(
           onStatus: (val) {
             if (val == "done") {}
@@ -33,17 +45,26 @@ class SttService {
           onError: (val) => print('onError: $val'),
           debugLogging: true);
       if (available) {
-        _isListening = true;
+      if(mounted){
+        setState(() {
+          isListening = true;
+        });
+      }
+
         _speechToText.listen(
           listenMode: ListenMode.deviceDefault,
           listenFor: Duration(seconds: 10),
           onResult: (val) {
-            _text = val.recognizedWords;
+          if(mounted){
+            setState(() {
+              text = val.recognizedWords;
+            });
+          }
 
             print(val.recognizedWords);
-            // navigateToPage(_text);
+            // navigateToPage(text);
             if (val.finalResult) {
-              readCommand(_text);
+              readCommand(text);
             }
 
             if (val.hasConfidenceRating && val.confidence > 0) {
@@ -53,8 +74,10 @@ class SttService {
         );
       }
     } else {
-      _isListening = false;
-      _speechToText.stop();
+      setState(() {
+        isListening = false;
+        _speechToText.stop();
+      });
     }
   }
 
@@ -169,8 +192,12 @@ class SttService {
         }
     }
 
-    _speechToText.stop();
-    _isListening = false;
+   if(mounted){
+     setState(() {
+       _speechToText.stop();
+       isListening = false;
+     });
+   }
   }
 
   Future _speak(String sentence) async {
@@ -185,5 +212,12 @@ class SttService {
         print(e);
       }
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: widget.builder != null ? widget.builder!(isListening, text) : SizedBox.shrink(),
+    );
   }
 }

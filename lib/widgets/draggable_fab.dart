@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:badges/badges.dart';
-import 'package:circular_menu/circular_menu.dart';
 import 'package:educazy/HelperMethods/alan_ai_helper.dart';
 import 'package:educazy/dataProviders/quiz_data_provider.dart';
 import 'package:educazy/dataProviders/timer_data.dart';
@@ -29,6 +28,8 @@ import 'package:string_similarity/string_similarity.dart';
 
 import '../screens/home_screen.dart';
 import '../screens/progress_card_screen.dart';
+import 'circular_menu_item.dart';
+import 'custom_circular_menu.dart';
 
 class DraggableFloatingActionButton extends StatefulWidget {
   final Alignment initialOffset;
