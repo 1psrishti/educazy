@@ -1,4 +1,3 @@
-import 'package:educazy/helper_methods.dart';
 import 'package:educazy/screens/auth_screens/login_screen.dart';
 import 'package:educazy/widgets/multi_select.dart';
 import 'package:educazy/widgets/screen_wrapper.dart';
@@ -69,7 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 180,
                     width: 195,
                     child: Image.asset(
-                      'assets/images/logo1.png',
+                      'assets/images/logo.png',
                       height: 180,
                       width: 195,
                     ),

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:educazy/data/quiz_data.dart';
-import 'package:educazy/helper_methods.dart';
 import 'package:flutter/cupertino.dart';
 
 class TimerData extends ChangeNotifier {

@@ -6,7 +6,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:string_similarity/string_similarity.dart';
-
+import '../screens/auth_screens/login_screen.dart';
 import '../dataProviders/quiz_data_provider.dart';
 import '../dataProviders/timer_data.dart';
 import '../dataProviders/user_app_data.dart';
@@ -283,14 +283,14 @@ class CircularMenuState extends State<CircularMenu>
         case 0:
           {
             text = text.substring(14);
-            setText(loginuserIdController, text);
+            setText(logInUserIdController, text);
             break;
           }
         case 1:
           {
             text = text.substring(14);
             if (currentscreen == LoginScreen.name) {
-              setText(loginpasswordController, text);
+              setText(logInPasswordController, text);
             } else if (currentscreen == RegisterScreen.name) {
               setText(registerpasswordController, text);
             }

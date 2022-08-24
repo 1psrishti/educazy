@@ -3,8 +3,7 @@ import 'dart:math';
 import 'package:badges/badges.dart';
 import 'package:educazy/dataProviders/quiz_data_provider.dart';
 import 'package:educazy/dataProviders/timer_data.dart';
-import 'package:educazy/helper_methods.dart';
-import 'package:educazy/screens/classes.dart';
+import 'package:educazy/screens/classes_screen.dart';
 import 'package:educazy/screens/incoming_call.dart';
 import 'package:educazy/screens/profile_screen.dart';
 import 'package:educazy/screens/progress_card_screen.dart';
@@ -22,7 +21,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../dataProviders/user_app_data.dart';
-import '../widgets/widgets.dart';
 
 int notifNo = 2;
 
@@ -47,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<Widget> items = [
-    Classes(),
+    ClassesScreen(),
     TestPortal(),
     Resources(),
     ProfileScreen(),

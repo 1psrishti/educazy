@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CustomColors {
   static Color blue = const Color(0xFF1FA1F4);
@@ -14,7 +13,7 @@ class CustomColors {
   static Color disabled = const Color(0xFFA9A9A9);
   static Color disabledDark = const Color(0xFFA9A9A9);
   static Color lightGrey = const Color(0XFFF1F1F1);
-  static Color textfieldDark = const Color(0xFF1B1B1B);
+  static Color textFieldDark = const Color(0xFF1B1B1B);
   static Color darkGrey = const Color(0XFFA9A9A9);
   static Color green = const Color(0xFF1D934C);
   static Color backgroundColor = const Color(0xFFF9F9F9);

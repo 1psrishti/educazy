@@ -1,30 +1,20 @@
 import 'package:camera/camera.dart';
-import 'package:educazy/dataProviders/quiz_data_provider.dart';
-import 'package:educazy/dataProviders/timer_data.dart';
 import 'package:educazy/dataProviders/user_app_data.dart';
-import 'package:educazy/models/user_model.dart';
 import 'package:educazy/screens/account_settings_screen.dart';
 import 'package:educazy/screens/auth_screens/enroll_screen.dart';
 import 'package:educazy/screens/auth_screens/login_screen.dart';
 import 'package:educazy/screens/auth_screens/register_screen.dart';
 import 'package:educazy/screens/home_screen.dart';
-import 'package:educazy/screens/profile_screen.dart';
 import 'package:educazy/screens/progress_card_screen.dart';
-
 import 'package:educazy/screens/quiz_screens/quiz_ques.dart';
 import 'package:educazy/screens/resources_screen.dart';
-import 'package:educazy/screens/speech_demo.dart';
-import 'package:educazy/screens/splash_screen.dart';
 import 'package:educazy/screens/test_portal_screen.dart';
 import 'package:educazy/utils/route_aware_widget.dart';
 import 'package:educazy/utils/theme_provider.dart';
-import 'package:educazy/utils/webview_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 AndroidNotificationChannel channel = const AndroidNotificationChannel(
@@ -52,12 +42,11 @@ String currentscreen = LoginScreen.name;
 String fcmToken = "";
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   // await Permission.camera.request();
   // await Permission.microphone.request();
-
   await Firebase.initializeApp();
   cameras = await availableCameras();
   runApp(const MyApp());
@@ -65,7 +54,6 @@ void main() async {
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   State<MyApp> createState() => _MyAppState();
 }
@@ -114,7 +102,7 @@ class _MyAppState extends State<MyApp> {
               Resources.name: (context) =>
                   const RouteAwareWidget(Resources.name, child: Resources()),
               TestPortal.name: (context) =>
-                  RouteAwareWidget(TestPortal.name, child: const TestPortal()),
+                  const RouteAwareWidget(TestPortal.name, child: TestPortal()),
               AccountSettingsScreen.name: (context) => const RouteAwareWidget(
                   AccountSettingsScreen.name,
                   child: AccountSettingsScreen())

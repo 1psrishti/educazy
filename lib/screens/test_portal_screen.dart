@@ -1,19 +1,10 @@
-import 'package:educazy/constants.dart';
-import 'package:educazy/screens/quiz_screens/quiz_ques.dart';
-import 'package:educazy/utils/stt_service.dart';
-import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../dataProviders/quiz_data_provider.dart';
-import '../dataProviders/timer_data.dart';
-import '../helper_methods.dart';
-import '../widgets/header_logo.dart';
-import '../widgets/text_styles.dart';
-import '../widgets/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../widgets/test_cards.dart';
+import '../widgets/active_test_card.dart';
 
 class TestPortal extends StatefulWidget {
-  static final String name = "testportal";
+  static const String name = "testPortal";
   const TestPortal({Key? key}) : super(key: key);
 
   @override
@@ -28,207 +19,128 @@ class _TestPortalState extends State<TestPortal> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 28,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+              width: double.infinity,
+              color: const Color(0xff0A5580),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Active Test",
+                    style: GoogleFonts.sourceSansPro(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(height: 16),
+                  ActiveTestCard(
+                    courseCode: "Physics (PY123978)",
+                    chapter: "Ray Optics",
+                    date: "24th Aug 2022",
+                    time: "9:30 AM",
+                    maxMarks: 75,
+                    faculty: "Mr. Vedant Singh",
+                    width: MediaQuery.of(context).size.width * 0.9,
+                  ),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 0.0613 * width),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const Text(
-                      "Test Portal",
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                      ),
+            ),
+            Container(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+                  Text(
+                    "Upcoming Tests",
+                    style: GoogleFonts.sourceSansPro(
+                      fontSize: 16,
+                      color: Color(0xff555555),
+                      fontWeight: FontWeight.w600,
                     ),
-                    Center(
-                      child: Column(
+                  ),
+                  const SizedBox(height: 8),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
                         children: [
-                          const SizedBox(height: 20),
-                          const HeaderText(text: "Active Test"),
-                          const SizedBox(height: 10),
                           TestCards(
-                              titleText: "Ray Optics",
-                              date: "04/08/22",
-                              time: "9:30",
-                              maxMarks: 75,
-                              profName: "Mr. John Doe"),
-                          const SizedBox(height: 20),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) => MultiProvider(
-                                            providers: [
-                                              ChangeNotifierProvider(
-                                                  create: (context) =>
-                                                      QuizData()),
-                                              ChangeNotifierProvider(
-                                                  create: (context) =>
-                                                      TimerData()),
-                                            ],
-                                            child: const QuizQues(),
-                                          ))));
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 50),
-                              child: const Text(
-                                "Give Test",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                ),
-                              ),
-                              // width: double.in
-                              decoration: const BoxDecoration(
-                                color: Color(0xff62C733),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5)),
-                              ),
-                            ),
+                            courseCode: "English (ENG3978)",
+                            chapter: "Literature",
+                            date: "30th Aug 2022",
+                            time: "9:30 AM",
+                            maxMarks: 75,
+                            faculty: "Mr. Viraj",
+                          ),
+                          const SizedBox(width: 16),
+                          TestCards(
+                            courseCode: "English (ENG3978)",
+                            chapter: "Literature",
+                            date: "30th Aug 2022",
+                            time: "9:30 AM",
+                            maxMarks: 75,
+                            faculty: "Mr. Viraj",
+                          ),
+                          const SizedBox(width: 16),
+                          TestCards(
+                            courseCode: "English (ENG3978)",
+                            chapter: "Literature",
+                            date: "30th Aug 2022",
+                            time: "9:30 AM",
+                            maxMarks: 75,
+                            faculty: "Mr. Viraj",
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 50),
-                    const HeaderText(text: "Instructions"),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: const [
-                        Icon(Icons.check_circle, color: Color(0xff27D381)),
-                        SizedBox(width: 10),
-                        Text(
-                          "The paper contains 10 questions.",
-                          style: TextStyle(
-                            color: Color(0xffABABAB),
-                            fontSize: 14,
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(height: 15),
-                    Row(
-                      children: const [
-                        Icon(Icons.check_circle, color: Color(0xff27D381)),
-                        SizedBox(width: 10),
-                        Text(
-                          "The paper will  close after 30 minutes.",
-                          style: TextStyle(
-                            color: Color(0xffABABAB),
-                            fontSize: 14,
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(height: 15),
-                    Row(
-                      children: const [
-                        Icon(Icons.check_circle, color: Color(0xff27D381)),
-                        SizedBox(width: 10),
-                        Text(
-                          "Have a stable network connection.",
-                          style: TextStyle(
-                            color: Color(0xffABABAB),
-                            fontSize: 14,
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(height: 15),
-                    Row(
-                      children: const [
-                        Icon(Icons.check_circle, color: Color(0xff27D381)),
-                        SizedBox(width: 10),
-                        Text(
-                          "Take the test in a closed room.",
-                          style: TextStyle(
-                            color: Color(0xffABABAB),
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 50),
-                    const HeaderText(text: "Upcoming"),
-                    const SizedBox(height: 10),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          children: [
-                            TestCards(
-                                titleText: "Ray Optics",
-                                date: "04/08/22",
-                                time: "9:30",
-                                maxMarks: 75,
-                                profName: "Mr. John Doe"),
-                            const SizedBox(width: 20),
-                            TestCards(
-                                titleText: "Ray Optics",
-                                date: "04/08/22",
-                                time: "9:30",
-                                maxMarks: 75,
-                                profName: "Mr. John Doe"),
-                            const SizedBox(width: 20),
-                            TestCards(
-                                titleText: "Ray Optics",
-                                date: "04/08/22",
-                                time: "9:30",
-                                maxMarks: 75,
-                                profName: "Mr. John Doe"),
-                          ],
-                        ),
+                  ),
+                  const SizedBox(height: 24),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 2,
+                        color: Color(0xff107ABE),
                       ),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    const SizedBox(height: 50),
-                    const HeaderText(text: "Previous"),
-                    const SizedBox(height: 10),
-                    const SizedBox(height: 10),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          children: [
-                            TestCards(
-                                titleText: "Ray Optics",
-                                date: "04/08/22",
-                                time: "9:30",
-                                maxMarks: 75,
-                                profName: "Mr. John Doe"),
-                            const SizedBox(width: 20),
-                            TestCards(
-                                titleText: "Ray Optics",
-                                date: "04/08/22",
-                                time: "9:30",
-                                maxMarks: 75,
-                                profName: "Mr. John Doe"),
-                            const SizedBox(width: 20),
-                            TestCards(
-                                titleText: "Ray Optics",
-                                date: "04/08/22",
-                                time: "9:30",
-                                maxMarks: 75,
-                                profName: "Mr. John Doe"),
-                          ],
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Results & Previous Tests",
+                          style: GoogleFonts.sourceSansPro(
+                            color: Color(0xff107ABE),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
+                        Container(
+                          // height: 30,
+                          // width: 30,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(27),
+                              color: const Color(0xFF107ABE).withOpacity(0.1) ),
+                          child: const Center(
+                            child: Icon(
+                              Icons.navigate_next_rounded,
+                              color: Color(0xff107ABE),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 50),
+                ],
               ),
-              const SizedBox(height: 50)
-            ],
-          ),
+            ),
+          ],),
         ),
       ),
     );

@@ -104,14 +104,14 @@ class STTServiceState extends State<STTService> {
       case 0:
         {
           text = text.substring(14);
-          setText(loginuserIdController, text);
+          setText(logInUserIdController, text);
           break;
         }
       case 1:
         {
           text = text.substring(14);
           if (currentscreen == LoginScreen.name) {
-            setText(loginpasswordController, text);
+            setText(logInPasswordController, text);
           } else if (currentscreen == RegisterScreen.name) {
             setText(registerpasswordController, text);
           }

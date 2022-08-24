@@ -1,8 +1,6 @@
 import 'package:educazy/screens/account_settings_screen.dart';
 import 'package:educazy/utils/theme_provider.dart';
-import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:educazy/widgets/toggle_theme_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -26,8 +24,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             children: [
               Container(
-                padding: const EdgeInsets.all(24),
-                color: Color(0xff0A5580),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24,),
+                color: const Color(0xff0A5580),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

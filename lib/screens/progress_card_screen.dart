@@ -1,5 +1,4 @@
 import 'package:educazy/models/user_model.dart';
-import 'package:educazy/widgets/header_logo.dart';
 import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -42,7 +41,6 @@ class _ProgresscardState extends State<Progresscard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const HeaderLogo(),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 18),
                   child: Column(

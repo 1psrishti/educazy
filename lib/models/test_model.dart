@@ -2,12 +2,8 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-
-import 'package:educazy/enums/subject_type.dart';
 import 'package:educazy/enums/test_status.dart';
-import 'package:educazy/helper_methods.dart';
 import 'package:educazy/models/question_model.dart';
-import 'package:educazy/models/subject_model.dart';
 
 class Test {
   String id;
