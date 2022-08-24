@@ -10,6 +10,7 @@ import 'package:educazy/screens/progress_card_screen.dart';
 import 'package:educazy/screens/quiz_screens/quiz_ques.dart';
 import 'package:educazy/screens/resources_screen.dart';
 import 'package:educazy/screens/test_portal_screen.dart';
+import 'package:educazy/services/notifications.dart';
 import 'package:educazy/utils/custom_colors.dart';
 import 'package:educazy/utils/theme_provider.dart';
 
@@ -42,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    notif(context);
   }
 
   List<Widget> items = [

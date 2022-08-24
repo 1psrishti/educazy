@@ -275,6 +275,12 @@ class CircularMenuState extends State<CircularMenu>
         'take me to resources',
         'take me to progress card',
         'take me to profile',
+        'mark option 1',
+        'mark option two',
+        'mark option 3',
+        'mark option 4',
+        'go to next question',
+        'go to previous question',
         null
       ];
       final bestMatch = text1.bestMatch(targetStrings);
@@ -322,21 +328,36 @@ class CircularMenuState extends State<CircularMenu>
           }
         case 6:
           {
-            navigatorKey.currentState!.pop();
-            await _speak("Going back");
+            if (navigatorKey.currentState!.canPop()) {
+              navigatorKey.currentState!.pop();
+              await _speak("Going back");
+            } else {
+              await _speak("Can't go back");
+            }
+
             break;
           }
         case 7:
           {
             // navigatorKey.currentState!.pushNamed(HomeScreen.name);
+            if (currentscreen == HomeScreen.name) {
+              Provider.of<UserAppData>(context, listen: false).setTabIndex(0);
+            } else {
+              navigatorKey.currentState!.pushNamed(HomeScreen.name);
+            }
 
-            Provider.of<UserAppData>(context, listen: false).setTabIndex(0);
             await _speak("Taking you to homepage");
             break;
           }
         case 8:
           {
-            Provider.of<UserAppData>(context, listen: false).setTabIndex(1);
+            if (currentscreen == HomeScreen.name) {
+              Provider.of<UserAppData>(context, listen: false).setTabIndex(1);
+            } else {
+              navigatorKey.currentState!.pushNamed(HomeScreen.name);
+              Provider.of<UserAppData>(context, listen: false).setTabIndex(1);
+            }
+
             await _speak("Taking you to testscreen");
             break;
           }
@@ -356,14 +377,25 @@ class CircularMenuState extends State<CircularMenu>
           }
         case 10:
           {
-            Provider.of<UserAppData>(context, listen: false).setTabIndex(0);
+            if (currentscreen == HomeScreen.name) {
+              Provider.of<UserAppData>(context, listen: false).setTabIndex(0);
+            } else {
+              navigatorKey.currentState!.pushNamed(HomeScreen.name);
+              Provider.of<UserAppData>(context, listen: false).setTabIndex(0);
+            }
+
             await _speak("Taking you to class");
             break;
           }
         case 11:
           {
             // navigatorKey.currentState!.pushNamed(Resources.name);
-            Provider.of<UserAppData>(context, listen: false).setTabIndex(2);
+            if (currentscreen == HomeScreen.name) {
+              Provider.of<UserAppData>(context, listen: false).setTabIndex(2);
+            } else {
+              navigatorKey.currentState!.pushNamed(HomeScreen.name);
+              Provider.of<UserAppData>(context, listen: false).setTabIndex(2);
+            }
             await _speak("Taking you to resources");
             break;
           }
@@ -377,8 +409,49 @@ class CircularMenuState extends State<CircularMenu>
         case 13:
           {
             // navigatorKey.currentState!.pushNamed(Progresscard.name);
-            Provider.of<UserAppData>(context, listen: false).setTabIndex(3);
+            if (currentscreen == HomeScreen.name) {
+              Provider.of<UserAppData>(context, listen: false).setTabIndex(3);
+            } else {
+              navigatorKey.currentState!.pushNamed(HomeScreen.name);
+              Provider.of<UserAppData>(context, listen: false).setTabIndex(3);
+            }
             await _speak("Taking you to progress card");
+            break;
+          }
+        case 14:
+          {
+            Provider.of<QuizData>(context, listen: false).markAnswer(0);
+
+            break;
+          }
+        case 15:
+          {
+            Provider.of<QuizData>(context, listen: false).markAnswer(1);
+
+            break;
+          }
+        case 16:
+          {
+            Provider.of<QuizData>(context, listen: false).markAnswer(2);
+
+            break;
+          }
+        case 17:
+          {
+            Provider.of<QuizData>(context, listen: false).markAnswer(3);
+
+            break;
+          }
+        case 18:
+          {
+            Provider.of<QuizData>(context, listen: false).nextQuestion();
+
+            break;
+          }
+        case 19:
+          {
+            Provider.of<QuizData>(context, listen: false).prevQuestion();
+
             break;
           }
       }

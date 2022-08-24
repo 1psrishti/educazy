@@ -4,6 +4,7 @@ import 'package:educazy/global.dart';
 import 'package:educazy/models/user_model.dart';
 import 'package:educazy/screens/auth_screens/login_screen.dart';
 import 'package:educazy/screens/home_screen.dart';
+import 'package:educazy/services/notifications.dart';
 import 'package:educazy/utils/stt_service.dart';
 import 'package:educazy/utils/webview_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,16 +20,18 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Widget _child = HomeScreen();
+  Widget _child = LoginScreen();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    setupData();
   }
 
   setupData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var key = prefs.getString('key');
+    print(await getToken());
     if (key != null) {
       Global.authToken = key;
       UserModel userModel = UserModel.fromJson(prefs.getString('userdata')!);
@@ -48,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
       splashIconSize: 350,
       duration: 4000,
       pageTransitionType: PageTransitionType.fade,
-      nextScreen: HomeScreen(),
+      nextScreen: _child,
     );
   }
 }

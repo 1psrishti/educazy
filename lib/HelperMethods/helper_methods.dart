@@ -1,3 +1,7 @@
+import 'package:educazy/dataProviders/user_app_data.dart';
+import 'package:educazy/enums/font_enum.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class HelperMethods {
   static Duration parseDuration(String s) {
@@ -20,5 +24,19 @@ class HelperMethods {
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
     return "$twoDigitMinutes:$twoDigitSeconds";
+  }
+
+  static toggleFont(BuildContext context) {
+    var font = Provider.of<UserAppData>(context, listen: false).font;
+    if (font == CustomFont.small) {
+      Provider.of<UserAppData>(context, listen: false)
+          .setFont(CustomFont.medium);
+    } else if (font == CustomFont.medium) {
+      Provider.of<UserAppData>(context, listen: false)
+          .setFont(CustomFont.large);
+    } else {
+      Provider.of<UserAppData>(context, listen: false)
+          .setFont(CustomFont.small);
+    }
   }
 }

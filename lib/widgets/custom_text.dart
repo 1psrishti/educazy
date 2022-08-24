@@ -1,45 +1,54 @@
+import 'package:educazy/dataProviders/user_app_data.dart';
 import 'package:educazy/enums/font_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
 class CustomText extends StatefulWidget {
   final String text;
-  final Color color;
-  final double size;
-  final FontWeight fontWeight;
-  final CustomFont? font;
+  final TextStyle style;
+  final TextAlign? textAlign;
 
-  const CustomText({Key? key, required this.text, required this.color, required this.size, required this.fontWeight,this.font=CustomFont.medium}) : super(key: key);
+  const CustomText(this.text, {Key? key, required this.style, this.textAlign})
+      : super(key: key);
 
   @override
   State<CustomText> createState() => _CustomTextState();
 }
 
 class _CustomTextState extends State<CustomText> {
-
   @override
   Widget build(BuildContext context) {
-    double size1=0.0;
-    switch(widget.font){
-      case CustomFont.small:{
-        size1=widget.size-2;
-        break;
-
-      }
-      case CustomFont.medium:{
-        size1=widget.size;
-        break;
-      }
-      case CustomFont.large:{
-        size1=widget.size+4;
-        break;
-      }
-      default:{
-        size1=widget.size;
-      }
-
+    var provider = Provider.of<UserAppData>(context);
+    double size1 = 0.0;
+    switch (provider.font) {
+      case CustomFont.small:
+        {
+          size1 = widget.style.fontSize! - 2;
+          break;
+        }
+      case CustomFont.medium:
+        {
+          size1 = widget.style.fontSize!;
+          break;
+        }
+      case CustomFont.large:
+        {
+          size1 = widget.style.fontSize! + 4;
+          break;
+        }
+      default:
+        {
+          size1 = widget.style.fontSize!;
+        }
     }
 
-
-    return Text(widget.text,style: GoogleFonts.sourceSansPro(fontSize: size1,color: widget.color,fontWeight: widget.fontWeight),);
+    return Text(
+      widget.text,
+      style: GoogleFonts.sourceSansPro(
+          fontSize: size1,
+          color: widget.style.color,
+          fontWeight: widget.style.fontWeight),
+    );
   }
 }

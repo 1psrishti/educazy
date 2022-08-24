@@ -28,7 +28,7 @@ class _QuizQuesState extends State<QuizQues> {
   Timer? countDownTimer;
   Duration? testDuration;
 
-  int? _groupValue;
+  int _groupValue = 0;
 
   QuizData? quizProvider;
   TimerData? timerProvider;
@@ -37,29 +37,14 @@ class _QuizQuesState extends State<QuizQues> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    _currentQuestionIndex =
+        Provider.of<QuizData>(context, listen: false).getCurentQuesIndex();
     testDuration = quizData.duration;
     quizProvider = Provider.of<QuizData>(context, listen: false);
     timerProvider = Provider.of<TimerData>(context, listen: false);
 
-    _groupValue = _currentQuestionIndex;
+    _groupValue = 0;
     startTimer();
-  }
-
-  void _nextQuestion() {
-    if (quizData.questions.length > _currentQuestionIndex + 1) {
-      setState(() {
-        _currentQuestionIndex = _currentQuestionIndex + 1;
-      });
-    } else {}
-  }
-
-  void _prevQuestion() {
-    if (_currentQuestionIndex - 1 >= 0) {
-      setState(() {
-        _currentQuestionIndex = _currentQuestionIndex - 1;
-      });
-    }
   }
 
   void markAnswer(String answer) {
@@ -75,7 +60,7 @@ class _QuizQuesState extends State<QuizQues> {
     setState(() {
       _groupValue = val;
     });
-    quizProvider!.markAnswer(currentQues!.answers[val]);
+    quizProvider!.markAnswer(val);
   }
 
   void startTimer() {
@@ -109,9 +94,16 @@ class _QuizQuesState extends State<QuizQues> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<QuizData>(context);
+    var marked = questions[provider.getCurentQuesIndex()].markedAnswer ??
+        questions[provider.getCurentQuesIndex()].answers[0];
+
+    _groupValue =
+        questions[provider.getCurentQuesIndex()].answers.indexOf(marked);
+
     bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
     var textColor = isDarkMode ? Color(0xFFDFDFDF) : Color(0xFF202020);
-    currentQues = quizData.questions[_currentQuestionIndex];
+    currentQues = quizData.questions[provider.getCurentQuesIndex()];
     final width = MediaQuery.of(context).size.width;
     return ScreenWrapper(
       child: Scaffold(
@@ -194,7 +186,6 @@ class _QuizQuesState extends State<QuizQues> {
                         shrinkWrap: true,
                         itemCount: currentQues!.answers.length,
                         itemBuilder: (context, index) {
-                          print(_groupValue);
                           return GestureDetector(
                             onTap: () {
                               onchangedAnswer(index);
@@ -234,7 +225,7 @@ class _QuizQuesState extends State<QuizQues> {
                       children: [
                         TextButton(
                           onPressed: () {
-                            _prevQuestion();
+                            provider.prevQuestion();
                           },
                           child: Row(children: [
                             Icon(
@@ -258,7 +249,7 @@ class _QuizQuesState extends State<QuizQues> {
                         TextButton(
                           onPressed: () {
                             print("next");
-                            _nextQuestion();
+                            provider.nextQuestion();
                           },
                           child: Row(children: [
                             Text('Next',

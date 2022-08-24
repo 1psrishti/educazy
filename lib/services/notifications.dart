@@ -1,12 +1,13 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 import '../main.dart';
 
 void notif(context) {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-    // await AlertHelper.speak(message.notification!.title!, "en");
+    await speak(message.notification!.title!);
     // NotificationHelper.updateNotifications(message);
 
     RemoteNotification? notification = message.notification;
@@ -57,4 +58,9 @@ updateToken(String token, String userId) async {
   //       .doc(userId)
   //       .update({"fcm_token": token});
   // }
+}
+
+Future speak(String sentence) async {
+  FlutterTts flutterTts = FlutterTts();
+  await flutterTts.speak(sentence);
 }

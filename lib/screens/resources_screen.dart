@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:read_pdf_text/read_pdf_text.dart';
 
 class Resources extends StatefulWidget {
@@ -173,9 +174,18 @@ class _ResourcesState extends State<Resources> {
     return pdfText;
   }
 
+  _write(String text) async {
+    final Directory? directory = await getExternalStorageDirectory();
+    final File file = File('${directory!.path}/my_file.txt');
+    print(directory.path);
+    await file.writeAsString(text).then((value) => print(file));
+    print("done");
+  }
+
   void getBraille(String text) {
     text = text.substring(0, text.length - 1);
     text = text.replaceAll(RegExp('[^A-Za-z0-9]'), '');
+    // _write(text);
     displayedText = "";
     String finalUrl = url + text;
     final uri = Uri.parse(finalUrl);

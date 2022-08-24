@@ -1,3 +1,4 @@
+import 'package:educazy/enums/font_enum.dart';
 import 'package:educazy/models/user_model.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -7,6 +8,7 @@ class UserAppData extends ChangeNotifier {
   UserModel? userModel;
   String? authToken;
   int tabIndex = 0;
+  CustomFont font = CustomFont.medium;
 
   void setOffset(Offset newOffset) {
     offset = newOffset;
@@ -30,6 +32,11 @@ class UserAppData extends ChangeNotifier {
 
   void setAuthToken(String authToken) {
     this.authToken = authToken;
+    notifyListeners();
+  }
+
+  void setFont(CustomFont font) {
+    this.font = font;
     notifyListeners();
   }
 }

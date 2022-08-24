@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:badges/badges.dart';
+import 'package:educazy/HelperMethods/helper_methods.dart';
 import 'package:educazy/dataProviders/quiz_data_provider.dart';
 import 'package:educazy/dataProviders/timer_data.dart';
 import 'package:educazy/dataProviders/user_app_data.dart';
@@ -216,9 +217,10 @@ class _DraggableFloatingActionButtonState
               }),
           CircularMenuItem(
               iconSize: 20,
-              icon: Icons.search,
+              icon: Icons.text_format,
               onTap: () {
                 //callback
+                HelperMethods.toggleFont(context);
               }),
           CircularMenuItem(
               iconSize: 20,

@@ -17,11 +17,21 @@ class QuizData extends ChangeNotifier {
     }
   }
 
-  void markAnswer(String answer) {
+  void markAnswer(index) {
     Question currentQues = quizData.questions[_currentQuesIndex];
-    if (currentQues.answers.contains(answer)) {
-      currentQues.markedAnswer = answer;
-    }
+    currentQues.markedAnswer = currentQues.answers[index];
     notifyListeners();
+  }
+
+  void nextQuestion() {
+    if (quizData.questions.length > _currentQuesIndex + 1) {
+      _currentQuesIndex = _currentQuesIndex + 1;
+    } else {}
+  }
+
+  void prevQuestion() {
+    if (_currentQuesIndex - 1 >= 0) {
+      _currentQuesIndex = _currentQuesIndex - 1;
+    }
   }
 }

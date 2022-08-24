@@ -1,5 +1,6 @@
 import 'package:educazy/utils/custom_colors.dart';
 import 'package:educazy/utils/theme_provider.dart';
+import 'package:educazy/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -38,7 +39,7 @@ class _ClassesScreenState extends State<ClassesScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                CustomText(
                   'Enrolled Classes',
                   textAlign: TextAlign.start,
                   style: GoogleFonts.sourceSansPro(
@@ -157,7 +158,7 @@ class EnrolledClass extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        CustomText(
                           subjectName,
                           style: GoogleFonts.sourceSansPro(
                               color: primaryColor,
@@ -165,7 +166,7 @@ class EnrolledClass extends StatelessWidget {
                               fontSize: 18),
                         ),
                         const SizedBox(height: 7),
-                        Text(
+                        CustomText(
                           'by $facultyName',
                           style: GoogleFonts.sourceSansPro(
                               color: Color(0xFF777777), fontSize: 13),
@@ -246,7 +247,7 @@ class _TopSectionState extends State<TopSection> {
           //           SizedBox(
           //             width: 18,
           //           ),
-          //           Text(
+          //           CustomText(
           //             'Educazy',
           //             style: GoogleFonts.squadaOne(
           //                 fontSize: 21, color: CustomColors.blue),
@@ -277,7 +278,7 @@ class _TopSectionState extends State<TopSection> {
           //             badgeColor: const Color(0xFFD84F4F),
           //             badgeContent: Padding(
           //               padding: const EdgeInsets.all(2.0),
-          //               child: Text(
+          //               child: CustomText(
           //                 widget.notifNo.toString(),
           //                 style: const TextStyle(
           //                     color: Colors.white, fontSize: 10),
@@ -366,7 +367,7 @@ class _TopSectionState extends State<TopSection> {
                       color: buttonColor,
                     ),
                     child: Center(
-                      child: Text('Join Class',
+                      child: CustomText('Join Class',
                           style: GoogleFonts.sourceSansPro(
                               fontSize: 16,
                               color: !isDarkMode

@@ -24,7 +24,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24,),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 24,
+                ),
                 color: const Color(0xff0A5580),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,6 +122,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Option(
                       icon: Icons.dark_mode_outlined,
                       text: "Dark Mode",
+                    ),
+                    const ToggleThemeButton()
+                  ],
+                ),
+              ),
+              const SizedBox(height: 8),
+              Container(
+                padding: EdgeInsets.all(16),
+                color: isDarkMode ? const Color(0xFF0D0D0D) : Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Option(
+                      icon: Icons.text_format,
+                      text: "Change Font",
                     ),
                     ToggleThemeButton()
                   ],
