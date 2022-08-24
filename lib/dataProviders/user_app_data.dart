@@ -6,9 +6,15 @@ class UserAppData extends ChangeNotifier {
   String? currentScreen;
   UserModel? userModel;
   String? authToken;
+  int tabIndex = 0;
 
   void setOffset(Offset newOffset) {
     offset = newOffset;
+    notifyListeners();
+  }
+
+  void setTabIndex(int i) {
+    tabIndex = i;
     notifyListeners();
   }
 

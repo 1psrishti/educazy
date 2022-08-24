@@ -162,7 +162,7 @@ class _ResourcesState extends State<Resources> {
   }
 
   void getBraille(String text) {
-    text = text.substring(0, 1900);
+    text = text.substring(0, text.length - 1);
     text = text.replaceAll(RegExp('[^A-Za-z0-9]'), '');
     displayedText = "";
     String finalUrl = url + text;

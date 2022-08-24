@@ -9,6 +9,7 @@ import 'package:string_similarity/string_similarity.dart';
 
 import '../dataProviders/quiz_data_provider.dart';
 import '../dataProviders/timer_data.dart';
+import '../dataProviders/user_app_data.dart';
 import '../main.dart';
 import '../screens/auth_screens/enroll_screen.dart';
 import '../screens/auth_screens/login_screen.dart';
@@ -119,8 +120,8 @@ class CircularMenuState extends State<CircularMenu>
       vsync: this,
       duration: widget.animationDuration,
     )..addListener(() {
-      setState(() {});
-    });
+        setState(() {});
+      });
     _animation = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
           parent: _animationController,
@@ -217,9 +218,9 @@ class CircularMenuState extends State<CircularMenu>
               offset: Offset.fromDirection(
                   _completeAngle == (2 * math.pi)
                       ? (_initialAngle +
-                      (_completeAngle! / (_itemsCount)) * index)
+                          (_completeAngle! / (_itemsCount)) * index)
                       : (_initialAngle +
-                      (_completeAngle! / (_itemsCount - 1)) * index),
+                          (_completeAngle! / (_itemsCount - 1)) * index),
                   _animation.value * widget.radius),
               child: Transform.scale(
                 scale: _animation.value,
@@ -236,13 +237,13 @@ class CircularMenuState extends State<CircularMenu>
     return items;
   }
 
-  Widget _buildMenuButton(BuildContext context) {
-    SpeechToText _speechToText = SpeechToText();
-    bool isListening = false;
-    String text = "";
-    double _confidence = 1.0;
-    FlutterTts flutterTts = FlutterTts();
+  SpeechToText _speechToText = SpeechToText();
+  bool isListening = false;
+  String text = "";
+  double _confidence = 1.0;
+  FlutterTts flutterTts = FlutterTts();
 
+  Widget _buildMenuButton(BuildContext context) {
     void setText(TextEditingController controller, value) {
       try {
         controller.text = value;
@@ -277,7 +278,7 @@ class CircularMenuState extends State<CircularMenu>
         null
       ];
       final bestMatch = text1.bestMatch(targetStrings);
-
+      HomeScreen home = HomeScreen();
       switch (bestMatch.bestMatchIndex) {
         case 0:
           {
@@ -327,15 +328,15 @@ class CircularMenuState extends State<CircularMenu>
           }
         case 7:
           {
-           // navigatorKey.currentState!.pushNamed(HomeScreen.name);
+            // navigatorKey.currentState!.pushNamed(HomeScreen.name);
 
-          btm_globalKey.currentState!.widget.onTap!(0);
+            Provider.of<UserAppData>(context, listen: false).setTabIndex(0);
             await _speak("Taking you to homepage");
             break;
           }
         case 8:
           {
-            btm_globalKey.currentState!.widget.onTap!(1);
+            Provider.of<UserAppData>(context, listen: false).setTabIndex(1);
             await _speak("Taking you to testscreen");
             break;
           }
@@ -343,45 +344,46 @@ class CircularMenuState extends State<CircularMenu>
           {
             navigatorKey.currentState!.push(MaterialPageRoute(
                 builder: ((context) => MultiProvider(
-                  providers: [
-                    ChangeNotifierProvider(create: (context) => QuizData()),
-                    ChangeNotifierProvider(create: (context) => TimerData()),
-                  ],
-                  child: const QuizQues(),
-                ))));
+                      providers: [
+                        ChangeNotifierProvider(create: (context) => QuizData()),
+                        ChangeNotifierProvider(
+                            create: (context) => TimerData()),
+                      ],
+                      child: const QuizQues(),
+                    ))));
             await _speak("Taking you to quiz");
             break;
           }
         case 10:
           {
-            btm_globalKey.currentState!.widget.onTap!(0);
+            Provider.of<UserAppData>(context, listen: false).setTabIndex(0);
             await _speak("Taking you to class");
             break;
           }
         case 11:
           {
-           // navigatorKey.currentState!.pushNamed(Resources.name);
-            btm_globalKey.currentState!.widget.onTap!(2);
+            // navigatorKey.currentState!.pushNamed(Resources.name);
+            Provider.of<UserAppData>(context, listen: false).setTabIndex(2);
             await _speak("Taking you to resources");
             break;
           }
         case 12:
           {
-           navigatorKey.currentState!.pushNamed(Progresscard.name);
+            navigatorKey.currentState!.pushNamed(Progresscard.name);
 
             await _speak("Taking you to progress card");
             break;
           }
         case 13:
           {
-           // navigatorKey.currentState!.pushNamed(Progresscard.name);
-            btm_globalKey.currentState!.widget.onTap!(3);
+            // navigatorKey.currentState!.pushNamed(Progresscard.name);
+            Provider.of<UserAppData>(context, listen: false).setTabIndex(3);
             await _speak("Taking you to progress card");
             break;
           }
       }
 
-      if(mounted){
+      if (mounted) {
         setState(() {
           _speechToText.stop();
           isListening = false;
@@ -399,7 +401,7 @@ class CircularMenuState extends State<CircularMenu>
             onError: (val) => print('onError: $val'),
             debugLogging: true);
         if (available) {
-          if(mounted){
+          if (mounted) {
             setState(() {
               isListening = true;
             });
@@ -409,7 +411,7 @@ class CircularMenuState extends State<CircularMenu>
             listenMode: ListenMode.deviceDefault,
             listenFor: Duration(seconds: 10),
             onResult: (val) {
-              if(mounted){
+              if (mounted) {
                 setState(() {
                   text = val.recognizedWords;
                 });
@@ -434,8 +436,6 @@ class CircularMenuState extends State<CircularMenu>
         });
       }
     }
-
-
 
 /* onLongPressed: () {
 
@@ -463,69 +463,60 @@ class CircularMenuState extends State<CircularMenu>
             }
             */
 
-
-
-
-
     return Positioned.fill(
       child: Align(
         alignment: widget.alignment,
         child: Stack(
           children: [
-
-
-              AnimatedContainer(
-                padding: const EdgeInsets.all(5),
-                duration: Duration(milliseconds: 500),
-                constraints: BoxConstraints(minWidth: 0),
-                child: Text(
-                  text,
-                  style: TextStyle(fontSize: 18, decoration: TextDecoration.none),
-                ),
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        bottomLeft: Radius.circular(20))),
+            AnimatedContainer(
+              padding: const EdgeInsets.all(5),
+              duration: Duration(milliseconds: 500),
+              constraints: BoxConstraints(minWidth: 0),
+              child: Text(
+                text,
+                style: TextStyle(fontSize: 18, decoration: TextDecoration.none),
               ),
-
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      bottomLeft: Radius.circular(20))),
+            ),
             Container(
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: Colors.transparent,
-                boxShadow:
-                    [
-                      BoxShadow(
-                        color: Theme.of(context).primaryColor,
-                        blurRadius: 10,
-                      ),
-                    ],
+                boxShadow: [
+                  BoxShadow(
+                    color: Theme.of(context).primaryColor,
+                    blurRadius: 10,
+                  ),
+                ],
                 shape: BoxShape.circle,
               ),
               child: ClipOval(
                 child: Material(
-                  color:  Theme.of(context).primaryColor,
+                  color: Theme.of(context).primaryColor,
                   child: InkWell(
                     child: Padding(
                       padding: EdgeInsets.all(10),
-                      child:
-                       AnimatedIcon( size: 40, progress: _animation,color: Colors.white, icon: AnimatedIcons.menu_close,),
-
-
-
+                      child: AnimatedIcon(
+                        size: 40,
+                        progress: _animation,
+                        color: Colors.white,
+                        icon: AnimatedIcons.menu_close,
+                      ),
                     ),
-                    onTap: (){
+                    onTap: () {
                       print("pressed0");
-                      if (_animationController.status != AnimationStatus.dismissed) {
+                      if (_animationController.status !=
+                          AnimationStatus.dismissed) {
                         (_animationController).reverse();
                       } else {
-
-
-
                         listen();
                       }
                     },
-                    onLongPress: (){
+                    onLongPress: () {
                       _animationController.status == AnimationStatus.dismissed
                           ? (_animationController).forward()
                           : (_animationController).reverse();
@@ -539,7 +530,6 @@ class CircularMenuState extends State<CircularMenu>
             ),
           ],
         ),
-
       ),
     );
   }

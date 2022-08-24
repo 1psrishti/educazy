@@ -1,0 +1,1 @@
+enum CustomFont{small,medium,large}

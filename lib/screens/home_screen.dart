@@ -21,11 +21,11 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../dataProviders/user_app_data.dart';
 import '../widgets/widgets.dart';
 
 int notifNo = 2;
 
-final btm_globalKey =  const GlobalObjectKey<State<BottomNavigationBar>>('hhhh');
 class HomeScreen extends StatefulWidget {
   static const String name = 'homescreen';
 
@@ -39,6 +39,7 @@ Random? rand = Random();
 
 class _HomeScreenState extends State<HomeScreen> {
   bool? isDarkMode;
+  int tab_index = 0;
   @override
   void initState() {
     // TODO: implement initState
@@ -56,16 +57,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
-
+    var provider = Provider.of<UserAppData>(context);
     return ScreenWrapper(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           body: IndexedStack(
-            index: selectedItem,
+            index: provider.tabIndex,
             children: items,
           ),
           bottomNavigationBar: BottomNavigationBar(
-            key: btm_globalKey,
             showUnselectedLabels: true,
             unselectedLabelStyle: TextStyle(color: Colors.grey),
             unselectedIconTheme:
@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
             selectedItemColor: Theme.of(context).primaryColor,
             iconSize: 15,
             onTap: onItemTapped,
-            currentIndex: selectedItem,
+            currentIndex: provider.tabIndex,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Feather.airplay),
@@ -101,8 +101,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void onItemTapped(int index) {
-    setState(() {
-      selectedItem = index;
-    });
+    Provider.of<UserAppData>(context, listen: false).setTabIndex(index);
   }
 }
