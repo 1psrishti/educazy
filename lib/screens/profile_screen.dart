@@ -72,12 +72,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               const SizedBox(height: 8),
-              Container(
-                padding: EdgeInsets.all(16),
-                color: isDarkMode ? const Color(0xFF0D0D0D) : Colors.white,
-                child: Option(
-                  icon: Icons.settings_outlined,
-                  text: "Profile Settings",
+              GestureDetector(
+                onTap: (){
+                  Navigator.pushNamed(context, AccountSettingsScreen.name);
+                },
+                child: Container(
+                  padding: EdgeInsets.all(16),
+                  color: isDarkMode ? const Color(0xFF0D0D0D) : Colors.white,
+                  child: Option(
+                    icon: Icons.settings_outlined,
+                    text: "Profile Settings",
+                  ),
                 ),
               ),
               const SizedBox(height: 8),
@@ -172,35 +177,30 @@ class Option extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isDarkMode =
         Provider.of<ThemeProvider>(context, listen: false).isDarkMode;
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, AccountSettingsScreen.name);
-      },
-      child: Container(
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                color: Color(0xffF1F1F1),
-              ),
-              child: Icon(
-                icon,
-                size: 15,
-                color: Colors.grey,
-              ),
+    return Container(
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              color: Color(0xffF1F1F1),
             ),
-            const SizedBox(width: 16),
-            Text(
-              text,
-              style: GoogleFonts.sourceSansPro(
-                //   color: Color(0xff2F2F2F),
-                fontSize: 14,
-              ),
+            child: Icon(
+              icon,
+              size: 15,
+              color: Colors.grey,
             ),
-          ],
-        ),
+          ),
+          const SizedBox(width: 16),
+          Text(
+            text,
+            style: GoogleFonts.sourceSansPro(
+              //   color: Color(0xff2F2F2F),
+              fontSize: 14,
+            ),
+          ),
+        ],
       ),
     );
   }
