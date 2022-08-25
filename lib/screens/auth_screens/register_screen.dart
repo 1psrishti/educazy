@@ -51,6 +51,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final height = MediaQuery.of(context).size.height;
 
     return ScreenWrapper(
+      showAppBar: false,
       child: Scaffold(
         //resizeToAvoidBottomInset: false,
         body: Container(

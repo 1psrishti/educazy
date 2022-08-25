@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:string_similarity/string_similarity.dart';
@@ -549,8 +550,8 @@ class CircularMenuState extends State<CircularMenu>
                 text,
                 style: TextStyle(fontSize: 18, decoration: TextDecoration.none),
               ),
-              decoration: const BoxDecoration(
-                  color: Colors.white,
+              decoration: BoxDecoration(
+                  color: text.length > 0 ? Colors.white : Colors.transparent,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       bottomLeft: Radius.circular(20))),
@@ -561,7 +562,7 @@ class CircularMenuState extends State<CircularMenu>
                 color: Colors.transparent,
                 boxShadow: [
                   BoxShadow(
-                    color: Theme.of(context).primaryColor,
+                    color: Colors.black.withOpacity(0.25),
                     blurRadius: 10,
                   ),
                 ],
@@ -569,17 +570,17 @@ class CircularMenuState extends State<CircularMenu>
               ),
               child: ClipOval(
                 child: Material(
-                  color: Theme.of(context).primaryColor,
+                  color: Color(0xFF5BB92F),
                   child: InkWell(
                     child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: AnimatedIcon(
-                        size: 40,
-                        progress: _animation,
-                        color: Colors.white,
-                        icon: AnimatedIcons.menu_close,
-                      ),
-                    ),
+                        padding: EdgeInsets.all(10),
+                        child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: ImageIcon(
+                              AssetImage('assets/images/mic.png'),
+                              color: Colors.white,
+                              size: 30,
+                            ))),
                     onTap: () {
                       listen();
                     },

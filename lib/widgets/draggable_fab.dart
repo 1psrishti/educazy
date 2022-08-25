@@ -32,12 +32,14 @@ class DraggableFloatingActionButton extends StatefulWidget {
   final Alignment initialOffset;
 
   final Widget child;
+  final bool? showAppBar;
 
-  const DraggableFloatingActionButton({
-    Key? key,
-    required this.initialOffset,
-    required this.child,
-  }) : super(key: key);
+  const DraggableFloatingActionButton(
+      {Key? key,
+      required this.initialOffset,
+      required this.child,
+      this.showAppBar = true})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _DraggableFloatingActionButtonState();
@@ -135,70 +137,73 @@ class _DraggableFloatingActionButtonState
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        elevation: 0.2,
-        toolbarHeight: 60,
-        backgroundColor: Theme.of(context).cardColor,
-        leading: ImageIcon(
-          const AssetImage('assets/images/logo.png'),
-          color: Theme.of(context).primaryColor,
-          size: 33,
-        ),
-        leadingWidth: 45,
-        title: Text(
-          'educazy',
-          style: GoogleFonts.squadaOne(
-              fontSize: 21, color: Theme.of(context).primaryColor),
-        ),
-        actions: [
-          Row(
-            children: [
-              Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: CustomColors.blue.withOpacity(0.05)),
-                child: Center(
-                  child: Icon(
-                    Icons.help_outline_rounded,
-                    color: Theme.of(context).primaryColor,
-                    size: 25,
-                  ),
-                ),
+      appBar: widget.showAppBar!
+          ? AppBar(
+              elevation: 0.2,
+              toolbarHeight: 60,
+              backgroundColor: Theme.of(context).cardColor,
+              leading: ImageIcon(
+                const AssetImage('assets/images/logo.png'),
+                color: Theme.of(context).primaryColor,
+                size: 33,
               ),
-              const SizedBox(width: 16),
-              Badge(
-                badgeColor: const Color(0xFFD84F4F),
-                badgeContent: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Text(
-                    notifNo.toString(),
-                    style: const TextStyle(color: Colors.white, fontSize: 10),
-                  ),
-                ),
-                toAnimate: true,
-                position: BadgePosition.topEnd(end: 0),
-                child: Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: CustomColors.blue.withOpacity(0.05)),
-                  child: Center(
-                    child: Icon(
-                      Icons.notifications_outlined,
-                      color: Theme.of(context).primaryColor,
-                      size: 25,
+              leadingWidth: 45,
+              title: Text(
+                'educazy',
+                style: GoogleFonts.squadaOne(
+                    fontSize: 21, color: Theme.of(context).primaryColor),
+              ),
+              actions: [
+                Row(
+                  children: [
+                    Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: CustomColors.blue.withOpacity(0.05)),
+                      child: Center(
+                        child: Icon(
+                          Icons.help_outline_rounded,
+                          color: Theme.of(context).primaryColor,
+                          size: 25,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 16),
-            ],
-          )
-        ],
-      ),
+                    const SizedBox(width: 16),
+                    Badge(
+                      badgeColor: const Color(0xFFD84F4F),
+                      badgeContent: Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Text(
+                          notifNo.toString(),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 10),
+                        ),
+                      ),
+                      toAnimate: true,
+                      position: BadgePosition.topEnd(end: 0),
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: CustomColors.blue.withOpacity(0.05)),
+                        child: Center(
+                          child: Icon(
+                            Icons.notifications_outlined,
+                            color: Theme.of(context).primaryColor,
+                            size: 25,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                  ],
+                )
+              ],
+            )
+          : null,
       body: CircularMenu(
         toggleButtonAnimatedIconData: AnimatedIcons.play_pause,
         startingAngleInRadian: 1 * pi,
