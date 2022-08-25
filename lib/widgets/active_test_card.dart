@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../dataProviders/quiz_data_provider.dart';
 import '../dataProviders/timer_data.dart';
 import '../screens/quiz_screens/quiz_ques.dart';
+import '../utils/theme_provider.dart';
 
 
 class ActiveTestCard extends StatelessWidget {
@@ -28,6 +29,8 @@ class ActiveTestCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
+
     return Container(
       width: width,
       decoration: BoxDecoration(
@@ -57,7 +60,7 @@ class ActiveTestCard extends StatelessWidget {
             chapter,
             style: GoogleFonts.sourceSansPro(
               fontSize: 14,
-              color: Color(0xff555555),
+              color: isDarkMode ? Color(0xffA9A9A9) : Color(0xff555555),
             ),
           ),
           const SizedBox(height: 24),
@@ -65,14 +68,14 @@ class ActiveTestCard extends StatelessWidget {
             text: TextSpan(
               text: "Teacher: ",
               style: GoogleFonts.sourceSansPro(
-                color: Color(0xff2F2F2F),
+                color: isDarkMode ? Color(0xffA9A9A9) : Color(0xff2F2F2F),
                 fontSize: 14,
               ),
               children: [
                 TextSpan(
                   text: faculty,
                   style: GoogleFonts.sourceSansPro(
-                    color: Color(0xff2F2F2F),
+                    color: isDarkMode ? Color(0xffA9A9A9) : Color(0xff2F2F2F),
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
@@ -95,7 +98,7 @@ class ActiveTestCard extends StatelessWidget {
                   Text(
                     date,
                     style: GoogleFonts.sourceSansPro(
-                      color: const Color(0xff2F2F2F),
+                      color: isDarkMode ? Color(0xffA9A9A9) : Color(0xff2F2F2F),
                       fontSize: 14,
                     ),
                   ),
@@ -112,7 +115,7 @@ class ActiveTestCard extends StatelessWidget {
                   Text(
                     time,
                     style: GoogleFonts.sourceSansPro(
-                      color: const Color(0xff2F2F2F),
+                      color: isDarkMode ? Color(0xffA9A9A9) : Color(0xff2F2F2F),
                       fontSize: 14,
                     ),
                   ),
@@ -129,7 +132,7 @@ class ActiveTestCard extends StatelessWidget {
                   Text(
                     maxMarks.toString() + " Marks",
                     style: GoogleFonts.sourceSansPro(
-                      color: const Color(0xff2F2F2F),
+                      color: isDarkMode ? Color(0xffA9A9A9) : Color(0xff2F2F2F),
                       fontSize: 14,
                     ),
                   ),

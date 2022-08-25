@@ -1,4 +1,5 @@
 import 'package:educazy/models/user_model.dart';
+import 'package:educazy/widgets/custom_text.dart';
 import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -49,7 +50,7 @@ class _ProgresscardState extends State<Progresscard> {
                       SizedBox(
                         height: 27,
                       ),
-                      Text(
+                      CustomText(
                         'Progress Card',
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
@@ -60,7 +61,7 @@ class _ProgresscardState extends State<Progresscard> {
                       SizedBox(
                         height: 21,
                       ),
-                      Text(
+                      CustomText(
                         'One-Portal-One-Report-Card',
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
@@ -71,7 +72,7 @@ class _ProgresscardState extends State<Progresscard> {
                       SizedBox(
                         height: 7,
                       ),
-                      Text(
+                      CustomText(
                         'Never stop learning! Books, worksheets and reading materials now just one click away.',
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w400,
@@ -114,11 +115,11 @@ class _ProgresscardState extends State<Progresscard> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text('UUID: ${student.userId}',
+                                          CustomText('UUID: ${student.userId}',
                                               style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 14)),
-                                          Text('Name: ${student.name}',
+                                          CustomText('Name: ${student.name}',
                                               style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 14)),
@@ -132,14 +133,14 @@ class _ProgresscardState extends State<Progresscard> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.stretch,
                                         children: [
-                                          Text(
+                                          CustomText(
                                             'Class: ${student.className}',
                                             style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 14),
                                             textAlign: TextAlign.left,
                                           ),
-                                          Text(
+                                          CustomText(
                                             'School: ${student.school}',
                                             style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w500,
@@ -157,7 +158,7 @@ class _ProgresscardState extends State<Progresscard> {
                               decoration: BoxDecoration(
                                 color: Color(0xFFF4F4F4),
                               ),
-                              child: Text(
+                              child: CustomText(
                                 'Normalised Marks',
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w500,
@@ -178,14 +179,14 @@ class _ProgresscardState extends State<Progresscard> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
+                                          CustomText(
                                             student.marksList![index].subject
                                                 .name.name,
                                             style: GoogleFonts.poppins(
                                                 fontSize: 15,
                                                 color: Color(0xFF202020)),
                                           ),
-                                          Text(
+                                          CustomText(
                                             '${student.marksList![index].acquiredMarks}/${student.marksList![index].totalMarks}',
                                             style: GoogleFonts.poppins(
                                                 fontSize: 15,

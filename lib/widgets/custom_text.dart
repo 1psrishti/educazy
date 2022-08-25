@@ -24,22 +24,22 @@ class _CustomTextState extends State<CustomText> {
     switch (provider.font) {
       case CustomFont.small:
         {
-          size1 = widget.style.fontSize! - 2;
+          size1 = (widget.style.fontSize ?? 14) - 2;
           break;
         }
       case CustomFont.medium:
         {
-          size1 = widget.style.fontSize!;
+          size1 = (widget.style.fontSize ?? 14);
           break;
         }
       case CustomFont.large:
         {
-          size1 = widget.style.fontSize! + 4;
+          size1 = (widget.style.fontSize ?? 14) + 4;
           break;
         }
       default:
         {
-          size1 = widget.style.fontSize!;
+          size1 = widget.style.fontSize ?? 14;
         }
     }
 

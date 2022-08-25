@@ -1,3 +1,4 @@
+import 'package:educazy/screens/enrolled_class.dart';
 import 'package:educazy/utils/custom_colors.dart';
 import 'package:educazy/utils/theme_provider.dart';
 import 'package:educazy/widgets/custom_text.dart';
@@ -17,11 +18,10 @@ class ClassesScreen extends StatefulWidget {
 
 class _ClassesScreenState extends State<ClassesScreen> {
   final homeClassCodeController = TextEditingController();
-  bool? isDarkMode;
+  // bool? isDarkMode;
   @override
   Widget build(BuildContext context) {
-    isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
-
+    bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
     double width = MediaQuery.of(context).size.width - 40;
 
     return SafeArea(
@@ -45,22 +45,32 @@ class _ClassesScreenState extends State<ClassesScreen> {
                   style: GoogleFonts.sourceSansPro(
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
-                    color: const Color(0xFF555555),
+                    color: isDarkMode ? Color(0xffA9A9A9) : Color(0xFF555555),
                   ),
                 ),
                 const SizedBox(height: 13),
-                EnrolledClass(
-                  width: width,
-                  facultyName: 'Mr. Vedant Singh',
-                  subjectName: 'Social Studies',
-                  onPressed: () {},
-                  image: Icon(
-                    Entypo.globe,
-                    color: CustomColors.green,
-                    size: 24,
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => EnrolledScreen()),
+                      ),
+                    );
+                  },
+                  child: EnrolledClass(
+                    width: width,
+                    facultyName: 'Mr. Vedant Singh',
+                    subjectName: 'Social Studies',
+                    onPressed: () {},
+                    image: Icon(
+                      Entypo.globe,
+                      color: CustomColors.green,
+                      size: 24,
+                    ),
+                    primaryColor: const Color(0XFF1D934C),
+                    backColor: const Color(0xFF1D934C).withOpacity(0.05),
                   ),
-                  primaryColor: const Color(0XFF1D934C),
-                  backColor: const Color(0xFF1D934C).withOpacity(0.05),
                 ),
                 EnrolledClass(
                   width: width,
@@ -120,7 +130,8 @@ class EnrolledClass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 150),
       margin: const EdgeInsets.symmetric(vertical: 5),
       padding: const EdgeInsets.symmetric(horizontal: 21),
       height: 100,
@@ -145,7 +156,8 @@ class EnrolledClass extends StatelessWidget {
             Container(
               child: Row(
                 children: [
-                  Container(
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 150),
                     height: 52,
                     width: 52,
                     decoration: BoxDecoration(
@@ -175,13 +187,14 @@ class EnrolledClass extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 150),
               height: 30,
               width: 30,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(27),
                   color: isDarkMode ? Color(0xFF1B1B1B) : Color(0xFFF1F1F1)),
-              child: Center(
+              child: const Center(
                 child: Icon(
                   Icons.navigate_next_rounded,
                   color: Color(0xFf999999),
@@ -228,7 +241,8 @@ class _TopSectionState extends State<TopSection> {
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
 
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 150),
       color: Theme.of(context).cardColor,
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -305,7 +319,8 @@ class _TopSectionState extends State<TopSection> {
           //     )
           //   ],
           // ),
-          SizedBox(
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 150),
             height: 44,
             width: widget.width,
             child: Row(

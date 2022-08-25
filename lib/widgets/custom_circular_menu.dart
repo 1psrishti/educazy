@@ -581,21 +581,7 @@ class CircularMenuState extends State<CircularMenu>
                       ),
                     ),
                     onTap: () {
-                      print("pressed0");
-                      if (_animationController.status !=
-                          AnimationStatus.dismissed) {
-                        (_animationController).reverse();
-                      } else {
-                        listen();
-                      }
-                    },
-                    onLongPress: () {
-                      _animationController.status == AnimationStatus.dismissed
-                          ? (_animationController).forward()
-                          : (_animationController).reverse();
-                      if (widget.toggleButtonOnPressed != null) {
-                        widget.toggleButtonOnPressed!();
-                      }
+                      listen();
                     },
                   ),
                 ),

@@ -4,7 +4,6 @@ import 'package:badges/badges.dart';
 import 'package:educazy/dataProviders/quiz_data_provider.dart';
 import 'package:educazy/dataProviders/timer_data.dart';
 import 'package:educazy/screens/classes_screen.dart';
-import 'package:educazy/screens/incoming_call.dart';
 import 'package:educazy/screens/profile_screen.dart';
 import 'package:educazy/screens/progress_card_screen.dart';
 import 'package:educazy/screens/quiz_screens/quiz_ques.dart';

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+import '../utils/theme_provider.dart';
 
 class TestCards extends StatelessWidget {
   String courseCode;
@@ -20,6 +23,7 @@ class TestCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
@@ -49,7 +53,7 @@ class TestCards extends StatelessWidget {
             chapter,
             style: GoogleFonts.sourceSansPro(
               fontSize: 14,
-              color: Color(0xff555555),
+              color: isDarkMode ? Color(0xffA9A9A9) : Color(0xff555555),
             ),
           ),
           const SizedBox(height: 24),
@@ -57,14 +61,14 @@ class TestCards extends StatelessWidget {
             text: TextSpan(
               text: "Teacher: ",
               style: GoogleFonts.sourceSansPro(
-                color: Color(0xff2F2F2F),
+                color: isDarkMode ? Color(0xffA9A9A9) : Color(0xff2F2F2F),
                 fontSize: 14,
               ),
               children: [
                 TextSpan(
                   text: faculty,
                   style: GoogleFonts.sourceSansPro(
-                    color: Color(0xff2F2F2F),
+                    color: isDarkMode ? Color(0xffA9A9A9) : Color(0xff2F2F2F),
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
@@ -76,14 +80,14 @@ class TestCards extends StatelessWidget {
             text: TextSpan(
               text: "Max Marks: ",
               style: GoogleFonts.sourceSansPro(
-                color: Color(0xff2F2F2F),
+                color: isDarkMode ? Color(0xffA9A9A9) : Color(0xff2F2F2F),
                 fontSize: 14,
               ),
               children: [
                 TextSpan(
                   text: maxMarks.toString(),
                   style: GoogleFonts.sourceSansPro(
-                    color: Color(0xff2F2F2F),
+                    color: isDarkMode ? Color(0xffA9A9A9) : Color(0xff2F2F2F),
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
@@ -106,7 +110,7 @@ class TestCards extends StatelessWidget {
                   Text(
                     date,
                     style: GoogleFonts.sourceSansPro(
-                      color: const Color(0xff2F2F2F),
+                      color: isDarkMode ? Color(0xffA9A9A9) :  Color(0xff2F2F2F),
                       fontSize: 14,
                     ),
                   ),
@@ -124,7 +128,7 @@ class TestCards extends StatelessWidget {
                   Text(
                     time,
                     style: GoogleFonts.sourceSansPro(
-                      color: const Color(0xff2F2F2F),
+                      color: isDarkMode ? Color(0xffA9A9A9) :  Color(0xff2F2F2F),
                       fontSize: 14,
                     ),
                   ),

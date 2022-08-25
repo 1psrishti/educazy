@@ -38,7 +38,7 @@ class Marks {
     };
   }
 
-  factory Marks.fromMap(Map<String, dynamic> map) {
+  factory Marks.fromMap(map) {
     return Marks(
       subject: Subject.fromMap(map['subject'] as Map<String, dynamic>),
       acquiredMarks:
