@@ -5,6 +5,7 @@ import 'package:educazy/dataProviders/quiz_data_provider.dart';
 import 'package:educazy/dataProviders/timer_data.dart';
 import 'package:educazy/models/question_model.dart';
 import 'package:educazy/utils/theme_provider.dart';
+import 'package:educazy/widgets/custom_text.dart';
 import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -116,7 +117,7 @@ class _QuizQuesState extends State<QuizQues> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
+                    CustomText(
                       'Test - ${quizData.name} (${quizData.id})',
                       style: GoogleFonts.poppins(
                           color: textColor,
@@ -149,7 +150,7 @@ class _QuizQuesState extends State<QuizQues> {
                                 const SizedBox(
                                   width: 8,
                                 ),
-                                Text(
+                                CustomText(
                                   'Time Remaining',
                                   style:
                                       GoogleFonts.poppins(color: Colors.black),
@@ -157,21 +158,21 @@ class _QuizQuesState extends State<QuizQues> {
                               ],
                             ),
                           ),
-                          Text(HelperMethods.printDuration(testDuration!),
+                          CustomText(HelperMethods.printDuration(testDuration!),
                               style: GoogleFonts.poppins(color: Colors.black))
                         ],
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 32),
-                      child: Text(
+                      child: CustomText(
                         'Question ${_currentQuestionIndex + 1}',
                         style: GoogleFonts.poppins(color: Color(0xFF707070)),
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 9),
-                      child: Text(
+                      child: CustomText(
                         currentQues!.question,
                         textAlign: TextAlign.left,
                         style: GoogleFonts.poppins(
@@ -208,11 +209,15 @@ class _QuizQuesState extends State<QuizQues> {
                                       value: index,
                                       groupValue: _groupValue,
                                       onChanged: onchangedAnswer),
-                                  Text('${String.fromCharCode(65 + index)})'),
+                                  CustomText(
+                                    '${String.fromCharCode(65 + index)})',
+                                    style: TextStyle(),
+                                  ),
                                   SizedBox(
                                     width: 15,
                                   ),
-                                  Text(currentQues!.answers[index])
+                                  CustomText(currentQues!.answers[index],
+                                      style: TextStyle()),
                                 ],
                               ),
                             ),
@@ -233,7 +238,7 @@ class _QuizQuesState extends State<QuizQues> {
                               color: Theme.of(context).primaryColor,
                               size: 21,
                             ),
-                            Text('Previous',
+                            CustomText('Previous',
                                 // gradient: const LinearGradient(
                                 //   colors: [
                                 //     Color(0xFF8A5BEF),
@@ -252,7 +257,7 @@ class _QuizQuesState extends State<QuizQues> {
                             provider.nextQuestion();
                           },
                           child: Row(children: [
-                            Text('Next',
+                            CustomText('Next',
                                 // gradient: const LinearGradient(
                                 //   colors: [
                                 //     Color(0xFF8A5BEF),

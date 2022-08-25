@@ -19,7 +19,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   List<String> _selectedDisabilities = [];
 
-  List<String> disabilities = ["Sight", "Speech", "Hearing"];
+  List<String> disabilities = [];
   String _text = "";
 
   void _showMultiSelectDropdown(List<String> items) async {
@@ -46,6 +46,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    disabilities = ["Sight", "Speech", "Hearing", "Handicap", "Other"];
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 

@@ -51,7 +51,7 @@ class UserModel {
       'school': school,
       'class': className,
       'disabilities': disabilities,
-      'marksList':
+      'scores':
           marksList != null ? marksList!.map((x) => x.toMap()).toList() : [],
     };
   }
@@ -66,9 +66,9 @@ class UserModel {
       disabilities: map['disabilities'] != null
           ? List<String>.from((map['disabilities']))
           : null,
-      marksList: map['marksList'] != null
+      marksList: map['scores'] != null
           ? List<Marks>.from(
-              (map['marksList']).map<Marks?>(
+              (map['scores']).map<Marks?>(
                 (x) => Marks.fromMap(x),
               ),
             )
@@ -83,7 +83,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(username: $username, name: $name, _id: $userId, school: $school, class: $className, disabilities: $disabilities, marksList: $marksList)';
+    return 'UserModel(username: $username, name: $name, _id: $userId, school: $school, class: $className, disabilities: $disabilities, scores: $marksList)';
   }
 
   @override

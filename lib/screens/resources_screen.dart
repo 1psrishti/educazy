@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:educazy/data/resources_data.dart';
+import 'package:educazy/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
@@ -42,7 +43,7 @@ class _ResourcesState extends State<Resources> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
+                  const CustomText(
                     'Resources',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -72,7 +73,7 @@ class _ResourcesState extends State<Resources> {
                                 )
                               ]),
                         ),
-                        Text(
+                        CustomText(
                           resources[index].name,
                           style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500, fontSize: 18),
@@ -81,14 +82,14 @@ class _ResourcesState extends State<Resources> {
                     },
                   ),
                   const SizedBox(height: 50),
-                  Text(
+                  CustomText(
                     "Braille Converter",
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 24,
                     ),
                   ),
-                  Text(
+                  CustomText(
                     "Easily convert text to braille.",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -116,7 +117,7 @@ class _ResourcesState extends State<Resources> {
                     },
                     child: Container(
                       padding: const EdgeInsets.all(12),
-                      child: const Text(
+                      child: const CustomText(
                         "Select Pdf",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -132,7 +133,10 @@ class _ResourcesState extends State<Resources> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Text(displayedText),
+                  CustomText(
+                    displayedText,
+                    style: GoogleFonts.sourceCodePro(fontSize: 14),
+                  ),
                   const SizedBox(height: 10),
                   GestureDetector(
                     onTap: () {
@@ -140,7 +144,7 @@ class _ResourcesState extends State<Resources> {
                     },
                     child: Container(
                       padding: const EdgeInsets.all(12),
-                      child: const Text(
+                      child: const CustomText(
                         "Convert to Braille",
                         textAlign: TextAlign.center,
                         style: TextStyle(

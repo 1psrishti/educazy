@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:educazy/DioHelper/dio_client.dart';
 import 'package:educazy/screens/auth_screens/register_screen.dart';
+import 'package:educazy/widgets/custom_text.dart';
 import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -60,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Container(
                 height: 50,
-                child: Text(
+                child: CustomText(
                   'Educazy',
                   style: GoogleFonts.squadaOne(
                       fontWeight: FontWeight.w400,
@@ -72,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 15,
               ),
               Container(
-                child: Text(
+                child: CustomText(
                   "Welcome Back",
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w600,
@@ -83,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: 15,
               ),
-              Text(
+              CustomText(
                 "Keep learning, keep growing.",
                 style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w400,
@@ -162,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Color(0xFF62C733),
                           borderRadius: BorderRadius.circular(10)),
                       child: Center(
-                          child: Text(
+                          child: CustomText(
                         'Sign In',
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
@@ -171,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       )),
                     )),
               ),
-              Text(
+              CustomText(
                 'Didn’t enroll yet?',
                 style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w400,
@@ -184,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     Navigator.pushNamed(context, RegisterScreen.name);
                   },
-                  child: Text(
+                  child: CustomText(
                     'Click here to enroll now',
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w400,

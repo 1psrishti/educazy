@@ -120,7 +120,8 @@ class EnrolledClass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 150),
       margin: const EdgeInsets.symmetric(vertical: 5),
       padding: const EdgeInsets.symmetric(horizontal: 21),
       height: 100,
@@ -145,7 +146,8 @@ class EnrolledClass extends StatelessWidget {
             Container(
               child: Row(
                 children: [
-                  Container(
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 150),
                     height: 52,
                     width: 52,
                     decoration: BoxDecoration(
@@ -175,7 +177,8 @@ class EnrolledClass extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 150),
               height: 30,
               width: 30,
               decoration: BoxDecoration(
@@ -228,7 +231,8 @@ class _TopSectionState extends State<TopSection> {
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
 
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 150),
       color: Theme.of(context).cardColor,
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -305,7 +309,8 @@ class _TopSectionState extends State<TopSection> {
           //     )
           //   ],
           // ),
-          SizedBox(
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 150),
             height: 44,
             width: widget.width,
             child: Row(

@@ -1,5 +1,6 @@
 import 'package:educazy/screens/auth_screens/login_screen.dart';
 import 'package:educazy/screens/auth_screens/register_screen.dart';
+import 'package:educazy/widgets/custom_text.dart';
 import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -42,7 +43,7 @@ class _EnrollScreenState extends State<EnrollScreen> {
                     height: 160,
                     width: 185,
                   ),
-                  Text(
+                  CustomText(
                     'educazy',
                     style: GoogleFonts.squadaOne(
                         fontWeight: FontWeight.w400,
@@ -50,7 +51,7 @@ class _EnrollScreenState extends State<EnrollScreen> {
                         color: Colors.white),
                   ),
                   const SizedBox(height: 25),
-                  Text(
+                  CustomText(
                     "Enroll here",
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w600,
@@ -58,7 +59,7 @@ class _EnrollScreenState extends State<EnrollScreen> {
                         color: Colors.white),
                   ),
                   const SizedBox(height: 10),
-                  Text(
+                  CustomText(
                     "Step into the world of accessible education.",
                     style: GoogleFonts.roboto(
                         fontWeight: FontWeight.w400,
@@ -156,7 +157,7 @@ class _EnrollScreenState extends State<EnrollScreen> {
                               color: Color(0xFF2D66D6),
                               borderRadius: BorderRadius.circular(10)),
                           child: Center(
-                              child: Text(
+                              child: CustomText(
                             'Next',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w500,
@@ -166,7 +167,7 @@ class _EnrollScreenState extends State<EnrollScreen> {
                         )),
                   ),
                   const SizedBox(height: 25),
-                  Text(
+                  CustomText(
                     'Already enrolled?',
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w400,
@@ -180,7 +181,7 @@ class _EnrollScreenState extends State<EnrollScreen> {
                       onPressed: () {
                         Navigator.pushNamed(context, LoginScreen.name);
                       },
-                      child: Text(
+                      child: CustomText(
                         'Click here to join the classroom',
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w600,

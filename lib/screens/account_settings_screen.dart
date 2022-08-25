@@ -1,4 +1,5 @@
 import 'package:educazy/utils/theme_provider.dart';
+import 'package:educazy/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +22,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
         backgroundColor: Theme.of(context).cardColor,
         elevation: 0,
         leading: BackButton(color: textColor),
-        title: Text(
+        title: CustomText(
           "Profile Settings",
           style: GoogleFonts.inter(
             color: textColor,
@@ -37,7 +38,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                 color: textColor,
               ),
               SizedBox(width: 4),
-              Text(
+              CustomText(
                 "EDIT",
                 style: GoogleFonts.inter(
                   color: textColor,
@@ -89,7 +90,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                 padding: EdgeInsets.all(24),
                 width: double.infinity,
                 color: Theme.of(context).cardColor,
-                child: Text(
+                child: CustomText(
                   "Change Password",
                   style: GoogleFonts.inter(
                     color: Theme.of(context).primaryColor,
@@ -153,7 +154,7 @@ class InfoText extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        CustomText(
           headerText,
           style: GoogleFonts.inter(
             color: Color(0xff555555),
@@ -162,7 +163,7 @@ class InfoText extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Text(
+        CustomText(
           infoText,
           style: GoogleFonts.inter(
             color: textColor,
