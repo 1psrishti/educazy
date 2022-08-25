@@ -1,4 +1,4 @@
-import 'package:educazy/screens/enrolled_class.dart';
+import 'package:educazy/screens/enrolled_class_screen.dart';
 import 'package:educazy/utils/custom_colors.dart';
 import 'package:educazy/utils/theme_provider.dart';
 import 'package:educazy/widgets/custom_text.dart';
