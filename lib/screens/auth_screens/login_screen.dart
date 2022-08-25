@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide:
-                                BorderSide(color: Colors.white, width: 2)),
+                            BorderSide(color: Colors.white, width: 2)),
                         hintText: 'Please Enter Unique User ID',
                         hintStyle: GoogleFonts.poppins(
                             color: Color(0xFF8D8D8D),
@@ -138,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide:
-                                BorderSide(color: Colors.white, width: 2)),
+                            BorderSide(color: Colors.white, width: 2)),
                         hintText: 'Please Enter Password',
                         hintStyle: GoogleFonts.poppins(
                             color: Color(0xFF8D8D8D),
@@ -165,12 +165,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             borderRadius: BorderRadius.circular(10)),
                         child: Center(
                             child: CustomText(
-                          'Sign In',
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 24,
-                              color: Colors.white),
-                        )),
+                              'Sign In',
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 24,
+                                  color: Colors.white),
+                            )),
                       )),
                 ),
                 CustomText(
@@ -182,7 +182,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 TextButton(
                     style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero, minimumSize: const Size(0, 0)),
+                        padding: EdgeInsets.zero,
+                        minimumSize: const Size(0, 0)),
                     onPressed: () {
                       Navigator.pushNamed(context, RegisterScreen.name);
                     },

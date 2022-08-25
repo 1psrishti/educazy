@@ -30,6 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   setupData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
     var key = prefs.getString('key');
     print(await getToken());
     if (key != null) {
