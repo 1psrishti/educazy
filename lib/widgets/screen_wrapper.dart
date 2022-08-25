@@ -6,9 +6,10 @@ import 'package:speech_to_text/speech_to_text.dart';
 
 class ScreenWrapper extends StatefulWidget {
   final Widget child;
-
+  final bool? showAppBar;
   const ScreenWrapper({
     Key? key,
+    this.showAppBar = true,
     required this.child,
   }) : super(key: key);
 
@@ -27,6 +28,7 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
             DraggableFloatingActionButton(
               child: widget.child,
               initialOffset: Alignment(0.85, 0.85),
+              showAppBar: widget.showAppBar,
             ),
           ],
         )

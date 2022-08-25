@@ -24,6 +24,7 @@ class _EnrollScreenState extends State<EnrollScreen> {
     final height = MediaQuery.of(context).size.height;
 
     return ScreenWrapper(
+      showAppBar: false,
       child: Scaffold(
         // resizeToAvoidBottomInset: false,
         body: Container(
