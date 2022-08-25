@@ -7,6 +7,8 @@ import 'package:educazy/screens/account_settings_screen.dart';
 import 'package:educazy/screens/auth_screens/enroll_screen.dart';
 import 'package:educazy/screens/auth_screens/login_screen.dart';
 import 'package:educazy/screens/auth_screens/register_screen.dart';
+import 'package:educazy/screens/classes_screen.dart';
+import 'package:educazy/screens/enrolled_class.dart';
 import 'package:educazy/screens/home_screen.dart';
 import 'package:educazy/screens/profile_screen.dart';
 import 'package:educazy/screens/progress_card_screen.dart';

@@ -4,47 +4,34 @@ import 'dart:convert';
 import 'package:educazy/models/subject_model.dart';
 
 class Marks {
-  Subject subject;
-  int? acquiredMarks;
-  int? totalMarks;
-  String? grade;
+  String testId;
+  int score;
   Marks({
-    required this.subject,
-    this.acquiredMarks,
-    this.totalMarks,
-    this.grade,
+    required this.testId,
+    required this.score,
   });
 
   Marks copyWith({
-    Subject? subject,
-    int? acquiredMarks,
-    int? totalMarks,
-    String? grade,
+    String? testId,
+    int? score,
   }) {
     return Marks(
-      subject: subject ?? this.subject,
-      acquiredMarks: acquiredMarks ?? this.acquiredMarks,
-      totalMarks: totalMarks ?? this.totalMarks,
-      grade: grade ?? this.grade,
+      testId: testId ?? this.testId,
+      score: score ?? this.score,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'subject': subject.toMap(),
-      'acquiredMarks': acquiredMarks,
-      'totalMarks': totalMarks,
-      'grade': grade,
+      'testId': testId,
+      'score': score,
     };
   }
 
   factory Marks.fromMap(Map<String, dynamic> map) {
     return Marks(
-      subject: Subject.fromMap(map['subject'] as Map<String, dynamic>),
-      acquiredMarks:
-          map['acquiredMarks'] != null ? map['acquiredMarks'] as int : null,
-      totalMarks: map['totalMarks'] != null ? map['totalMarks'] as int : null,
-      grade: map['grade'] != null ? map['grade'] as String : null,
+      testId: map['testId'] as String,
+      score: map['score'] as int,
     );
   }
 
@@ -54,26 +41,15 @@ class Marks {
       Marks.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() {
-    return 'Marks(subject: $subject, acquiredMarks: $acquiredMarks, totalMarks: $totalMarks, grade: $grade)';
-  }
+  String toString() => 'Marks(testId: $testId, score: $score)';
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(covariant Marks other) {
     if (identical(this, other)) return true;
 
-    return other is Marks &&
-        other.subject == subject &&
-        other.acquiredMarks == acquiredMarks &&
-        other.totalMarks == totalMarks &&
-        other.grade == grade;
+    return other.testId == testId && other.score == score;
   }
 
   @override
-  int get hashCode {
-    return subject.hashCode ^
-        acquiredMarks.hashCode ^
-        totalMarks.hashCode ^
-        grade.hashCode;
-  }
+  int get hashCode => testId.hashCode ^ score.hashCode;
 }

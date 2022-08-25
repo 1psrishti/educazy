@@ -179,19 +179,19 @@ class _ProgresscardState extends State<Progresscard> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          CustomText(
-                                            student.marksList![index].subject
-                                                .name.name,
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 15,
-                                                color: Color(0xFF202020)),
-                                          ),
-                                          CustomText(
-                                            '${student.marksList![index].acquiredMarks}/${student.marksList![index].totalMarks}',
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 15,
-                                                color: Color(0xFF2D66D6)),
-                                          )
+                                          // CustomText(
+                                          //   student.marksList![index].subject
+                                          //       .name.name,
+                                          //   style: GoogleFonts.poppins(
+                                          //       fontSize: 15,
+                                          //       color: Color(0xFF202020)),
+                                          // ),
+                                          // CustomText(
+                                          //   '${student.marksList![index].acquiredMarks}/${student.marksList![index].totalMarks}',
+                                          //   style: GoogleFonts.poppins(
+                                          //       fontSize: 15,
+                                          //       color: Color(0xFF2D66D6)),
+                                          // )
                                         ],
                                       ));
                                 },
