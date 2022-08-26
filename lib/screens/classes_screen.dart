@@ -18,7 +18,6 @@ class ClassesScreen extends StatefulWidget {
 
 class _ClassesScreenState extends State<ClassesScreen> {
   final homeClassCodeController = TextEditingController();
-  // bool? isDarkMode;
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;

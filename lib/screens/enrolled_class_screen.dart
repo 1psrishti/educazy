@@ -1,8 +1,8 @@
-import 'package:educazy/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+import '../utils/theme_provider.dart';
 
 class EnrolledScreen extends StatefulWidget {
   const EnrolledScreen({Key? key}) : super(key: key);
@@ -13,6 +13,7 @@ class EnrolledScreen extends StatefulWidget {
 class _EnrolledScreenState extends State<EnrolledScreen> {
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -28,7 +29,7 @@ class _EnrolledScreenState extends State<EnrolledScreen> {
             ),
             expandedHeight: 160,
             leading: BackButton(),
-          ), //SliverAppBar
+          ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
                   (context, index) => ListTile(
@@ -322,8 +323,7 @@ class _EnrolledScreenState extends State<EnrolledScreen> {
                                           color: Color(0xff777777),
                                           fontSize: 14,
                                         ),
-                                      )
-
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -339,8 +339,7 @@ class _EnrolledScreenState extends State<EnrolledScreen> {
             ),
           )
         ],
-
-      )
+      ),
     );
   }
 }
