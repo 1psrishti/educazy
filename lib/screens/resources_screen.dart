@@ -112,31 +112,31 @@ class _ResourcesState extends State<Resources> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    GestureDetector(
-                      onTap: () {
+                    EnrolledClass(
+                      width: width,
+                      facultyName: 'Convert to Braille',
+                      subjectName: '',
+                      onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: ((context) => ConvertToBraille()),
+                            builder: ((context) => const ConvertToBraille()),
                           ),
                         );
                       },
-                      child: EnrolledClass(
-                        width: width,
-                        facultyName: 'Convert to Braille',
-                        subjectName: '',
-                        onPressed: () {},
-                        image: Icon(
-                          Entypo.globe,
-                          color: CustomColors.green,
-                          size: 24,
-                        ),
-                        primaryColor: const Color(0XFF1D934C),
-                        backColor: const Color(0xFF1D934C).withOpacity(0.05),
+                      image: Icon(
+                        Entypo.globe,
+                        color: CustomColors.green,
+                        size: 24,
                       ),
+                      primaryColor: const Color(0XFF1D934C),
+                      backColor: const Color(0xFF1D934C).withOpacity(0.05),
                     ),
-                    GestureDetector(
-                      onTap: () {
+                    EnrolledClass(
+                      width: width,
+                      facultyName: 'Convert to Speech',
+                      subjectName: '',
+                      onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -144,19 +144,13 @@ class _ResourcesState extends State<Resources> {
                           ),
                         );
                       },
-                      child: EnrolledClass(
-                        width: width,
-                        facultyName: 'Convert to Speech',
-                        subjectName: '',
-                        onPressed: () {},
-                        image: Icon(
-                          Entypo.globe,
-                          color: CustomColors.green,
-                          size: 24,
-                        ),
-                        primaryColor: const Color(0XFF1D934C),
-                        backColor: const Color(0xFF1D934C).withOpacity(0.05),
+                      image: Icon(
+                        Entypo.globe,
+                        color: CustomColors.green,
+                        size: 24,
                       ),
+                      primaryColor: const Color(0XFF1D934C),
+                      backColor: const Color(0xFF1D934C).withOpacity(0.05),
                     ),
                     SizedBox(
                       height: 150,
