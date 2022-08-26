@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:educazy/data/resources_data.dart';
+import 'package:educazy/main.dart';
 import 'package:educazy/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,6 +25,13 @@ class _ResourcesState extends State<Resources> {
   String url =
       "https://api.funtranslations.com/translate/braille/unicode.json?text=";
   String displayedText = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    currentscreen = Resources.name;
+  }
 
   @override
   Widget build(BuildContext context) {

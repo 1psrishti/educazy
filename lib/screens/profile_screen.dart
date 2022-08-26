@@ -1,6 +1,8 @@
 import 'package:educazy/dataProviders/user_app_data.dart';
 import 'package:educazy/enums/font_enum.dart';
+import 'package:educazy/main.dart';
 import 'package:educazy/screens/account_settings_screen.dart';
+import 'package:educazy/screens/resources_screen.dart';
 import 'package:educazy/utils/theme_provider.dart';
 import 'package:educazy/widgets/custom_text.dart';
 import 'package:educazy/widgets/toggle_theme_button.dart';
@@ -8,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const name = 'profileScreen';
@@ -18,6 +21,13 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool darkMode = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    currentscreen = ProfileScreen.name;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,22 +96,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   },
                   child: Container(
                     padding: EdgeInsets.all(16),
-                    color: isDarkMode ? const Color(0xFF0D0D0D) : Colors.white,
+                    color: Theme.of(context).cardColor,
                     child: Option(
                       icon: Icons.settings_outlined,
-                      text: "Profile Settings",
+                      text:
+                          '${AppLocalizations.of(context)!.profile} ${AppLocalizations.of(context)!.settings}',
                     ),
                   ),
                 ),
                 const SizedBox(height: 8),
                 Container(
                   padding: EdgeInsets.all(16),
-                  color: isDarkMode ? const Color(0xFF0D0D0D) : Colors.white,
+                  color: Theme.of(context).cardColor,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomText(
-                        "Support",
+                        AppLocalizations.of(context)!.support,
                         style: GoogleFonts.sourceSansPro(
                           color: Color(0xff555555),
                           fontSize: 12,
@@ -110,17 +121,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(height: 16),
                       Option(
                         icon: Icons.info_outline,
-                        text: "Assistive Support",
+                        text: AppLocalizations.of(context)!.assistive_support,
                       ),
                       const SizedBox(height: 16),
                       Option(
                         icon: Icons.help_outline,
-                        text: "Help",
+                        text: AppLocalizations.of(context)!.help,
                       ),
                       const SizedBox(height: 16),
                       Option(
                         icon: Icons.info_outline,
-                        text: "Terms & Privacy",
+                        text:
+                            AppLocalizations.of(context)!.terms_and_conditions,
                       ),
                     ],
                   ),
@@ -128,13 +140,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const SizedBox(height: 8),
                 Container(
                   padding: EdgeInsets.all(16),
-                  color: isDarkMode ? const Color(0xFF0D0D0D) : Colors.white,
+                  color: Theme.of(context).cardColor,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Option(
                         icon: Icons.dark_mode_outlined,
-                        text: "Dark Mode",
+                        text: AppLocalizations.of(context)!.dark_mode,
                       ),
                       const ToggleThemeButton()
                     ],
@@ -143,13 +155,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const SizedBox(height: 8),
                 Container(
                   padding: EdgeInsets.all(16),
-                  color: isDarkMode ? const Color(0xFF0D0D0D) : Colors.white,
+                  color: Theme.of(context).cardColor,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Option(
+                        icon: Icons.dark_mode_outlined,
+                        text: AppLocalizations.of(context)!.language,
+                      ),
+                      const ToggleLanguage()
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  padding: EdgeInsets.all(16),
+                  color: Theme.of(context).cardColor,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Option(
                         icon: Icons.text_format,
-                        text: "Change Font",
+                        text: AppLocalizations.of(context)!.change_font,
                       ),
                       Row(
                         children: [
@@ -192,10 +219,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const SizedBox(height: 8),
                 Container(
                   padding: const EdgeInsets.all(16),
-                  color: isDarkMode ? const Color(0xFF0D0D0D) : Colors.white,
+                  color: Theme.of(context).cardColor,
                   child: Option(
                     icon: Icons.logout_outlined,
-                    text: "Log Out",
+                    text: AppLocalizations.of(context)!.log_out,
                   ),
                 ),
               ],
@@ -235,7 +262,7 @@ class Option extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 16),
-        Text(
+        CustomText(
           text,
           style: GoogleFonts.sourceSansPro(
             //   color: Color(0xff2F2F2F),

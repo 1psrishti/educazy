@@ -13,7 +13,7 @@ final logInUserIdController = TextEditingController();
 final logInPasswordController = TextEditingController();
 
 class LoginScreen extends StatefulWidget {
-  static const name = 'loginScreen';
+  static const name = 'log in Screen';
   const LoginScreen({Key? key}) : super(key: key);
 
   @override

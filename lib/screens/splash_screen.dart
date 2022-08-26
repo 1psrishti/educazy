@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:speech_to_text/speech_to_text.dart';
+import 'package:string_similarity/string_similarity.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -29,6 +31,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   setupData() async {
+    // SpeechToText _speechToText = SpeechToText();
+    // print(await _speechToText.locales());
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
     var key = prefs.getString('key');

@@ -209,7 +209,6 @@ class _DraggableFloatingActionButtonState
         startingAngleInRadian: 1 * pi,
         endingAngleInRadian: 1.5 * pi,
         alignment: widget.initialOffset,
-
         items: [
           CircularMenuItem(
               iconSize: 20,
@@ -236,21 +235,6 @@ class _DraggableFloatingActionButtonState
               }),
         ],
         backgroundWidget: widget.child,
-        // child: GestureDetector(
-        //   onTap: () {
-        //     _listen();
-        //   },
-        //   child: Container(
-        //     decoration: BoxDecoration(
-        //         borderRadius: BorderRadius.circular(50),
-        //         color: Color(0xFF5BB92F)),
-        //     padding: EdgeInsets.all(20),
-        //     child: Icon(
-        //       _isListening ? Icons.mic : Icons.mic_none,
-        //       color: Colors.white,
-        //     ),
-        //   ),
-        // ),
       ),
     );
   }

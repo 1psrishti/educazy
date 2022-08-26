@@ -1,6 +1,8 @@
 import 'package:educazy/data/quiz_data.dart';
+import 'package:educazy/main.dart';
 import 'package:educazy/models/question_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class QuizData extends ChangeNotifier {
   Question? _question;
@@ -33,5 +35,18 @@ class QuizData extends ChangeNotifier {
     if (_currentQuesIndex - 1 >= 0) {
       _currentQuesIndex = _currentQuesIndex - 1;
     }
+  }
+
+  void readQuestion() {
+    speak(quizData.questions[_currentQuesIndex].question);
+  }
+
+  readOptions() async {
+    var sentence =
+        "First option is ${quizData.questions[_currentQuesIndex].answers[0]}   Second option is ${quizData.questions[_currentQuesIndex].answers[1]}  Third option is ${quizData.questions[_currentQuesIndex].answers[2]} Fourth option is ${quizData.questions[_currentQuesIndex].answers[3]}";
+    FlutterTts flutterTts = FlutterTts();
+    await flutterTts.setPitch(0.7);
+    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.speak(sentence);
   }
 }

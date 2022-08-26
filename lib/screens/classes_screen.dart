@@ -1,4 +1,5 @@
 import 'package:educazy/screens/enrolled_class_screen.dart';
+import 'package:educazy/main.dart';
 import 'package:educazy/utils/custom_colors.dart';
 import 'package:educazy/utils/theme_provider.dart';
 import 'package:educazy/widgets/custom_text.dart';
@@ -6,8 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
+import '../main.dart';
 import 'home_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+final homeClassCodeController = TextEditingController();
 
 class ClassesScreen extends StatefulWidget {
   const ClassesScreen({Key? key}) : super(key: key);
@@ -18,7 +22,7 @@ class ClassesScreen extends StatefulWidget {
 
 class _ClassesScreenState extends State<ClassesScreen> {
   final homeClassCodeController = TextEditingController();
-  // bool? isDarkMode;
+  bool? isDarkMode;
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
@@ -40,7 +44,7 @@ class _ClassesScreenState extends State<ClassesScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
-                  'Enrolled Classes',
+                  AppLocalizations.of(context)!.enrolled_classes,
                   textAlign: TextAlign.start,
                   style: GoogleFonts.sourceSansPro(
                     fontWeight: FontWeight.w600,
@@ -49,34 +53,50 @@ class _ClassesScreenState extends State<ClassesScreen> {
                   ),
                 ),
                 const SizedBox(height: 13),
-                GestureDetector(
-                  onTap: (){
+                EnrolledClass(
+                  width: width,
+                  facultyName: 'Mr. Vedant Singh',
+                  subjectName: 'Social Studies',
+                  onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: ((context) => EnrolledScreen()),
+                        builder: ((context) => EnrolledScreen(
+                              subjectName: 'Social Studies',
+                              facultyName: 'Mr. Vedant Singh',
+                              description:
+                                  'Integrated study of multiple fields of social science and the humanities, including history, geography, and political science. ',
+                              image: 'assets/images/social.png',
+                            )),
                       ),
                     );
                   },
-                  child: EnrolledClass(
-                    width: width,
-                    facultyName: 'Mr. Vedant Singh',
-                    subjectName: 'Social Studies',
-                    onPressed: () {},
-                    image: Icon(
-                      Entypo.globe,
-                      color: CustomColors.green,
-                      size: 24,
-                    ),
-                    primaryColor: const Color(0XFF1D934C),
-                    backColor: const Color(0xFF1D934C).withOpacity(0.05),
+                  image: Icon(
+                    Entypo.globe,
+                    color: CustomColors.green,
+                    size: 24,
                   ),
+                  primaryColor: const Color(0XFF1D934C),
+                  backColor: const Color(0xFF1D934C).withOpacity(0.05),
                 ),
                 EnrolledClass(
                   width: width,
                   facultyName: 'Mr. Viraj',
                   subjectName: 'Mathematics',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => EnrolledScreen(
+                              subjectName: 'Social Studies',
+                              facultyName: 'Mr. Vedant Singh',
+                              description:
+                                  'Integrated study of multiple fields of social science and the humanities, including history, geography, and political science. ',
+                              image: 'assets/images/social.png',
+                            )),
+                      ),
+                    );
+                  },
                   image: const Icon(
                     Icons.calculate_outlined,
                     color: Color(0xFf107ABE),
@@ -89,7 +109,20 @@ class _ClassesScreenState extends State<ClassesScreen> {
                   width: width,
                   facultyName: 'Ms. Srishti',
                   subjectName: 'Science',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => EnrolledScreen(
+                              subjectName: 'Social Studies',
+                              facultyName: 'Mr. Vedant Singh',
+                              description:
+                                  'Integrated study of multiple fields of social science and the humanities, including history, geography, and political science. ',
+                              image: 'assets/images/social.png',
+                            )),
+                      ),
+                    );
+                  },
                   image: const Icon(
                     Icons.science,
                     color: Color(0xFF914698),
@@ -120,7 +153,7 @@ class EnrolledClass extends StatelessWidget {
   }) : super(key: key);
 
   final double width;
-  final void Function() onPressed;
+  final VoidCallback onPressed;
   final String subjectName;
   final String facultyName;
   final Widget image;
@@ -130,78 +163,81 @@ class EnrolledClass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 150),
-      margin: const EdgeInsets.symmetric(vertical: 5),
-      padding: const EdgeInsets.symmetric(horizontal: 21),
-      height: 100,
-      width: width,
-      decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: isDarkMode
-                  ? Color.fromARGB(255, 255, 255, 255).withOpacity(0.08)
-                  : Color(0xFF000000).withOpacity(0.08),
-              offset: Offset(0, 4),
-              blurRadius: 8,
-              blurStyle: BlurStyle.normal,
-            )
-          ]),
-      child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              child: Row(
-                children: [
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 150),
-                    height: 52,
-                    width: 52,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: backColor),
-                    child: Center(child: image),
-                  ),
-                  const SizedBox(width: 21),
-                  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CustomText(
-                          subjectName,
-                          style: GoogleFonts.sourceSansPro(
-                              color: primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
-                        ),
-                        const SizedBox(height: 7),
-                        CustomText(
-                          'by $facultyName',
-                          style: GoogleFonts.sourceSansPro(
-                              color: Color(0xFF777777), fontSize: 13),
-                        )
-                      ])
-                ],
-              ),
-            ),
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 150),
-              height: 30,
-              width: 30,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(27),
-                  color: isDarkMode ? Color(0xFF1B1B1B) : Color(0xFFF1F1F1)),
-              child: const Center(
-                child: Icon(
-                  Icons.navigate_next_rounded,
-                  color: Color(0xFf999999),
+    return InkWell(
+      onTap: onPressed,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 21),
+        height: 100,
+        width: width,
+        decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: isDarkMode
+                    ? Color.fromARGB(255, 255, 255, 255).withOpacity(0.08)
+                    : Color(0xFF000000).withOpacity(0.08),
+                offset: Offset(0, 4),
+                blurRadius: 8,
+                blurStyle: BlurStyle.normal,
+              )
+            ]),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                child: Row(
+                  children: [
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 150),
+                      height: 52,
+                      width: 52,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: backColor),
+                      child: Center(child: image),
+                    ),
+                    const SizedBox(width: 21),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomText(
+                            subjectName,
+                            style: GoogleFonts.sourceSansPro(
+                                color: primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                          ),
+                          const SizedBox(height: 7),
+                          CustomText(
+                            'by $facultyName',
+                            style: GoogleFonts.sourceSansPro(
+                                color: Color(0xFF777777), fontSize: 13),
+                          )
+                        ])
+                  ],
                 ),
               ),
-            ),
-          ],
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 150),
+                height: 30,
+                width: 30,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(27),
+                    color: isDarkMode ? Color(0xFF1B1B1B) : Color(0xFFF1F1F1)),
+                child: Center(
+                  child: Icon(
+                    Icons.navigate_next_rounded,
+                    color: Color(0xFf999999),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -353,9 +389,9 @@ class _TopSectionState extends State<TopSection> {
                         });
                       }
                     },
-                    controller: widget.controller,
+                    controller: homeClassCodeController,
                     decoration: InputDecoration(
-                        hintText: '#Class ID',
+                        hintText: AppLocalizations.of(context)!.class_id,
                         filled: true,
                         border: const OutlineInputBorder(
                             borderSide: BorderSide.none),
@@ -382,7 +418,8 @@ class _TopSectionState extends State<TopSection> {
                       color: buttonColor,
                     ),
                     child: Center(
-                      child: CustomText('Join Class',
+                      child: CustomText(
+                          AppLocalizations.of(context)!.join_class,
                           style: GoogleFonts.sourceSansPro(
                               fontSize: 16,
                               color: !isDarkMode

@@ -138,7 +138,7 @@ class _QuizQuesState extends State<QuizQues> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           SizedBox(
-                            width: 150,
+                            // width: 150,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [

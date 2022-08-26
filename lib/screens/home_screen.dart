@@ -12,6 +12,7 @@ import 'package:educazy/screens/test_portal_screen.dart';
 import 'package:educazy/services/notifications.dart';
 import 'package:educazy/utils/custom_colors.dart';
 import 'package:educazy/utils/theme_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:educazy/widgets/screen_wrapper.dart';
 import 'package:educazy/widgets/toggle_theme_button.dart';
@@ -60,10 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return ScreenWrapper(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          body: IndexedStack(
-            index: provider.tabIndex,
-            children: items,
-          ),
+          body: items.elementAt(provider.tabIndex),
           bottomNavigationBar: BottomNavigationBar(
             showUnselectedLabels: true,
             unselectedLabelStyle: TextStyle(color: Colors.grey),
@@ -77,22 +75,22 @@ class _HomeScreenState extends State<HomeScreen> {
             iconSize: 15,
             onTap: onItemTapped,
             currentIndex: provider.tabIndex,
-            items: const <BottomNavigationBarItem>[
+            items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Feather.airplay),
-                label: 'Classes',
+                label: AppLocalizations.of(context)!.classes,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Feather.book_open),
-                label: 'Tests',
+                label: AppLocalizations.of(context)!.tests,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Feather.book),
-                label: 'Resources',
+                label: AppLocalizations.of(context)!.resources,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Feather.user),
-                label: 'Profile',
+                label: AppLocalizations.of(context)!.profile,
               ),
             ],
           )),

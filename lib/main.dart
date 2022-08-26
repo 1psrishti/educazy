@@ -1,7 +1,9 @@
 import 'package:camera/camera.dart';
+import 'package:educazy/dataProviders/locale_provider.dart';
 import 'package:educazy/dataProviders/quiz_data_provider.dart';
 import 'package:educazy/dataProviders/timer_data.dart';
 import 'package:educazy/dataProviders/user_app_data.dart';
+import 'package:educazy/l10n/l10n.dart';
 import 'package:educazy/models/user_model.dart';
 import 'package:educazy/screens/account_settings_screen.dart';
 import 'package:educazy/screens/auth_screens/enroll_screen.dart';
@@ -29,6 +31,9 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:translator/translator.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 AndroidNotificationChannel channel = const AndroidNotificationChannel(
     'new_email_arrived', // id
@@ -58,6 +63,7 @@ Future speak(String sentence) async {
 List<CameraDescription>? cameras;
 String currentscreen = LoginScreen.name;
 String fcmToken = "";
+GoogleTranslator translator = GoogleTranslator();
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 void main() async {
@@ -103,19 +109,29 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: ((context) => UserAppData())),
-          ChangeNotifierProvider(create: ((context) => ThemeProvider()))
+          ChangeNotifierProvider(create: ((context) => ThemeProvider())),
+          ChangeNotifierProvider(create: ((context) => LocaleProvider())),
         ],
         builder: (context, _) {
           final themeProvider = Provider.of<ThemeProvider>(context);
+          var localeProvider = Provider.of<LocaleProvider>(context);
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
             themeMode: themeProvider.themeMode,
+            locale: localeProvider.locale,
             darkTheme: MyThemes.darkTheme,
             navigatorKey: navigatorKey,
             theme: MyThemes.lightTheme,
             navigatorObservers: [routeObserver],
             home: SplashScreen(),
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: L10n.all,
             routes: {
               HomeScreen.name: (context) =>
                   RouteAwareWidget(HomeScreen.name, child: HomeScreen()),

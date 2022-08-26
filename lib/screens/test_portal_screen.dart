@@ -1,3 +1,4 @@
+import 'package:educazy/main.dart';
 import 'package:educazy/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,6 +16,13 @@ class TestPortal extends StatefulWidget {
 }
 
 class _TestPortalState extends State<TestPortal> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    currentscreen = TestPortal.name;
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;

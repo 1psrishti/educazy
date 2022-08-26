@@ -5,7 +5,7 @@ class CustomColors {
   static Color blueDark = const Color(0xFF37ACF5);
 
   static Color card = Colors.white;
-  static Color cardDark = Color(0xFF0D0D0D);
+  static Color cardDark = Color(0xFF36373A);
 
   static Color button = const Color(0xFF55AD2C);
   static Color buttonDark = const Color(0xFF5FC131);
