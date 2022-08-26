@@ -175,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       )),
                 ),
                 CustomText(
-                  'Didn’t enroll yet?',
+                  'Didn\’t enroll yet?',
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w400,
                       fontSize: 14,

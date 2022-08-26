@@ -1,7 +1,4 @@
-import 'package:educazy/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -26,6 +23,7 @@ class EnrolledScreen extends StatefulWidget {
 class _EnrolledScreenState extends State<EnrolledScreen> {
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
