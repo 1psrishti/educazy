@@ -43,7 +43,7 @@ class RouteAwareWidgetState extends State<RouteAwareWidget> with RouteAware {
   void didPush() {
     currentscreen = widget.name;
     debugPrint('didPush ${widget.name}');
-    AlanAiHelper.setVisualState(widget.name);
+    // AlanAiHelper.setVisualState(widget.name);
   }
 
   @override
@@ -51,7 +51,7 @@ class RouteAwareWidgetState extends State<RouteAwareWidget> with RouteAware {
   void didPopNext() {
     currentscreen = widget.name;
     print('didPopNext ${widget.name}');
-    AlanAiHelper.setVisualState(widget.name);
+    // AlanAiHelper.setVisualState(widget.name);
   }
 
   @override
